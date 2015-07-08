@@ -1,0 +1,1 @@
+{!! Lang::get('emails.reg_conf_message', ['attribute' => $link]) !!}

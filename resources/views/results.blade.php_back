@@ -1,0 +1,46 @@
+@extends('layout')
+
+@section('sidebar')
+
+	<div class="well well-sm">
+		<legend>
+			<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          	<span class="glyphicon-class">{{Lang::get('site.search_heading')}}</span>
+		</legend>
+		<!--{!! Form::open(['url' => '/results', 'id' => 'search']) !!}-->
+		{!! Form::open(['action' => 'PagesController@search', 'id' => 'search']) !!}
+			@include('forms.search')
+		{!! Form::close() !!}
+	</div>
+
+@stop
+
+
+@section('content')
+
+	<h1>{{Lang::get('site.search_results_heading')}}</h1>
+	@if ($count>0)
+		<h4>{{$count}} {{Lang::choice('site.search_results_count', $count)}}</h4>
+	@else
+		<h4>{{Lang::choice('site.search_results_count', $count)}}</h4>
+	@endif
+	
+	@if ($count>0)
+		<table class="table table-hover">
+		  	@foreach ($data as $parking)
+				<tr>
+					<td><img class="media-object" src="/img/default-p.png" alt="..."></td>
+					<td>
+						<a href="{{ action('ParkingsController@show', [$parking->parking_id]) }}"><b>{{ $parking->parking_name }}</b></a>
+						<br>
+						{{ $parking->address }}
+					</td>
+					<td>
+						<a href="{{ action('ParkingsController@book', [$parking->parking_id]) }}" class="btn btn-primary">{{ $parking->price }} {{Lang::get('site.search_results_book_btn')}}</a>
+					</td>
+				</tr>
+			@endforeach
+		</table>
+	@endif
+
+@stop

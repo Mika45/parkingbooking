@@ -1,0 +1,90 @@
+<div class="form-group">
+			
+	<table class="table">
+		<tbody>
+
+			<tr>
+				
+				<td class="col-md-4">
+					<!-- {!! Form::text('location', Input::old('location'), ['class' => 'form-control']) !!} -->
+					{!! Form::label('parking_name', 'Parking name:') !!}
+					{!! Form::text('parking_name', null, ['class' => 'form-control']) !!}
+					<br/>
+					{!! Form::label('rate_type', 'Rate type:') !!}
+					{!! Form::select('rate_type', [
+					   'D' => 'Daily',
+					   'H' => 'Hourly'], null, ['class' => 'form-control']
+					) !!}
+					<br/>
+					{!! Form::label('min_duration', 'Minimum duration of a booking (hours):') !!}
+					{!! Form::select('min_duration', [
+					   '1' => '1', '2' => '2',
+					   '3' => '3', '4' => '4',
+					   '5' => '5', '6' => '6',
+					   '7' => '7', '8' => '8',
+					   '9' => '9', '10' => '10',
+					   '11' => '11', '12' => '12',
+					   '13' => '13', '14' => '14',
+					   '15' => '15', '16' => '16',
+					   '17' => '17', '18' => '18',
+					   '19' => '19', '20' => '20',
+					   '21' => '21', '22' => '22',
+					   '23' => '23', '24' => '24'], null, ['class' => 'form-control']
+					) !!}
+					<br/>
+				</td>
+
+				<td class="col-md-4">
+					{!! Form::label('status', 'Status:') !!}
+					{!! Form::select('status', [
+					   'A' => 'Active',
+					   'I' => 'Inactive'], null, ['class' => 'form-control']
+					) !!}
+					<br/>
+					{!! Form::label('lat', 'Google map latitude:') !!}
+					{!! Form::text('lat', null, ['class' => 'form-control']) !!}
+				</td>
+
+				<td class="col-md-4">
+					{!! Form::label('slots', 'Slots:') !!}
+					{!! Form::text('slots', null, ['class' => 'form-control']) !!}
+					<br/>
+					{!! Form::label('lng', 'Google map longtitude:') !!}
+					{!! Form::text('lng', null, ['class' => 'form-control']) !!}
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="3">
+					{!! Form::label('address', 'Address:') !!}
+					{!! Form::text('address', null, ['class' => 'form-control']) !!}
+					<br/>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="col-md-4">
+					{!! Form::label('description', 'Parking description:') !!}
+					{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+				</td>
+				<td class="col-md-4">
+					{!! Form::label('find_it', 'Directions:') !!}
+					{!! Form::textarea('find_it', null, ['class' => 'form-control']) !!}
+					<br/>
+				</td>
+				<td class="col-md-4">
+					{!! Form::label('reserve_notes', 'Reserve notes:') !!}
+					{!! Form::textarea('reserve_notes', null, ['class' => 'form-control']) !!}
+					<br/>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="col-md-4"></td>
+				<td class="col-md-4"></td>
+				<td class="col-md-4"><br/>{!! Form::submit('Save', ['class' => 'btn btn-primary form-control']) !!}</td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>

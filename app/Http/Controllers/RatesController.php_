@@ -1,0 +1,117 @@
+<?php namespace App\Http\Controllers;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use Request;
+use App\Parking;
+use App\RateDaily;
+use App\RateHourly;
+use App\Http\Requests\AddRatesRequest;
+
+class RatesController extends Controller {
+
+	/**
+     * Instantiate a new LocationsController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+	public function create()
+	{
+		return view('rates.create');
+	}
+
+	public function store()
+	{
+		return "ok";
+		//return view('rates.create');
+	}
+
+	public function view($id)
+	{
+		try 
+		{
+			$parking = Parking::findOrFail($id);
+		} 
+		catch(\Exception $e) 
+		{
+			abort(403, 'Unauthorized action.');
+		}
+
+		if ($parking->rate_type == 'D')
+			$rates = RateDaily::where('parking_id', '=', $parking->parking_id)->get();
+		elseif ($parking->rate_type == 'H')
+			$rates = RateHourly::where('parking_id', '=', $parking->parking_id)->get();
+		else
+			$rates = NULL;
+
+		return view('rates.index', compact('rates'));
+	}
+
+	public function edit($id, $rateid)
+	{
+		//$id 		: parking_id
+		//$rateid 	: rate_id
+
+		try 
+		{
+			$parking = Parking::findOrFail($id);
+		} 
+		catch(\Exception $e) 
+		{
+			abort(403, 'Unauthorized action.');
+		}
+
+		if ($parking->rate_type == 'D')
+			//$rates = RateDaily::where('parking_id', '=', $parking->parking_id)->get();
+			$rate = RateDaily::findOrFail($rateid);
+		elseif ($parking->rate_type == 'H')
+			//$rates = RateHourly::where('parking_id', '=', $parking->parking_id)->get();
+			$rate = RateHourly::findOrFail($rateid);
+		else
+			$rate = NULL;
+
+		//return $rate;
+		return view('rates.edit', compact('rate'));
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id, $rateid, AddRatesRequest $request)
+	{
+		//$id 		: parking_id
+		//$rateid 	: rate_id
+
+		dd("got here");
+
+		try 
+		{
+			$parking = Parking::findOrFail($id);
+		} 
+		catch(\Exception $e) 
+		{
+			abort(403, 'Unauthorized action.');
+		}
+
+		if ($parking->rate_type == 'D')
+			//$rates = RateDaily::where('parking_id', '=', $parking->parking_id)->get();
+			$rate = RateDaily::findOrFail($rateid);
+		elseif ($parking->rate_type == 'H')
+			//$rates = RateHourly::where('parking_id', '=', $parking->parking_id)->get();
+			$rate = RateHourly::findOrFail($rateid);
+		else
+			$rate = NULL;
+
+		$rate->update($request->all());
+		dd("end");
+		return redirect()->route('/rates', ['id' => $parking->parking_id]);
+	}
+
+}
