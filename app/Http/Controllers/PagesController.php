@@ -267,8 +267,8 @@ class PagesController extends Controller {
 		if (is_null($count))
 			$count = 0;
 
-		//Session::put('allowedParkings', $parkings_array);
-		Session::flash('allowedParkings', $parkings_array);
+		Session::put('allowedParkings', $parkings_array);
+		//Session::flash('allowedParkings', $parkings_array);
 
 		session(['location' 	=> $location,
 				 'checkindate' 	=> $checkindate,

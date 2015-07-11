@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 // FORCE HTTP - NOT SECURE - NON CRITICAL ROUTES ONLY
 Route::group(['middleware' => 'unsecure'], function()
 {
@@ -26,7 +26,7 @@ Route::group(['middleware' => 'unsecure'], function()
 	Route::get('privacy', 'PagesController@privacy');
 	Route::get('affiliates', 'PagesController@affiliates');
 	Route::get('payment-methods', 'PagesController@payment_methods');
-	Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
+	//Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 });
 
 // FORCE HTTPS

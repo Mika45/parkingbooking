@@ -18,7 +18,7 @@ class SetApplicationLanguage {
   public function handle($request, Closure $next)
   {
     Session::keep(['allowedParkings']); // added because of the session expiration when changing the language
-    
+
     if (Session::has('applocale') AND array_key_exists(Session::get('applocale'), Config::get('app.locales'))) {
         App::setLocale(Session::get('applocale'));
     }
