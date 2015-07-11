@@ -26,7 +26,6 @@ Route::group(['middleware' => 'unsecure'], function()
 	Route::get('privacy', 'PagesController@privacy');
 	Route::get('affiliates', 'PagesController@affiliates');
 	Route::get('payment-methods', 'PagesController@payment_methods');
-	//Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 });
 
 // FORCE HTTPS
