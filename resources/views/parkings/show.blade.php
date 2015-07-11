@@ -28,7 +28,7 @@
 		<a href="{{ action('ParkingsController@book', [$parking->parking_id]) }}" class="btn btn-primary">{{ $btn_caption }} {{Lang::get('site.search_results_book_btn')}}</a>
 	@endif
 
-	<h4>{{ Lang::get('site.park_reserve_notes') }}</h4>
+	<h4>{!! Lang::get('site.park_reserve_notes') !!}</h4>
 
 	<p>
 		{!! $translations['reserve_notes'] or $parking->reserve_notes !!}
@@ -41,7 +41,7 @@
 
 	<h4>{{ Lang::get('site.park_find_it') }}</h4>
 	<p>
-		{{{ $translations['find_it'] or $parking->find_it }}}
+		{!! $translations['find_it'] or $parking->find_it !!}
 	</p>
 
 	<p>
