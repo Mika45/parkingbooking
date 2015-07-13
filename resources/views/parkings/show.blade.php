@@ -45,7 +45,9 @@
 	</p>
 
 	<p>
-		
+		@foreach ($url as $value)
+			<img src='https://www.parkinglegend.com/{{ $value }}' />
+		@endforeach
 	</p>
 
 @stop

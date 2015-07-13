@@ -25,6 +25,8 @@ use App\Http\Requests\BookRequest;
 use App\Http\Requests\AddParkingRequest;
 use Input;
 use Carbon;
+use Validator;
+use Image;
 
 use Ivory\GoogleMap\Helper\MapHelper;
 
@@ -83,7 +85,18 @@ class ParkingsController extends Controller {
 		$map = build_map( $parking->lat, $parking->lng, $parking->parking_name ); //uses helpers.php
 		$mapHelper = new MapHelper();
 
-		return view('parkings.show', compact('parking', 'map', 'mapHelper', 'translations', 'pcur'));
+		$images = glob('img/parkings/'.$id.'/*.{jpg,png,gif}', GLOB_BRACE);
+		//dd($files);
+		foreach($images as $img) {
+			$url[] = Image::url($img,300,300,array('crop','grayscale'));
+			/*Image::make($img,array(
+			    'width' => 300,
+			    'height' => 300,
+			    'grayscale' => true
+			))->save('/img/parkings/.jpg');*/
+		}
+
+		return view('parkings.show', compact('parking', 'map', 'mapHelper', 'translations', 'pcur', 'url'));
 	}
 
 	public function book($id)
@@ -506,6 +519,25 @@ class ParkingsController extends Controller {
 	public function update($id, AddParkingRequest $request)
 	{
 		$input = $request->all();
+		//dd($input);
+
+		$files = $request->file('images');
+
+		//dd($files);
+		$files = Input::file('images');
+		$file_count = count($files);
+	    // start count how many uploaded
+	    $uploadcount = 0;
+	    foreach($files as $file) {
+			$rules = array('file' => 'required'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+			$validator = Validator::make(array('file'=> $file), $rules);
+			if($validator->passes()){
+				$destinationPath = 'img/parkings/'.$id.'/';
+				$filename = $file->getClientOriginalName();
+				$upload_success = $file->move($destinationPath, $filename);
+				$uploadcount ++;
+			}
+	    }
 
 		$json = '{';
 		if ($request->input('non-working-hours-1') == '1'){

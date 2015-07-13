@@ -84,7 +84,8 @@
 				   									'R' => 'Right'], $configArray['CURRENCY_ORDER'], ['class' => 'form-control']) !!}
     		</div>
     		<div class="col-lg-4">
-				
+    			{!! Form::label('images', 'Images:') !!}
+				{!! Form::file('images[]', array('multiple'=>true)) !!}
     		</div>
     		<div class="col-lg-4">
 				

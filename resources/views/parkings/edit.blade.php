@@ -17,7 +17,7 @@
 			</div>
 		@endif
 	
-		{!! Form::model($parking, ['method' => 'PATCH', 'action' => ['ParkingsController@update', $parking->parking_id], 'id' => 'search']) !!}
+		{!! Form::model($parking, ['method' => 'PATCH', 'action' => ['ParkingsController@update', $parking->parking_id], 'id' => 'search', 'files' => true]) !!}
 			@include('forms.parking')
 		{!! Form::close() !!}
 	</div>
