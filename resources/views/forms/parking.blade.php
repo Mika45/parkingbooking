@@ -1,3 +1,13 @@
+<?php 
+	if (!array_key_exists('CANCEL_THRESHOLD', $configArray))
+		$configArray['CANCEL_THRESHOLD'] = null;
+
+	if (!array_key_exists('CURRENCY', $configArray))
+		$configArray['CURRENCY'] = null;
+
+	if (!array_key_exists('CURRENCY_ORDER', $configArray))
+		$configArray['CURRENCY_ORDER'] = null;
+?>
 <div class="form-group">
 	<fieldset>
 		<div class="form-group">
