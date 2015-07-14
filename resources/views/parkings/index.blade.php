@@ -25,7 +25,7 @@
 	  	@foreach ($parkings as $parking)
 			<tr>
 				<td></td>
-				<td><small>{{ $parking->parking_name }}</small></td>
+				<td><small><a href="/parking/{{ $parking->parking_id }}" target="_blank" title="View parking page">{{ $parking->parking_name }}</a></small></td>
 				<td><small>{{ $parking->status }}</small></td>
 				<td><small>{{ $parking->slots }}</small></td>
 				<td><small>{{ $parking->rate_type }}</small></td>

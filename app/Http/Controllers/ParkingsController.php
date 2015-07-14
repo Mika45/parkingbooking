@@ -27,6 +27,7 @@ use Input;
 use Carbon;
 use Validator;
 use Image;
+use Imagine;
 
 use Ivory\GoogleMap\Helper\MapHelper;
 
@@ -85,10 +86,11 @@ class ParkingsController extends Controller {
 		$map = build_map( $parking->lat, $parking->lng, $parking->parking_name ); //uses helpers.php
 		$mapHelper = new MapHelper();
 
-		$images = glob('img/parkings/'.$id.'/*.{jpg,png,gif}', GLOB_BRACE);
-		//dd($files);
+		$images = glob('img/parkings/'.$id.'/thumb/*.{jpg,png,gif}', GLOB_BRACE);
+		$url = null;
+
 		foreach($images as $img) {
-			$url[] = Image::url($img,300,300,array('crop','grayscale'));
+			$url[] = basename($img);
 			/*Image::make($img,array(
 			    'width' => 300,
 			    'height' => 300,
@@ -529,12 +531,30 @@ class ParkingsController extends Controller {
 	    // start count how many uploaded
 	    $uploadcount = 0;
 	    foreach($files as $file) {
+	    	//dd($file);
 			$rules = array('file' => 'required'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
 			$validator = Validator::make(array('file'=> $file), $rules);
 			if($validator->passes()){
+
 				$destinationPath = 'img/parkings/'.$id.'/';
 				$filename = $file->getClientOriginalName();
+				
 				$upload_success = $file->move($destinationPath, $filename);
+
+				//
+				//$thumbnail = Image::open($destinationPath.$filename)->thumbnail(new Imagine\Image\Box(300,300));
+				$thumbnail = Image::make($destinationPath.$filename, array(
+				    'width' => 75,
+				    'height' => 75,
+				    'crop' => true
+				));
+
+				if (!File::exists($destinationPath.'thumb')) {
+					$directory = File::makeDirectory($destinationPath.'thumb');
+				}
+
+				$thumbnail->save($destinationPath.'thumb/'.$filename);
+
 				$uploadcount ++;
 			}
 	    }
