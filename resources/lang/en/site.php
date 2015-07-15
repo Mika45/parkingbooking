@@ -132,6 +132,7 @@ return [
 	'park_reserve_notes' => 'Reservation notes',
 	'park_description' => 'Description',
 	'park_find_it'  => 'How to find it',
+	'park_gallery'  => 'Car Park Photos',
 
 	/*
 	|--------------------------------------------------------------------------

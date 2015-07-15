@@ -53,13 +53,14 @@
 	{!!$mapHelper->renderJavascripts($map)!!}
 
 	@if(!is_null($url))
+	<h5><b>{{ Lang::get('site.park_gallery') }}</b></h5>
 	<p>
 		<?php $i=1; ?>
 		<div class="gallery">
 		@foreach ($url as $value)
 			{{-- <img src='https://www.parkinglegend.com/img/parkings/{{$parking->parking_id}}/thumb/{{ $value }}' /> --}}
 
-			<a class="test-popup-link{{$i}}" href="path-to-image.jpg">
+			<a class="test-popup-link{{$i}}" href="#">
 				<img src='https://www.parkinglegend.com/img/parkings/{{$parking->parking_id}}/thumb/{{ $value }}' />
 			</a>
 
