@@ -326,7 +326,7 @@ class ParkingsController extends Controller {
 
 		$hours = get_dropdown_hours(); //helpers.php
 
-		$configArray = NULL;
+		$configArray[] = NULL;
 
 		return view('parkings.create', compact('p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
 												'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
