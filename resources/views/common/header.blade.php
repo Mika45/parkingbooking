@@ -2,14 +2,16 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		{!! HTML::script('js/jquery-1.11.2.min.js') !!}
+
+		{!! HTML::script('js/jquery-migrate-1.2.1.min.js') !!}
 		{!! HTML::script('js/moment.js') !!}
 		{!! HTML::style('css/bootswatch.min.css') !!}
 		<!-- Latest compiled and minified JavaScript -->
 		{!! HTML::script('js/bootstrap.js') !!}
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		
 		<!-- Optional theme -->
 		<!--{!! HTML::style('css/bootstrap-theme.css') !!}-->
 		{!! HTML::style('css/bootstrap-theme2.css') !!}
