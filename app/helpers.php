@@ -134,7 +134,7 @@ function build_results_map( $in_lat, $in_lng, $in_data)
 		$marker->setOptions(array(
 		    'clickable' => true,
 		    'flat'      => true,
-		    'title'		=> $parking->price
+		    'title'		=> (string)$parking->price
 		));
 
 		$infoWindow = new InfoWindow();
