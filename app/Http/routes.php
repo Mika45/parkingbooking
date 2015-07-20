@@ -31,8 +31,6 @@ Route::group(['middleware' => 'unsecure'], function()
 // FORCE HTTPS
 Route::group(['middleware' => 'secure'], function()
 {
-	
-
 	Route::post('payment', 'ParkingsController@payment');
 	
 	Route::get('settings', ['middleware' => 'auth', 'uses' => 'UsersController@index']);

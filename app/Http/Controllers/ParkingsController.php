@@ -244,6 +244,15 @@ class ParkingsController extends Controller {
 		    $message->to($booking[0]->email)->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
 		});
+
+		// send the email to a second address as well (needs a wrapper function rather than copying the same code)
+		// Need to save the generated PDF to a temp directory and then include its path as the attachment
+		
+		Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
+		{
+		    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
+			$message->attach('tmp/'.$temp_pdf_name);
+		});
 		
 		// Delete the generated pdf after the send
 		File::delete('tmp/'.$temp_pdf_name);

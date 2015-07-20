@@ -1,21 +1,21 @@
-@extends('layout')
+@extends('layout57')
 
-@section('sidebar')
+@section('content-left')
 
-	<div class="well well-sm">
+	<div class="well well-yellow">
 		<legend>
 			<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
           	<span class="glyphicon-class">{{Lang::get('site.search_heading')}}</span>
 		</legend>
 		<!--{!! Form::open(['url' => '/results', 'id' => 'search']) !!}-->
-		{!! Form::open(['action' => 'PagesController@search', 'id' => 'search']) !!}
-			@include('forms.search_narrow')
+		{!! Form::open(['action' => 'PagesController@search', 'id' => 'search', 'class' => 'form-horizontal']) !!}
+			@include('forms.search')
 		{!! Form::close() !!}
 	</div>
 
 @stop
 
-@section('content')
+@section('content-right')
 
 	<h1>{{Lang::get('site.back_book_heading')}}</h1>
 	
