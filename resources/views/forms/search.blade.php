@@ -4,7 +4,7 @@
 		<!-- {!! Form::text('location', Input::old('location'), ['class' => 'form-control']) !!} -->
 		<div class="col-lg-12">
 			{!! Form::label('location', Lang::get('site.location')) !!}
-			{!! Form::select('location', $locationsList, null, ['id' => 'location_list', 'class' => 'form-control']) !!}
+			{!! Form::select('location', $locationsList, 14, ['id' => 'location_list', 'class' => 'form-control']) !!}
 		</div>
 
 	</div>
