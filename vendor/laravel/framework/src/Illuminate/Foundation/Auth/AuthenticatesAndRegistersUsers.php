@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
+use App\Field;
 
 trait AuthenticatesAndRegistersUsers {
 
@@ -27,7 +28,26 @@ trait AuthenticatesAndRegistersUsers {
 	 */
 	public function getRegister()
 	{
-		return view('auth.register');
+
+		// get the traslations of the current locale
+		$translations = get_parking_translation( 'NULL' );
+		//dd($translations);
+		$title_attributes = NULL;
+		foreach ($translations as $key2 => $value2) {
+			if ($key2 == 'title'){
+				$title_attributes = $value2['attributes'];
+				$translations['title'] = $value2['value'];
+			}
+		}
+
+		if (empty($title_attributes)){
+			$field = Field::where('field_name', '=', 'title')->first();
+			$titles = json_decode($field->attributes, true);
+		}
+		else
+			$titles = json_decode($title_attributes, true);
+
+		return view('auth.register', compact('titles'));
 	}
 
 	/**
