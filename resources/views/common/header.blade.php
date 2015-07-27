@@ -26,7 +26,8 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		{!! HTML::style('css/bootstrap-social.css') !!}
 		
-		
+		{!! HTML::style('css/magnific-popup.css') !!}
+		{!! HTML::script('js/jquery.magnific-popup.js') !!}
 
 		<style>
 			.bs-glyphicons-list{padding-left:0;list-style:none}
