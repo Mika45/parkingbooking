@@ -1,6 +1,7 @@
 <?php namespace App\Http\Middleware;
 
 use Closure;
+use Session;
 
 class RedirectUnsecure {
 
@@ -13,6 +14,7 @@ class RedirectUnsecure {
 	 */
 	public function handle($request, Closure $next)
 	{
+		Session::reflash();
 		//dd( url($request->_url, $parameters = [], $secure = false) );
 
 		$request->_url = url($request->_url, $parameters = [], $secure = false);
