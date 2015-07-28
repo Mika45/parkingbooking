@@ -42,7 +42,7 @@
 		{!! Form::submit(Lang::get('site.search'), ['class' => 'btn btn-info form-control', 'name' => 'search']) !!}
 	</div>
 	<div class="col-lg-6">
-		@if (session()->has('amend') && session()->get('amend') == 'Y')
+		@if (session()->has('amend') && session()->get('amend') == 'Y' && 1==2)
 			{{-- {!! HTML::linkAction('UsersController@postAmendConfirmBooking', 'Amend', array($booking->booking_id), array('class' => 'btn btn-danger form-control', 'name' => 'amend')) !!} --}}
 			{!! Form::submit('Amend', ['class' => 'btn btn-danger form-control', 'name' => 'amend']) !!}
 		@endif
