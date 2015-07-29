@@ -250,7 +250,7 @@ class ParkingsController extends Controller {
 		
 		Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
 		{
-		    //$message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
+		    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
 		});
 		

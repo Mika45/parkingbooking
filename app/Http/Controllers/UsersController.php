@@ -239,7 +239,9 @@ class UsersController extends Controller {
 		//dd($checkindate);
 
 		// Update the availability - Increase
-		DB::statement('CALL UpdateAvailability('.$parking->parking_id.', "'.$checkindate.'", "'.$checkoutdate.'", "I")');
+		$query = 'CALL UpdateAvailability('.$parking->parking_id.', "'.$checkindate.'", "'.$checkoutdate.'", "I")';
+		//dd($query);
+		DB::statement($query);
 		
 		//return view('users.mybookings', compact('locationsList', 'booking', 'location'));
 		return redirect('mybookings')->with('message', Lang::get('site.info_cancel_ok'));
