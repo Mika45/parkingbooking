@@ -250,7 +250,7 @@ class ParkingsController extends Controller {
 		
 		Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
 		{
-		    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
+		    //$message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
 		});
 		
@@ -629,6 +629,10 @@ class ParkingsController extends Controller {
 				$config->save();
 			}
 
+		}
+
+		foreach ($input['fields'] as $field){
+			$p_field = ParkingField::firstOrCreate(['parking_id' => $parking->parking_id, 'field_id' => $field, 'required' => 'Y']);
 		}
 
 		$tagIds = $request->input('tags');

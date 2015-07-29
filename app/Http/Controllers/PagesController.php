@@ -223,7 +223,7 @@ class PagesController extends Controller {
 		$checkout = date('d/m/Y', strtotime($in_to_date)).' '.date('H:i', strtotime($in_to_time));
 
 		$lang = Session::get('applocale');
-		$query = 'CALL GetAvailability_test('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", "'.$lang.'")';
+		$query = 'CALL GetAvailability('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", "'.$lang.'")';
 
 		//dd($query);
 		$data = DB::select($query);
