@@ -205,7 +205,7 @@ class ParkingsController extends Controller {
 		$booking->car_make = $input['items']['carmake'];
 		$booking->car_model = $input['items']['carmodel'];
 		$booking->car_reg = $input['items']['carreg'];
-		if( array_key_exists('carcolour', $input) )
+		if( array_key_exists('carcolour', $input['items']) )
 			$booking->car_colour = $input['items']['carcolour'];
 		if( array_key_exists('passengers', $input) )
 			$booking->passengers = $input['passengers'];
