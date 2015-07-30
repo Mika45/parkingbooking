@@ -16,7 +16,9 @@
 			<p>{{Lang::get('emails.common_ref')}}: <strong>{{$bk->booking_ref}}</strong></p>
 			<p>{{$bk->checkin}} - {{$bk->checkout}}</p>
 			<p>{{Lang::get('emails.common_park')}}: {{$bk->parking_name}}, {{$bk->address}}</p>
-			<p>{{Lang::get('emails.common_name')}}: {{$bk->firstname}} {{$bk->lastname}}</p>
+			<p>{{Lang::get('emails.common_name')}}: {{$bk->title}} {{$bk->firstname}} {{$bk->lastname}}</p>
+			<p>{{Lang::get('emails.common_mob')}}: {{$bk->mobile}}</p>
+			<p>{{Lang::get('emails.common_email')}}: {{$bk->email}}</p>
 			<p>{{Lang::get('emails.common_reg')}}: {{$bk->car_reg}}</p>
 			
 			<h4>{{Lang::get('emails.voucher_notes')}}</h4>

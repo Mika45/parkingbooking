@@ -21,6 +21,8 @@ return [
 	'common_reg'     => 'Registration number',
 	'common_park'    => 'Parking',
 	'common_add'     => 'Address',
+	'common_mob'     => 'Mobile',
+	'common_email'   => 'E-mail',
 
 	/*
 	|--------------------------------------------------------------------------
