@@ -74,6 +74,10 @@
     	</div>
     	<br/><br/><br/>
     	<div class="form-group">
+    		<div class="col-lg-4">
+    			{!! Form::label('email', 'E-mail:') !!}
+				{!! Form::text('email', null, ['class' => 'form-control']) !!}
+    		</div>
 			<div class="col-lg-2">
 				{!! Form::label('currency', 'Currency:') !!}
 				{!! Form::text('currency', $configArray['CURRENCY'], ['class' => 'form-control']) !!}
@@ -86,9 +90,6 @@
     		<div class="col-lg-4">
     			{!! Form::label('images', 'Images:') !!}
 				{!! Form::file('images[]', array('multiple'=>true)) !!}
-    		</div>
-    		<div class="col-lg-4">
-				
     		</div>
     	</div>
     	<br/><br/><br/>
