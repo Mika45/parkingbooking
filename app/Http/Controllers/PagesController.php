@@ -74,90 +74,9 @@ class PagesController extends Controller {
 		return redirect('results/'.$input['location'].'/'.$checkindate.'/'.$checkintime.'/'.$checkoutdate.'/'.$checkouttime);
 	}
 
-	/*public function search(SearchRequest $request)
-	{
-		
-		$input = $request->all();
-
-		$checkindate = date('Y-d-m', strtotime($input['checkin']));
-		$checkintime = date('H:i:s', strtotime($input['checkin']));
-		$checkoutdate = date('Y-d-m', strtotime($input['checkout']));
-		$checkouttime = date('H:i:s', strtotime($input['checkout']));
-
-		$checkin = $input['checkin'];
-		$checkout = $input['checkout'];
-
-		$lang = Session::get('applocale');
-
-		$data = DB::select('CALL GetAvailability('.$input['location'].', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", "'.$lang.'")');
-		$locationsList = DB::table('LOCATION')->orderBy('name', 'asc')->lists('name','location_id');
-
-		$parkings_array = array();
-
-		foreach ($data as $key => $pid){
-			$keys[] = $pid->parking_id;
-			$values[] = $pid->price;
-			$parkings_array = array_combine($keys, $values);
-			
-			$sysdate = Carbon\Carbon::now($pid->timezone); // current date and time of the Parking
-
-			$hourdiff = round((strtotime($checkindate.' '.$checkintime) - strtotime($sysdate))/3600, 1);
-
-			if ($pid->early_booking > $hourdiff)
-				$data[$key]->late_booking = 'Y';
-			else
-				$data[$key]->late_booking = 'N';
-
-
-			$parking = Parking::Find($pid->parking_id);
-			$data[$key]->tags = $parking->tags()->lists('name', 'icon_filename');
-			//dd($data);
-		}
-
-		//dd($data);
-
-		$count = count($parkings_array);
-		if (is_null($count))
-			$count = 0;
-
-		Session::put('allowedParkings', $parkings_array);
-		//Session::flash('allowedParkings', $parkings_array);
-
-		session(['location' 	=> $input['location'],
-				 'checkindate' 	=> $checkindate,
-				 'checkintime' 	=> $checkintime,
-				 'checkoutdate' => $checkoutdate,
-				 'checkouttime' => $checkouttime,
-				 'checkin'		=> $input['checkin'],
-				 'checkout'		=> $input['checkout']]);
-
-		$lang = Session::get('applocale');
-		$location = DB::select('CALL GetLocations("one", '.$input['location'].', "'.$lang.'")');
-
-		$map = build_results_map( $location[0]->lat, $location[0]->lng, $data ); //uses helpers.php
-		$mapHelper = new MapHelper();
-
-		return view('results', compact('data', 'locationsList', 'location', 'count', 'map', 'mapHelper', 'checkin', 'checkout'));
-	}*/
-
+	// Not currently in use (could be used if the results page would contain the search form)
 	public function getsearch(SearchCombinedRequest $request)
 	{
-		
-		/*$input = $request->all();
-		dd($input);
-
-		$checkindate = str_replace("/",".", $input['checkindate']);
-		//$checkintime = str_replace("/",".", $input['checkindate']);
-		$checkoutdate = str_replace("/",".", $input['checkoutdate']);
-		//$checkouttime = date('His', strtotime($input['checkouttime']));
-
-		$checkindate = date('Ymd', strtotime($checkindate));
-		$checkintime = date('His', strtotime($input['checkintime']));
-		$checkoutdate = date('Ymd', strtotime($checkoutdate));
-		$checkouttime = date('His', strtotime($input['checkouttime']));
-
-		return redirect('results/'.$input['location'].'/'.$checkindate.'/'.$checkintime.'/'.$checkoutdate.'/'.$checkouttime);
-		*/
 		
 		$location = Session::get('location');
 		$checkindate = Session::get('checkindate');
@@ -169,7 +88,7 @@ class PagesController extends Controller {
 		$checkout = Session::get('checkout');
 
 		$lang = Session::get('applocale');
-		$data = DB::select('CALL GetAvailability('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", "'.$lang.'")');
+		$data = DB::select('CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", "'.$lang.'")');
 		$locationsList = DB::table('LOCATION')->orderBy('name', 'asc')->lists('name','location_id');
 
 		$parkings_array = array();
@@ -194,10 +113,6 @@ class PagesController extends Controller {
 		$count = count($parkings_array);
 		if (is_null($count))
 			$count = 0;
-
-		//$location = Location::findOrFail($location);
-		//$location_name = $location->name;
-		//$location_cur = $location->currency;
 
 		$lang = Session::get('applocale');
 		$location = DB::select('CALL GetLocations("one", '.$location.', "'.$lang.'")');
@@ -212,7 +127,6 @@ class PagesController extends Controller {
 	public function geturlsearch($in_location_id, $in_from_date, $in_from_time, $in_to_date, $in_to_time)
 	{
 		$location = $in_location_id;
-		//dd($location);
 
 		$checkindate = date('Y-m-d', strtotime($in_from_date));
 		$checkintime = date('H:i:s', strtotime($in_from_time));
@@ -223,9 +137,8 @@ class PagesController extends Controller {
 		$checkout = date('d/m/Y', strtotime($in_to_date)).' '.date('H:i', strtotime($in_to_time));
 
 		$lang = Session::get('applocale');
-		$query = 'CALL GetAvailability('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", "'.$lang.'")';
+		$query = 'CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", "'.$lang.'")';
 
-		//dd($query);
 		$data = DB::select($query);
 		$locationsList = DB::table('LOCATION')->orderBy('name', 'asc')->lists('name','location_id');
 
@@ -251,24 +164,21 @@ class PagesController extends Controller {
 			$parking = Parking::Find($pid->parking_id);
 
 			$data[$key]->tags = $parking->tags()->lists('name', 'icon_filename');
-			//$data[$key]->tags = $parking->tags()->get()->toArray();
 
 			$tag_trans = get_tag_translations( $pid->parking_id );
 			
 			foreach ($tag_trans as $value2) {
 				$trans_merge[$value2->icon_filename] = $value2->name;
 			}
-			//dd($trans_merge);
+
 			$data[$key]->tags = $trans_merge + $data[$key]->tags;
 		}
-		//dd($data);
 		
 		$count = count($parkings_array);
 		if (is_null($count))
 			$count = 0;
 
 		Session::put('allowedParkings', $parkings_array);
-		//Session::flash('allowedParkings', $parkings_array);
 
 		session(['location' 	=> $location,
 				 'checkindate' 	=> $checkindate,

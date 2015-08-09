@@ -174,7 +174,7 @@ class ParkingsController extends Controller {
 
 		// Final check of Availability
 		$lang = Session::get('applocale');
-		$avail_parks = DB::select('CALL GetAvailability('.$data['location'].', "'.$data['checkindate'].'", "'.$data['checkintime'].'", "'.$data['checkoutdate'].'", "'.$data['checkouttime'].'", "'.$lang.'")');
+		$avail_parks = DB::select('CALL GetResults('.$data['location'].', "'.$data['checkindate'].'", "'.$data['checkintime'].'", "'.$data['checkoutdate'].'", "'.$data['checkouttime'].'", "'.$lang.'")');
 
 		foreach ($avail_parks as $pid){
 			$pids[] = $pid->parking_id;
@@ -224,7 +224,8 @@ class ParkingsController extends Controller {
 		$booking->save();
 
 		// Update the availability - Decrease
-		DB::statement('CALL UpdateAvailability('.$selectedId.', "'.$data['checkindate'].'", "'.$data['checkoutdate'].'", "D")');
+		// Disabled at the moment - querying the booking table for availability
+		//DB::statement('CALL UpdateAvailability('.$selectedId.', "'.$data['checkindate'].'", "'.$data['checkoutdate'].'", "D")');
 
 		$bid = $booking->booking_id;
 		$temp_pdf_name = 'Booking Voucher '.$bid.'.pdf';
@@ -443,7 +444,7 @@ class ParkingsController extends Controller {
 
 
 		$sysdate = Carbon\Carbon::now();
-		$avail = create_availability( $parking->parking_id, $sysdate->format('Y-m-d'), '2017-12-31' );
+		//$avail = create_availability( $parking->parking_id, $sysdate->format('Y-m-d'), '2017-12-31' );
 
 		return redirect('parking');
 	}

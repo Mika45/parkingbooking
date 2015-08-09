@@ -225,13 +225,6 @@ class UsersController extends Controller {
 		$booking->status = 'C';
 		$booking->save();
 
-		/*UPDATE AVAILABILITY 
-		   SET remaining_slots = remaining_slots - 1
-		 WHERE parking_id = in_parking_id
-		   AND date BETWEEN in_date_from AND in_date_to
-		   AND remaining_slots > 0 
-		   AND status = 'A';*/
-
 		$data = Session::all();
 
 		$checkindate = date('Y-m-d', strtotime($booking->checkin));
@@ -239,9 +232,10 @@ class UsersController extends Controller {
 		//dd($checkindate);
 
 		// Update the availability - Increase
-		$query = 'CALL UpdateAvailability('.$parking->parking_id.', "'.$checkindate.'", "'.$checkoutdate.'", "I")';
+		// Disabled at the moment - querying the booking table to get availability
+		//$query = 'CALL UpdateAvailability('.$parking->parking_id.', "'.$checkindate.'", "'.$checkoutdate.'", "I")';
 		//dd($query);
-		DB::statement($query);
+		//DB::statement($query);
 		
 		//return view('users.mybookings', compact('locationsList', 'booking', 'location'));
 		return redirect('mybookings')->with('message', Lang::get('site.info_cancel_ok'));
