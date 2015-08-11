@@ -21,6 +21,7 @@ use Carbon;
 use Request;
 use Input;
 use Lang;
+use Mail;
 /********************/
 
 /*
@@ -225,19 +226,20 @@ class UsersController extends Controller {
 		$booking->status = 'C';
 		$booking->save();
 
+		$booking = DB::select('CALL GetBooking('.$booking->booking_id.')');
+		if (!empty($parking->email)) 
+		{
+			Mail::send('emails.cancellation', compact('booking', 'parking'), function($message) use($booking, $parking)
+			{
+			    $message->to($parking->email)->subject(Lang::get('emails.cancel_subject'));
+			});
+		}
+
 		$data = Session::all();
 
 		$checkindate = date('Y-m-d', strtotime($booking->checkin));
 		$checkoutdate = date('Y-m-d', strtotime($booking->checkout));
-		//dd($checkindate);
-
-		// Update the availability - Increase
-		// Disabled at the moment - querying the booking table to get availability
-		//$query = 'CALL UpdateAvailability('.$parking->parking_id.', "'.$checkindate.'", "'.$checkoutdate.'", "I")';
-		//dd($query);
-		//DB::statement($query);
 		
-		//return view('users.mybookings', compact('locationsList', 'booking', 'location'));
 		return redirect('mybookings')->with('message', Lang::get('site.info_cancel_ok'));
 	}
 

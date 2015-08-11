@@ -51,5 +51,9 @@ return [
 	'voucher_notes'   => 'Σημειώσεις κράτησης',
 	'voucher_desc'    => 'Περιγραφή',
 	'voucher_find'    => 'Πως να το βρείτε',
+	'voucher_price'   => 'Price',
+
+	'cancel_subject' => 'Ακύρωση Κράτησης',
+	'cancel_message' => 'Ο χρήστης έχει πραγματοποιήσει ακύρωση της κράτησής του.',
 
 ];
