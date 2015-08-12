@@ -22,13 +22,13 @@
 			<p>{{Lang::get('emails.common_reg')}}: {{$bk->car_reg}}</p>
 			
 			<h4>{{Lang::get('emails.voucher_notes')}}</h4>
-			<p>{!!$bk->reserve_notes!!}</p>
+			<p>{!! $translations['reserve_notes'] or $bk->reserve_notes !!}</p>
 
 			{{-- <h4>{{Lang::get('emails.voucher_desc')}}</h4>
 			<p>{!!$bk->description!!}</p> --}}
 
 			<h4>{{Lang::get('emails.voucher_find')}}</h4>
-			<p>{!!$bk->find_it!!}</p>
+			<p>{!! $translations['find_it'] or $bk->find_it !!}</p>
 		@endforeach
 
 	</body>

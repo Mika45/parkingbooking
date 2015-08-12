@@ -231,10 +231,12 @@ class ParkingsController extends Controller {
 		$temp_pdf_name = 'Booking Voucher '.$bid.'.pdf';
 
 		$booking = DB::select('CALL GetBooking('.$booking->booking_id.')');
-		$pdf = App::make('dompdf');
-
-		$pdf->loadView('emails.voucher', compact('booking'));
 		
+		// get the traslations of the current locale
+		$translations = get_parking_translation( $booking[0]->parking_id );
+
+		$pdf = App::make('dompdf');
+		$pdf->loadView('emails.voucher', compact('booking', 'translations'));
 		$pdf->save('tmp/'.$temp_pdf_name);
 
 		// send the email to the booking user, to the admin and to the Park's e-mail if it exists

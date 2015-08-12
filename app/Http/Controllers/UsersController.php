@@ -71,12 +71,14 @@ class UsersController extends Controller {
 
 	public function generatePDF($id)
 	{
-
 		$booking = DB::select('CALL GetBooking('.$id.')');
+
+		// get the traslations of the current locale
+		$translations = get_parking_translation( $booking[0]->parking_id );
 
 		$pdf = App::make('dompdf');
 
-		$pdf->loadView('emails.voucher', compact('booking'));
+		$pdf->loadView('emails.voucher', compact('booking', 'translations'));
 		
 		return $pdf->stream();
 	}
