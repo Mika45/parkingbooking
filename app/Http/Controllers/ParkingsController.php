@@ -236,29 +236,30 @@ class ParkingsController extends Controller {
 		$pdf->loadView('emails.voucher', compact('booking'));
 		
 		$pdf->save('tmp/'.$temp_pdf_name);
-		
-		// send the email
+
+		// send the email to the booking user, to the admin and to the Park's e-mail if it exists
 		// Need to save the generated PDF to a temp directory and then include its path as the attachment
 		
+		// Get the parking model to grab the email address of the parking
+		$parking = Parking::where('parking_id', '=', $booking[0]->parking_id)->first();
+
+		if(!empty($parking->email)) {
+			Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking, $parking)
+			{
+			    $message->to($parking->email)->subject(Lang::get('emails.voucher_subject'));
+				$message->attach('tmp/'.$temp_pdf_name);
+			});
+		}
+
 		Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
 		{
 		    $message->to($booking[0]->email)->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
 		});
 
-		// send the email to a second address as well (needs a wrapper function rather than copying the same code)
-		// Need to save the generated PDF to a temp directory and then include its path as the attachment
-		
-		// Get the parking model to grab the email address of the parking
-		$parking = Parking::where('parking_id', '=', $booking[0]->parking_id)->first();
-		// Multiple recipients
-		$recipients[] = [$booking[0]->email, 'jimkavouris4@gmail.com'];
-		if(!empty($parking->email)) // send it to the Parking's e-mail address also
-			$recipients[] = $parking->email;
-
 		Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
 		{
-		    $message->to($recipients)->subject(Lang::get('emails.voucher_subject'));
+		    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
 		});
 		

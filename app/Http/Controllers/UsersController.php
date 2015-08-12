@@ -236,9 +236,6 @@ class UsersController extends Controller {
 		}
 
 		$data = Session::all();
-
-		$checkindate = date('Y-m-d', strtotime($booking->checkin));
-		$checkoutdate = date('Y-m-d', strtotime($booking->checkout));
 		
 		return redirect('mybookings')->with('message', Lang::get('site.info_cancel_ok'));
 	}
