@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
+        {{-- <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">{{ Lang::get('content.faq_4_title') }}</a>
@@ -56,7 +56,7 @@
                     <p>{!! Lang::get('content.faq_4_content') !!}</p>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
