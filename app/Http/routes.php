@@ -11,6 +11,7 @@
 |
 */
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
+Route::get('sitemap', 'PagesController@sitemap');
 // FORCE HTTP - NOT SECURE - NON CRITICAL ROUTES ONLY
 Route::group(['middleware' => 'unsecure'], function()
 {

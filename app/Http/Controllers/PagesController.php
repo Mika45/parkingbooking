@@ -357,4 +357,23 @@ class PagesController extends Controller {
 		
 	}
 
+	public function sitemap()
+	{
+		// create new sitemap object
+	    $sitemap = App::make("sitemap");
+
+	    // add items to the sitemap (url, date, priority, freq)
+	    $sitemap->add(url(), '2015-08-13T20:10:00+02:00', '1.0', 'daily');
+	    $sitemap->add(url('faq'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
+	    $sitemap->add(url('contact'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
+	    $sitemap->add(url('about'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
+	    $sitemap->add(url('affiliates'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
+	    $sitemap->add(url('tscs'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
+	    $sitemap->add(url('privacy'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
+	    $sitemap->add(url('payment-methods'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
+
+	    // generate your sitemap (format, filename)
+	    $sitemap->store('xml', 'sitemap');
+	}
+
 }
