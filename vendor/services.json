@@ -29,7 +29,8 @@
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
         "Barryvdh\\DomPDF\\ServiceProvider",
-        "Folklore\\Image\\ImageServiceProvider"
+        "Folklore\\Image\\ImageServiceProvider",
+        "Roumen\\Sitemap\\SitemapServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -129,7 +130,8 @@
         "translation.loader": "Illuminate\\Translation\\TranslationServiceProvider",
         "html": "Illuminate\\Html\\HtmlServiceProvider",
         "form": "Illuminate\\Html\\HtmlServiceProvider",
-        "dompdf": "Barryvdh\\DomPDF\\ServiceProvider"
+        "dompdf": "Barryvdh\\DomPDF\\ServiceProvider",
+        "sitemap": "Roumen\\Sitemap\\SitemapServiceProvider"
     },
     "when": {
         "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider": [],
@@ -144,6 +146,7 @@
         "Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider": [],
         "Illuminate\\Translation\\TranslationServiceProvider": [],
         "Illuminate\\Html\\HtmlServiceProvider": [],
-        "Barryvdh\\DomPDF\\ServiceProvider": []
+        "Barryvdh\\DomPDF\\ServiceProvider": [],
+        "Roumen\\Sitemap\\SitemapServiceProvider": []
     }
 }

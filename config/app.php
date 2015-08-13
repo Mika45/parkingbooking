@@ -154,6 +154,7 @@ return [
 
 		'Barryvdh\DomPDF\ServiceProvider',
 		'Folklore\Image\ImageServiceProvider',
+		'Roumen\Sitemap\SitemapServiceProvider',
 
 	],
 
