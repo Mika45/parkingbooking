@@ -21,7 +21,7 @@ return [
 	'home_slogan_3'	=> 'Secure Parking',
 	'home_slogan_4'	=> 'Secure Payment Online',
 
-	'faq_heading'		=> 'FAQ',
+	'faq_heading'		=> 'Frequently Asked Questions',
 
 	'faq_1_title'		=> '1. How can I make my booking online?',
 	'faq_1_content' 	=> 'You can place your booking on ParkingLegend.com very easily through the three following steps:
@@ -29,7 +29,7 @@ return [
 						   <ul>
 						   	<li>On the home page, select the Location, the Drop-Off Date and Time as well as the Pick-Up Date and Time you want and then click on the blue button "Search"</li>
 						   	<li>On the next step you will see all the available car parks according to your previous selection. You may see the car park’s name, address, its general characteristics, its place on the map and its price for the selected duration. If you would like to view more information about a specific car park, click on the car park’s name. When you decide on the car park you wish to make your booking with, click on "Book Now".</li>
-						   	<li>At the last step, fill in your details to complete your booking. You can also choose the method of payment. Please note that you must accept the "Terms and Conditions" to complete your booking. When you have filled in all your details and you have accepted accept the "Terms and Conditions", click on "Complete Booking".</li>
+						   	<li>At the last step, fill in your details to complete your booking. You can also choose the method of payment. Please note that you must accept the "Terms and Conditions" to complete your booking. When you have filled in all your details and you have accepted the "Terms and Conditions", click on "Complete Booking".</li>
 						   </ul>',
 	'faq_2_title'		=> '2. What times should I choose for vehicle drop-off and pick up?',
 	'faq_2_content' 	=> 'The times that you choose online are approximate and you should take into account the time that will take you to arrive at the airport, port, train station or city centre. 
@@ -46,47 +46,47 @@ return [
 							Your parking reservation with ParkingLegend.com only covers the times shown in the booking confirmation. You will need to check ahead of time to avoid any unpleasant surprises.',
 	'faq_4_title'		=> '4. What happens in case I do not have all the required information with me when I make my booking online?',
 	'faq_4_content'		=> 'You do not need to worry about that. You can mention “To be confirmed” in the boxes with the missing information and you can update these information as soon as you have them at a latter stage (and of course before your arrival), through your online account.',
-	'faq_5_title'		=> '5. How can I amend my booking through my online account?',
+	/*'faq_5_title'		=> '5. How can I amend my booking through my online account?',
 	'faq_5_content'		=> 'As soon as you complete your booking online you will receive a username and password via e-mail to access your online account. From the home page of our site, just click on "My Booking" and insert your username and password. 
-							You will be able to log in to your account and extend your reservation or add/amend any other details.',
-	'faq_6_title'		=> '6. Am I allowed to make a parking reservation on behalf of a relative/friend or any other third party?',
-	'faq_6_content'		=> 'As soon as you make your parking reservation through ParkingLegend.com you will automatically receive the confirmation of your booking. You can forward this confirmation to a third party in order to facilitate him/her for any reason. 
+							You will be able to log in to your account and extend your reservation or add/amend any other details.',*/
+	'faq_5_title'		=> '5. Am I allowed to make a parking reservation on behalf of a relative/friend or any other third party?',
+	'faq_5_content'		=> 'As soon as you make your parking reservation through ParkingLegend.com you will automatically receive the confirmation of your booking. You can forward this confirmation to a third party in order to facilitate him/her for any reason. 
 							Please note that you will need to mention the driver’s name in the booking form. 
 							<br/><br/>
 							In case you write your name by mistake, you can always change it through your online account. Please note that while it’s ok to purchase a ticket on behalf of a third party, resale of booking confirmations that are sent through ParkingLegend.com is prohibited.',
-	'faq_7_title'		=> '7. What happens if a relative or friend collects my vehicle during the pick up date?',
-	'faq_7_content'		=> 'You can inform the car park about that, by mentioning on the “Special Requests” box in the booking form that the other person (driver’s name) will collect your vehicle during the pick up date. 
+	'faq_6_title'		=> '6. What happens if a relative or friend collects my vehicle during the pick up date?',
+	'faq_6_content'		=> 'You can inform the car park about that, by mentioning on the “Special Requests” box in the booking form that the other person (driver’s name) will collect your vehicle during the pick up date. 
 							Please note that the driver should bring along his/her ID/Passport and Driving License and present the relevant documents at the car park staff. 
 							Additionally, the third party should have a copy of the booking confirmation as well.',
-	'faq_8_title'		=> '8. What do I need to do in case I do not receive my booking confirmation?',
-	'faq_8_content'		=> 'Some internet service providers and personal e-mail accounts use spam filters that may be blocking incoming messages. Please check the folder with the spam messages, in case your confirmation by ParkingLegend.com has gone in this folder. 
+	'faq_7_title'		=> '7. What do I need to do in case I do not receive my booking confirmation?',
+	'faq_7_content'		=> 'Some internet service providers and personal e-mail accounts use spam filters that may be blocking incoming messages. Please check the folder with the spam messages, in case your confirmation by ParkingLegend.com has gone in this folder. 
 							Please add info@parkinglegend.com to your contact list, so that you can make sure our e-mails will be going straight to your inbox folder.
 							<br/><br/>
 							In case you have checked your spam folder and you still cannot find our e-mail, please contact us either by phone (0030) 218 21 89 914 or e-mail: customer@parkinglegend.com',
-	'faq_9_title'		=> '9. What if I cannot find the car park?',
-	'faq_9_content'		=> 'As soon as you complete your booking through ParkingLegend.com you will receive by e-mail all the appropriate information about the car park (address, contact details, GPS coordinates, and map) as well as instructions and directions. 
+	'faq_8_title'		=> '8. What if I cannot find the car park?',
+	'faq_8_content'		=> 'As soon as you complete your booking through ParkingLegend.com you will receive by e-mail all the appropriate information about the car park (address, contact details, GPS coordinates, and map) as well as instructions and directions. 
 							If you find any difficulty in finding the car park you should contact the car park directly on the telephone number/numbers displayed in your booking confirmation.',
-	'faq_10_title'		=> '10. Is it safe to make my payment online?',
-	'faq_10_content'	=> 'ParkingLegend.com has taken all necessary measures so that your payment is made securely online. 
+	'faq_9_title'		=> '9. Is it safe to make my payment online?',
+	'faq_9_content'	=> 'ParkingLegend.com has taken all necessary measures so that your payment is made securely online. 
 							Your credit/debit card details you provide will only be used to process your payment. 
 							These details will only be used for the specific transaction and they will not be stored on our system. 
 							Thus, such information will not be accessible after the completion of your booking.',
-	'faq_11_title'		=> '11. Is there any additional cost for the services I receive?',
-	'faq_11_content'	=> 'The price that you see when you check the availability online is the total price for the car park for the dates and times given. 
+	'faq_10_title'		=> '10. Is there any additional cost for the services I receive?',
+	'faq_10_content'	=> 'The price that you see when you check the availability online is the total price for the car park for the dates and times given. 
 							Some car parks may have an additional charge for large vehicles or for additional services provided (car wash or Meet and Greet service for instance).
 							<br/><br/>
 							In these cases you will find these options in the booking form and you will be able to choose whichever service you are interested for. 
 							ParkingLegend.com always offers as many options as possible to its customers so that it can satisfy any customer’s need.',
-	'faq_12_title'		=> '12. What is the Meet and Greet service and what do I need to do?',
-	'faq_12_content'	=> 'Some car parks may operate either exclusively with Meet and Greet service or provide this service when selected by the customer. 
+	'faq_11_title'		=> '11. What is the Meet and Greet service and what do I need to do?',
+	'faq_11_content'	=> 'Some car parks may operate either exclusively with Meet and Greet service or provide this service when selected by the customer. 
 							When you receive a Meet and Greet service, all you need to do is drive directly to the airport/port. 
 							The car park staff will meet you there to pick up your vehicle.
 							<br/><br/>
 							All you need to do is contact the car park, on the phone number displayed within the booking confirmation, 20-30 minutes before you get there. 
 							On your return, the car park staff will be waiting for you at the airport/port to deliver your vehicle to you. 
 							All you need to do is contact the car park once you have collected your luggage.',
-	'faq_13_title'		=> '13. What is shuttle service and what do I need to do?',
-	'faq_13_content'	=> 'Some car parks may offer a shuttle service either free of charge or with a small additional charge. 
+	'faq_12_title'		=> '12. What is shuttle service and what do I need to do?',
+	'faq_12_content'	=> 'Some car parks may offer a shuttle service either free of charge or with a small additional charge. 
 							When you receive a shuttle service, you drive to the car park from where you will be transferred to the airport/port. 
 							All you need to do is contact the car park, on the phone number displayed within the booking confirmation, 20-30 minutes before you get there. 
 							The car park staff will arrange for your immediate transfer to the airport/port. 
@@ -135,22 +135,22 @@ After this bad experience, it was understood that the parking space should have 
 									<li>Create a source of income, with zero cost for your business. Our partners will be receiving a commission for each booking, without any registration fees or other initial costs.</li>
 								</ul>',
 	'privacy_heading'	=> 'Privacy Policy',
-	'privacy_content'	=>  'Parkinglegend.com is committed to protecting your privacy and maintaining the security of your personal information which we receive from you. We use the information we collect about you lawfully and in accordance with the Hellenic Personal Data Protection Act 2472/1997 and 3471/2006.
+	'privacy_content'	=>  'ParkingLegend.com is committed to protecting your privacy and maintaining the security of your personal information which we receive from you. We use the information we collect about you lawfully and in accordance with the Hellenic Personal Data Protection Act 2472/1997 and 3471/2006.
 							<br/><br/>
 							We will collect your personal information securely and in accordance with the law and our company\'s security policy. Additionally, we will not add your e-mail address on our mailing list unless you have given us permission to do so. You can see this option in the booking form on ParkingLegend.com
 							<br/><br/>
 							All personal data collected from ParkingLegend.com are used only to process your booking with your selected car park. Therefore, your data will be disclosed to the selected car park (third party).
 							<br/><br/>
-							Parkinglegend.com will not collect extra sensitive information from you without your explicit consent. Information regarding your debit or credit card will be used only during your payment for the completion of your booking and the process is completed using SSL encryption. Parkinglegend.com will not store your debit or credit card details.
+							ParkingLegend.com will not collect extra sensitive information from you without your explicit consent. Information regarding your debit or credit card will be used only during your payment for the completion of your booking and the process is completed using SSL encryption. ParkingLegend.com will not store your debit or credit card details.
 							<br/><br/>
-							Parkinglegend.com uses Google Analytics to collect data in order to promote its services more efficiently. Google Analytics uses cookies and the information collected is anonymous. You can see Google\'s Privacy Policy by using the following link: http://www.google.com/privacy.html
+							ParkingLegend.com uses Google Analytics to collect data in order to promote its services more efficiently. Google Analytics uses cookies and the information collected is anonymous. You can see Google\'s Privacy Policy by using the following link: http://www.google.com/privacy.html
 							<br/><br/>
 							You can contact ParkingLegend.com by e-mail: customer@parkinglegend.com or phone: (0030) 218 21 89 914. More information regarding our company’s opening hours can be seen on “Contact Us”',
 	'terms_heading'	=> 'Terms and Conditions',
 	'terms_content'	=>  '<strong style="text-align:center">The Company’s Liability</strong>
 						<br/><br/>
-						Parkinglegend.com acts as a booking agency only and therefore any liability and responsibility for all vehicles lie with the parking company, the hotel, the Meet and Greet service or any other transfer service (“Parking Provider”) reserved. The customer will be entering into an agreement with the company which provides the service ("Parking Provider") and will be subject to the service provider’s terms and conditions. 
-						The terms and conditions will be available by the service provider ("Parking Provider"). Parkinglegend.com, as a booking agency for the Parking Provider, will be liable to the customer only in respect of losses arising directly from the negligence of the company while processing a parking reservation. 
+						ParkingLegend.com acts as a booking agency only and therefore any liability and responsibility for all vehicles lie with the parking company, the hotel, the Meet and Greet service or any other transfer service (“Parking Provider”) reserved. The customer will be entering into an agreement with the company which provides the service ("Parking Provider") and will be subject to the service provider’s terms and conditions. 
+						The terms and conditions will be available by the service provider ("Parking Provider"). ParkingLegend.com, as a booking agency for the Parking Provider, will be liable to the customer only in respect of losses arising directly from the negligence of the company while processing a parking reservation. 
 						Any claim by the customer regarding the delivery of the parking service must be made against the Parking Provider and the service will be subject to its terms and conditions.
 						<br/><br/>
 						<strong style="text-align:center">Bookings</strong>
@@ -166,13 +166,13 @@ After this bad experience, it was understood that the parking space should have 
 							</li>
 							<li>
 							It is the responsibility of the customer to ensure that a valid e-mail address (so that all the information about the Parking Provider can be sent to the customer) and contact number (so that the Parking Provider or ParkingLegend.com can contact the customer) have been provided. 
-							Parkinglegend.com is not responsible for any costs or consequential loss or losses arising from the provision of invalid e-mail address or contact number(s). Moreover, it is the responsibility of the customer to read the booking confirmation along with all the information about the Parking Provider and to follow the appropriate procedure. 
-							Parkinglegend.com is not responsible under any circumstances if the customer fails to follow the right procedure because of the fact that he/she did not read the booking confirmation. It is the responsibility of the customer to present the confirmation of the booking (booking voucher) at the car park staff as proof of the reservation placed on ParkingLegend.com. 
-							Parkinglegend.com will not be responsible and will not refund any money if the car park cancels or overcharges the customer due to the fact that the customer failed to display the booking confirmation (booking voucher).
+							ParkingLegend.com is not responsible for any costs or consequential loss or losses arising from the provision of invalid e-mail address or contact number(s). Moreover, it is the responsibility of the customer to read the booking confirmation along with all the information about the Parking Provider and to follow the appropriate procedure. 
+							ParkingLegend.com is not responsible under any circumstances if the customer fails to follow the right procedure because of the fact that he/she did not read the booking confirmation. It is the responsibility of the customer to present the confirmation of the booking (booking voucher) at the car park staff as proof of the reservation placed on ParkingLegend.com. 
+							ParkingLegend.com will not be responsible and will not refund any money if the car park cancels or overcharges the customer due to the fact that the customer failed to display the booking confirmation (booking voucher).
 							</li>
 							<li>
 							All the appropriate information about the car park (company name, company address, contact number, GPS coordinates) will be included within the booking confirmation (booking voucher), so that the customer can find the car park easily. It is the responsibility of the customer to have the booking voucher in his/her possession as well as valid directions before travelling. 
-							Parkinglegend.com is not responsible for any loss or losses arising from the failure of the customer to bring along the booking voucher or failure of the customer to get valid directions.
+							ParkingLegend.com is not responsible for any loss or losses arising from the failure of the customer to bring along the booking voucher or failure of the customer to get valid directions.
 							</li>
 							<li>
 							Each reservation is valid only for one entry/exit, unless otherwise agreed directly with the Parking Provider. 
@@ -197,7 +197,7 @@ After this bad experience, it was understood that the parking space should have 
 						<br/><br/>
 						Any amendment or cancellation must be made by using the "My Account" facility on ParkingLegend.com. The process is very quick and easy. 
 						If you amend or cancel your booking through "My Account" facility on ParkingLegend.com, your request will take place immediately and the cancellation/amendment notice period (defined as the time between the indicated vehicle drop-off date/time and the time ParkingLegend.com is aware of your cancellation or amendment) is calculated from the time the cancellation or amendment request is made. 
-						If, for any reason, you cannot use the "My Account" facility on ParkingLegend.com, you must send us your request via e-mail. Parkinglegend.com will not accept such request over the telephone. Please note that if you send your request by e-mail, you must do so as soon as possible. Parkinglegend.com will first need to open your e-mail and then proceed with the relevant actions. 
+						If, for any reason, you cannot use the "My Account" facility on ParkingLegend.com, you must send us your request via e-mail. ParkingLegend.com will not accept such request over the telephone. Please note that if you send your request by e-mail, you must do so as soon as possible. ParkingLegend.com will first need to open your e-mail and then proceed with the relevant actions. 
 						Moreover, you should also note that our office needs to be open for us to serve you and to action your cancellation/amendment request. For this reason, we recommend that you use the "My Account" facility on our website.
 						<br/><br/>
 						<strong style="text-align:center">Cancellation Notice Period</strong>
