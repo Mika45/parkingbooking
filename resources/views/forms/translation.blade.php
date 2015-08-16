@@ -33,13 +33,13 @@
             </div>
             <div class="col-lg-3">
                 {!! Form::label('column_name', 'Column:') !!}
-                {!! Form::select('column_name', ['name' => 'Name'], null, ['class' => 'form-control']) !!}
+                {!! Form::select('column_name', ['description' => 'Description', 'name' => 'Name'], null, ['class' => 'form-control']) !!}
             </div>
 
             
             <div class="col-lg-6">
                 {!! Form::label('value', 'Value:') !!}
-                {!! Form::text('value', null, ['class' => 'form-control']) !!}
+                {!! Form::textarea('value', null, ['class' => 'form-control']) !!}
             </div>
 
             {!! Form::hidden('table_name', 'LOCATION') !!}

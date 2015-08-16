@@ -48,23 +48,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('parkings/{id}', 'ParkingsController@view'); //was @show
 	Route::get('parkings/{id}/book', 'ParkingsController@book');
 
-	Route::resource('parking', 'ParkingsController');
-	Route::get('parking/{id}/rates', 'RatesController@index');
-	Route::resource('locations', 'LocationsController');
 	Route::get('locations/{slug}', 'LocationsController@show');
-	Route::resource('rates', 'RatesController');
-	Route::resource('fields', 'FieldsController');
-	Route::resource('tags', 'TagsController');
-	Route::resource('translations', 'TranslationsController');
-	Route::resource('bookings', 'BookingsController');
-	Route::resource('availabilities', 'AvailabilitiesController');
-	Route::resource('articles', 'ArticlesController');
 
 	Route::get('activate/{code}', 'Auth\AuthController@activateAccount');
-	Route::get('availabilities/{id}/create', 'AvailabilitiesController@create');
-	Route::get('translations/{type}/{id}', 'TranslationsController@index');
-	Route::get('translations/{type}/{id}/create', 'TranslationsController@create');
-	Route::get('rates/{id}/create', 'RatesController@create');
+
 
 	// taken out due to problems with login
 	/*Route::controllers([
@@ -81,6 +68,26 @@ Route::group(['middleware' => 'secure'], function()
 		'auth' => 'Auth\AuthController',
 		'password' => 'Auth\PasswordController',
 	]);
+});
+
+// taken out of the redirection middlewares (admin backend)
+Route::group(['middleware' => 'secure'], function()
+{
+	Route::resource('parking', 'ParkingsController');
+	Route::get('parking/{id}/rates', 'RatesController@index');
+	Route::resource('locations', 'LocationsController');
+	Route::resource('rates', 'RatesController');
+	Route::resource('fields', 'FieldsController');
+	Route::resource('tags', 'TagsController');
+	Route::resource('translations', 'TranslationsController');
+	Route::resource('bookings', 'BookingsController');
+	Route::resource('availabilities', 'AvailabilitiesController');
+	Route::resource('articles', 'ArticlesController');
+
+	Route::get('availabilities/{id}/create', 'AvailabilitiesController@create');
+	Route::get('translations/{type}/{id}', 'TranslationsController@index');
+	Route::get('translations/{type}/{id}/create', 'TranslationsController@create');
+	Route::get('rates/{id}/create', 'RatesController@create');
 });
 
 //Route::get('test', 'TestController@test');
