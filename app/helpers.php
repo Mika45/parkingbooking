@@ -20,11 +20,12 @@ function set_active($uri)
     return Request::is($uri) ? 'active' : '';
 }
 
-function link_to_route_icon($route, $lang_icon, $title)
+function link_to_route_icon($properties, $lang_icon)
 {
-   $m = '<a href="'.route($route, $lang_icon, $title).'">'
-      . '<span class="flag-icon flag-icon-'.$lang_icon.'"></span>&nbsp;&nbsp;'.$title
+   $m = '<a rel="alternate" hreflang="'.$lang_icon.'" href="'. LaravelLocalization::getLocalizedURL($lang_icon, Request::url()) .'">'
+      . $properties['native']
       . '</a>';
+
    return $m;
 }
 
@@ -252,7 +253,7 @@ function build_map( $in_lat, $in_lng, $in_marker_title)
 
 function get_parking_translation( $in_parking_id )
 {
-	$lang = Session::get('applocale');
+	$lang = App::getLocale();
 	$response = DB::select('CALL GetTranslation("'.$lang.'", NULL, "PARKING", '.$in_parking_id.')');
 	//dd($translations);
 	$keys = array();
@@ -271,7 +272,7 @@ function get_parking_translation( $in_parking_id )
 
 function get_translation( $in_table, $in_id, $in_column = NULL )
 {
-	$lang = Session::get('applocale');
+	$lang = App::getLocale();
 	
 	if (empty($in_column)){
 		$response = DB::select('CALL GetTranslation("'.$lang.'", NULL, "'.$in_table.'", '.$in_id.')');
@@ -301,7 +302,7 @@ function get_tag_translations( $in_parking_id )
 	$lang = Session::get('applocale');
 	//$response = DB::select('CALL GetTranslation("'.$lang.'", NULL, "TAG", NULL)');
 	$response = DB::table('TRANSLATION')->whereRaw('table_name = "TAG" and locale = "'.$lang.'" and identifier in ('.$tagcsv.') ')->lists('value', 'identifier');*/
-	$lang = Session::get('applocale');
+	$lang = App::getLocale();
 	$response = DB::select('CALL GetParkingTagTranslation("'.$lang.'",'.$in_parking_id.')');
 
 	return $response;
@@ -311,7 +312,7 @@ function get_locations_for_search()
 {
 	//$optgroups = DB::table('LOCATION')->whereNull('location_parent_id')->orderBy('name', 'asc')->get();
 
-	$lang = Session::get('applocale');
+	$lang = App::getLocale();
 	$locations = DB::select('CALL GetLocations("all", NULL, "'.$lang.'")');
 
 	$locationsList = array();

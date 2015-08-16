@@ -30,7 +30,8 @@
         "App\\Providers\\RouteServiceProvider",
         "Barryvdh\\DomPDF\\ServiceProvider",
         "Folklore\\Image\\ImageServiceProvider",
-        "Roumen\\Sitemap\\SitemapServiceProvider"
+        "Roumen\\Sitemap\\SitemapServiceProvider",
+        "Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -49,7 +50,8 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "Folklore\\Image\\ImageServiceProvider"
+        "Folklore\\Image\\ImageServiceProvider",
+        "Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",

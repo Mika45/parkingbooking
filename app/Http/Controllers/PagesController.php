@@ -27,13 +27,16 @@ class PagesController extends Controller {
 
 	public function index()
 	{
+		// NO LONGER NEEDED as it seems that mcamara/laravel-localization already provides that
 		// set website locale according to browser language (only when the language is not already set - session)
-		if (!Session::has('applocale')){
+		/*if (!Session::has('applocale')){
 			$browser_lang = get_browser_language();
 			App::setLocale($browser_lang);
-		}
+		}*/
 
-		//$locationsList = DB::table('LOCATION')->whereNotNull('location_parent_id')->orderBy('name', 'asc')->lists('name','location_id');
+		// this session variable is already used in places so need to keep that logic
+		Session::set('applocale', App::getLocale());
+
 		$locationsList = get_locations_for_search(); // in helpers.php
 
 		return view('home', compact('locationsList'));

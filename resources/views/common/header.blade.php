@@ -48,28 +48,25 @@
 	              		<span class="icon-bar"></span>
 	              		<span class="icon-bar"></span>
 	            	</button>
-	            	<a class="navbar-brand" href="/">
+	            	<a class="navbar-brand" href="/{{App::getLocale()}}/">
 			        	<img alt="Brand" src="/img/logo.png">
 			      	</a>
 	            	{{--<a class="navbar-brand" href="/">ParkingLegend.com</a>--}}
 	          	</div>
 	          	<div id="navbar" class="navbar-collapse collapse">
 	            	<ul class="nav navbar-nav">
-		              	<li class="{{ set_active('faq') }}"><a href="/faq">{{Lang::get('site.nav_faq')}}</a></li>
-		              	<li class="{{ set_active('contact') }}"><a href="/contact">{{Lang::get('site.nav_contact')}}</a></li>
+		              	<li class="{{ set_active('faq') }}"><a href="/{{App::getLocale()}}/faq">{{Lang::get('site.nav_faq')}}</a></li>
+		              	<li class="{{ set_active('contact') }}"><a href="/{{App::getLocale()}}/contact">{{Lang::get('site.nav_contact')}}</a></li>
 		            </ul>
 		            <ul class="nav navbar-nav navbar-right">
 		            	<li class="dropdown">
 						    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! get_current_lang_icon() !!} <b class="caret"></b></a>
 						    <ul class="dropdown-menu">
-						        @foreach (Config::get('app.locales') as $lang => $language)
-						            @if ($lang != App::getLocale())
-						                <li>
-						                    <!--{!! link_to_route('lang.switch', $language, $lang) !!}-->
-						                    {!! link_to_route_icon('lang.switch', $lang, $language) !!}
-						                </li>
-						            @endif
-						        @endforeach
+						        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+							        <li>
+							            {!! link_to_route_icon($properties, $localeCode) !!}
+							        </li>
+							    @endforeach
 						    </ul>
 						</li>
 		            	@if(Auth::check())

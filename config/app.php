@@ -155,6 +155,7 @@ return [
 		'Barryvdh\DomPDF\ServiceProvider',
 		'Folklore\Image\ImageServiceProvider',
 		'Roumen\Sitemap\SitemapServiceProvider',
+		'Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider'
 
 	],
 
@@ -206,6 +207,7 @@ return [
 		'Form'		=> 'Illuminate\Html\FormFacade', 
 		'HTML'		=> 'Illuminate\Html\HtmlFacade',
 		'Image' 	=> 'Folklore\Image\Facades\Image',
+		'LaravelLocalization'   => 'Mcamara\LaravelLocalization\Facades\LaravelLocalization'
 
 	],
 

@@ -16,7 +16,7 @@ class Kernel extends HttpKernel {
 		'Illuminate\Session\Middleware\StartSession',
 		'Illuminate\View\Middleware\ShareErrorsFromSession',
 		'App\Http\Middleware\VerifyCsrfToken',
-		'App\Http\Middleware\SetApplicationLanguage',
+		//'App\Http\Middleware\SetApplicationLanguage',
 		//'App\Http\Middleware\RedirectSecure',
 	];
 
@@ -26,6 +26,11 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
+		/* REDIRECTION MIDDLEWARE */
+		'localize' => 'Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes',
+        'localizationRedirect' => 'Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter',
+        'localeSessionRedirect' => 'Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect',
+        /* OTHER MIDDLEWARE */
 		'auth' => 'App\Http\Middleware\Authenticate',
 		'auth.admin' => 'App\Http\Middleware\AuthenticateAdmin',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',

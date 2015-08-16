@@ -13,7 +13,7 @@
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 Route::get('sitemap', 'PagesController@sitemap');
 // FORCE HTTP - NOT SECURE - NON CRITICAL ROUTES ONLY
-Route::group(['middleware' => 'secure'], function() //can use unsecure also
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect', 'localizationRedirect']], function() //can use unsecure also
 {
 	Route::get('/', 'PagesController@index');
 	Route::get('results', 'PagesController@getsearch');
@@ -30,7 +30,7 @@ Route::group(['middleware' => 'secure'], function() //can use unsecure also
 });
 
 // FORCE HTTPS
-Route::group(['middleware' => 'secure'], function()
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect', 'localizationRedirect']], function()
 {
 	Route::post('payment', 'ParkingsController@payment');
 	
@@ -65,12 +65,21 @@ Route::group(['middleware' => 'secure'], function()
 	Route::get('translations/{type}/{id}/create', 'TranslationsController@create');
 	Route::get('rates/{id}/create', 'RatesController@create');
 
+	// taken out due to problems with login
+	/*Route::controllers([
+		'auth' => 'Auth\AuthController',
+		'password' => 'Auth\PasswordController',
+	]);*/
+
+	//Route::get('/indextest', 'PagesController@indextest');
+});
+
+Route::group(['middleware' => 'secure'], function()
+{
 	Route::controllers([
 		'auth' => 'Auth\AuthController',
 		'password' => 'Auth\PasswordController',
 	]);
-
-	//Route::get('/indextest', 'PagesController@indextest');
 });
 
 //Route::get('test', 'TestController@test');
