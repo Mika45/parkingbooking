@@ -19,15 +19,15 @@
     	</div>
     	<br/><br/><br/>
     	<div class="form-group">
-			<div class="col-lg-3">
+			<div class="col-lg-2">
 				{!! Form::label('lat', 'Latitude:') !!}
 				{!! Form::text('lat', null, ['class' => 'form-control']) !!}
     		</div>
-    		<div class="col-lg-3">
+    		<div class="col-lg-2">
 				{!! Form::label('lng', 'Longtitude:') !!}
 				{!! Form::text('lng', null, ['class' => 'form-control']) !!}
     		</div>
-    		<div class="col-lg-4">
+    		<div class="col-lg-2">
 				{!! Form::label('currency', 'Currency:') !!}
 				{!! Form::text('currency', null, ['class' => 'form-control']) !!}
     		</div>
@@ -36,6 +36,10 @@
 				{!! Form::select('currency_order', ['L' => 'Left',
 				   									'R' => 'Right'], null, ['class' => 'form-control']) !!}
     		</div>
+            <div class="col-lg-4">
+                {!! Form::label('slug', 'URL alias:') !!}
+                {!! Form::text('slug', null, ['class' => 'form-control']) !!}
+            </div>
     	</div>
         <br/><br/><br/>
         <div class="form-group">

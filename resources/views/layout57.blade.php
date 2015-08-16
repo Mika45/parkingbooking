@@ -14,6 +14,14 @@
 
 	    </div>
 
+	    <div class="row">
+
+	    	<div class="col-md-12">
+        		@yield('content-bottom')
+	        </div>
+
+	    </div>
+
     </div>
 
 @include('common.footer')

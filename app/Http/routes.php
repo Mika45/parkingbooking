@@ -51,6 +51,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::resource('parking', 'ParkingsController');
 	Route::get('parking/{id}/rates', 'RatesController@index');
 	Route::resource('locations', 'LocationsController');
+	Route::get('locations/{slug}', 'LocationsController@show');
 	Route::resource('rates', 'RatesController');
 	Route::resource('fields', 'FieldsController');
 	Route::resource('tags', 'TagsController');

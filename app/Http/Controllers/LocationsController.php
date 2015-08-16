@@ -18,7 +18,7 @@ class LocationsController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['show']]);
     }
 
 	/**
@@ -75,18 +75,20 @@ class LocationsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($slug)
 	{
-		$location = Location::findOrFail($id);
+		$location = Location::where('slug', '=', $slug)->first();
 		
 		// get the traslations of the current locale
-		$translations = get_translation( 'LOCATION', $id );
+		$translations = get_translation( 'LOCATION', $location->location_id );
 		
 		// create the google map
 		$map = build_map( $location->lat, $location->lng, $location->name ); //uses helpers.php
 		$mapHelper = new MapHelper();
 
-		return view('locations.show', compact('location', 'map', 'mapHelper', 'translations'));
+		$locationsList = get_locations_for_search(); // in helpers.php
+
+		return view('locations.show', compact('location', 'map', 'mapHelper', 'translations', 'locationsList'));
 	}
 
 	/**

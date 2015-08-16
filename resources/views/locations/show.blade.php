@@ -1,4 +1,4 @@
-@extends('halflayout')
+@extends('layout57')
 
 @section('sidebar-left')
 
@@ -15,14 +15,15 @@
 		</tr>
 	</table>
 
-	{{-- <h4>{{ Lang::get('site.park_description') }}</h4> --}}
-	<p>
-		{!! $translations['description'] or $location->description !!}
-	</p>
-
-	<p>
-		
-	</p>
+	<div class="well well-yellow">
+		<legend>
+			<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          	<span class="glyphicon-class">{{Lang::get('site.search_heading')}}</span>
+		</legend>
+		{!! Form::open(['action' => 'PagesController@search', 'id' => 'search', 'class' => 'form-horizontal']) !!}
+			@include('forms.search')
+		{!! Form::close() !!}
+	</div>
 
 @stop
 
@@ -33,5 +34,13 @@
 		{!!$mapHelper->renderHtmlContainer($map)!!}
 		{!!$mapHelper->renderJavascripts($map)!!}
 	@endif
+
+@stop
+
+@section('content-bottom')
+
+	<p>
+		{!! $translations['description'] or $location->description !!}
+	</p>
 
 @stop
