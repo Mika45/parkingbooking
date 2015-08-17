@@ -11,7 +11,7 @@
 
 	<table>
 		<tr>
-			<td width="85%"><h1>{!! $translations['name'] or $location->name !!}</h1></td>
+			<td width="85%"><h1>{!! $translations['name'] or $location[0]->name !!}</h1></td>
 		</tr>
 	</table>
 
@@ -30,7 +30,7 @@
 @section('content-right')
 	<h1>&nbsp;</h1>
 
-	@if (isset($location->lat) && isset($location->lng))
+	@if (isset($location[0]->lat) && isset($location[0]->lng))
 		{!!$mapHelper->renderHtmlContainer($map)!!}
 		{!!$mapHelper->renderJavascripts($map)!!}
 	@endif
@@ -40,7 +40,7 @@
 @section('content-bottom')
 
 	<p>
-		{!! $translations['description'] or $location->description !!}
+		{!! $translations['description'] or $location[0]->description !!}
 	</p>
 
 @stop

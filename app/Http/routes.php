@@ -10,6 +10,27 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
+// taken out of the redirection middlewares (admin backend)
+Route::group(['middleware' => 'secure'], function()
+{
+	Route::resource('parking', 'ParkingsController');
+	Route::get('parking/{id}/rates', 'RatesController@index');
+	
+	Route::resource('rates', 'RatesController');
+	Route::resource('fields', 'FieldsController');
+	Route::resource('tags', 'TagsController');
+	Route::resource('translations', 'TranslationsController');
+	Route::resource('bookings', 'BookingsController');
+	Route::resource('availabilities', 'AvailabilitiesController');
+	Route::resource('articles', 'ArticlesController');
+	Route::resource('locations', 'LocationsController');
+	Route::get('availabilities/{id}/create', 'AvailabilitiesController@create');
+	Route::get('translations/{type}/{id}', 'TranslationsController@index');
+	Route::get('translations/{type}/{id}/create', 'TranslationsController@create');
+	Route::get('rates/{id}/create', 'RatesController@create');
+});
+
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 Route::get('sitemap', 'PagesController@sitemap');
 // FORCE HTTP - NOT SECURE - NON CRITICAL ROUTES ONLY
@@ -47,7 +68,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('parkings', 'ParkingsController@all'); //was @index
 	Route::get('parkings/{id}', 'ParkingsController@view'); //was @show
 	Route::get('parkings/{id}/book', 'ParkingsController@book');
-
+	
 	Route::get('locations/{slug}', 'LocationsController@show');
 
 	Route::get('activate/{code}', 'Auth\AuthController@activateAccount');
@@ -68,26 +89,6 @@ Route::group(['middleware' => 'secure'], function()
 		'auth' => 'Auth\AuthController',
 		'password' => 'Auth\PasswordController',
 	]);
-});
-
-// taken out of the redirection middlewares (admin backend)
-Route::group(['middleware' => 'secure'], function()
-{
-	Route::resource('parking', 'ParkingsController');
-	Route::get('parking/{id}/rates', 'RatesController@index');
-	Route::resource('locations', 'LocationsController');
-	Route::resource('rates', 'RatesController');
-	Route::resource('fields', 'FieldsController');
-	Route::resource('tags', 'TagsController');
-	Route::resource('translations', 'TranslationsController');
-	Route::resource('bookings', 'BookingsController');
-	Route::resource('availabilities', 'AvailabilitiesController');
-	Route::resource('articles', 'ArticlesController');
-
-	Route::get('availabilities/{id}/create', 'AvailabilitiesController@create');
-	Route::get('translations/{type}/{id}', 'TranslationsController@index');
-	Route::get('translations/{type}/{id}/create', 'TranslationsController@create');
-	Route::get('rates/{id}/create', 'RatesController@create');
 });
 
 //Route::get('test', 'TestController@test');
