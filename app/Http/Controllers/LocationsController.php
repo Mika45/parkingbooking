@@ -7,6 +7,7 @@ use Request;
 //
 use App;
 use App\Location;
+use App\Translation;
 use App\Http\Requests\AddLocationRequest;
 use DB;
 use Ivory\GoogleMap\Helper\MapHelper;
@@ -79,20 +80,31 @@ class LocationsController extends Controller {
 	public function show($slug)
 	{
 		$lang = App::getLocale();
-		$location = DB::select('CALL GetLocationBySlug("'.$slug.'", "'.$lang.'")');
+		//$location = DB::select('CALL GetLocationBySlug("'.$slug.'", "'.$lang.'")');
+
+		$translation = Translation::where('value', '=', $slug)
+									->where('table_name', '=', 'LOCATION')
+									->where('column_name', '=', 'slug')
+									->first();
+
+		if (!empty($translation)){
+			$location = Location::findOrFail($translation->identifier);
+		} else {
+			$location = Location::where('slug', '=', $slug)->first();
+		}
 
 		// get the traslations of the current locale
-		$translations = get_translation( 'LOCATION', $location[0]->location_id );
+		$translations = get_translation( 'LOCATION', $location->location_id );
 		
-		$data = DB::select('CALL GetLocationParkings('.$location[0]->location_id.')');
+		$data = DB::select('CALL GetLocationParkings('.$location->location_id.')');
 		
 		// create the google map
-		$map = build_results_map( $location[0]->lat, $location[0]->lng, $data ); //uses helpers.php
+		$map = build_results_map( $location->lat, $location->lng, $data ); //uses helpers.php
 		$mapHelper = new MapHelper();
 
 		$locationsList = get_locations_for_search(); // in helpers.php
 
-		$defaultLocation = $location[0]->location_id;
+		$defaultLocation = $location->location_id;
 
 		return view('locations.show', compact('location', 'map', 'mapHelper', 'translations', 'locationsList', 'defaultLocation'));
 	}
