@@ -70,6 +70,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('parkings/{id}/book', 'ParkingsController@book');
 	
 	Route::get('locations/{slug}', 'LocationsController@show');
+	Route::get('locations/{parent}/{slug}', 'LocationsController@show');
 
 	Route::get('activate/{code}', 'Auth\AuthController@activateAccount');
 

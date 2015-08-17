@@ -77,7 +77,7 @@ class LocationsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($slug)
+	public function show($parent, $slug)
 	{
 		$lang = App::getLocale();
 		//$location = DB::select('CALL GetLocationBySlug("'.$slug.'", "'.$lang.'")');
@@ -91,6 +91,11 @@ class LocationsController extends Controller {
 			$location = Location::findOrFail($translation->identifier);
 		} else {
 			$location = Location::where('slug', '=', $slug)->first();
+		}
+
+		$parent_loc = DB::table('LOCATIONS_V')->where('parent_slug', '=', $parent)->where('location_id', '=', $location->location_id)->first();
+		if(empty($parent_loc)){
+			App::abort(404, 'Not Found');
 		}
 
 		// get the traslations of the current locale
