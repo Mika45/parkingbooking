@@ -145,9 +145,20 @@ class TranslationsController extends Controller {
 	{
 		$translation = Translation::findOrFail($id);
 		$translation->update($request->all());
-		//return redirect('parking');
-		//return redirect()->route('translations/{type}/{id}', ['type' => 'parking', 'id' => $translation->identifier]);
-		return redirect()->action('TranslationsController@index', ['type' => 'parking', 'id' => $translation->identifier]);
+
+		switch (strtoupper($translation->table_name)) {
+			case 'PARKING':
+				$type = 'parking';
+				break;
+			case 'LOCATION':
+				$type = 'location';
+				break;
+			case 'TAG':
+				$type = 'tag';
+				break;
+		}
+
+		return redirect()->action('TranslationsController@index', ['type' => $type, 'id' => $translation->identifier]);
 	}
 
 	/**
