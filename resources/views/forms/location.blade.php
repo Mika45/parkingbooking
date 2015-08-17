@@ -2,11 +2,15 @@
 	<fieldset>
 
 		<div class="form-group">
-			<div class="col-lg-6">
+			<div class="col-lg-4">
 				{!! Form::label('name', 'Location name:') !!}
 				{!! Form::text('name', null, ['class' => 'form-control']) !!}
     		</div>
-    		<div class="col-lg-4">
+            <div class="col-lg-4">
+                {!! Form::label('location_page_name', 'Location Page title:') !!}
+                {!! Form::text('location_page_name', null, ['class' => 'form-control']) !!}
+            </div>
+    		<div class="col-lg-2">
 				{!! Form::label('location_parent_id', 'Parent location:') !!}
 				{!! Form::select('location_parent_id', $parents, null, ['class' => 'form-control']) !!}
     		</div>

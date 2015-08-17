@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Absolute_Positioner' => $vendorDir . '/dompdf/dompdf/include/absolute_positioner.cls.php',
     'Abstract_Renderer' => $vendorDir . '/dompdf/dompdf/include/abstract_renderer.cls.php',
+    'AddLocationPageNameColumn' => $baseDir . '/database/migrations/2015_08_18_013454_add_location_page_name_column.php',
     'AddLocationSlugColumn' => $baseDir . '/database/migrations/2015_08_16_223213_add_location_slug_column.php',
     'AddParkingEmailColumn' => $baseDir . '/database/migrations/2015_08_08_024554_add_parking_email_column.php',
     'Adobe_Font_Metrics' => $vendorDir . '/phenx/php-font-lib/classes/Adobe_Font_Metrics.php',

@@ -33,7 +33,7 @@
             </div>
             <div class="col-lg-3">
                 {!! Form::label('column_name', 'Column:') !!}
-                {!! Form::select('column_name', ['description' => 'Description', 'name' => 'Name', 'slug' => 'URL alias'], null, ['class' => 'form-control']) !!}
+                {!! Form::select('column_name', ['description' => 'Description', 'location_page_name' => 'Location Page title', 'name' => 'Name', 'slug' => 'URL alias'], null, ['class' => 'form-control']) !!}
             </div>
 
             

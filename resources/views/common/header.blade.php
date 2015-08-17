@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 	<head>
+		<title>ParkingLegend.com @yield('title')</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		{!! HTML::script('js/jquery-1.11.2.min.js') !!}
 

@@ -1,5 +1,9 @@
 @extends('layout57')
 
+@section('title')
+    {!! $translations['location_page_name'] or $location->location_page_name !!}
+@stop
+
 @section('sidebar-left')
 
 	<h2>Ads here</h2>
@@ -11,7 +15,7 @@
 
 	<table>
 		<tr>
-			<td width="85%"><h1>{!! $translations['name'] or $location->name !!}</h1></td>
+			<td width="85%"><h1>{!! $translations['location_page_name'] or $location->location_page_name !!}</h1></td>
 		</tr>
 	</table>
 
