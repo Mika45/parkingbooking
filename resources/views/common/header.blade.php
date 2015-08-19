@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>ParkingLegend.com @yield('title')</title>
+		<meta name="google-site-verification" content="JRnT1QScbmi8ajN_F8ZzCAXr7gwQVbgj1-Ub5DbdVpk" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		{!! HTML::script('js/jquery-1.11.2.min.js') !!}
 
