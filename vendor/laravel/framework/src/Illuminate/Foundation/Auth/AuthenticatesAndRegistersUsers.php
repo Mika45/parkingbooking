@@ -83,7 +83,7 @@ trait AuthenticatesAndRegistersUsers {
 			$data = array(
 				'email' => $user->email,
 				'code' => $activation_code,
-				'link' => 'http://www.parkinglegend.com/activate/'.$activation_code
+				'link' => URL::to('/').'/activate/'.$activation_code
 			);
 			//\Mail::queue('emails.activation', $data, function($message) use ($user) {
 			\Mail::later(15, 'emails.activation', $data, function($message) use ($user) {
