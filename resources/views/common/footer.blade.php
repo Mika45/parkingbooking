@@ -10,7 +10,9 @@
 			              		<li><a href="/{{App::getLocale()}}/privacy">{{Lang::get('site.nav_privacy')}}</a></li>
 			              		<li><a href="/{{App::getLocale()}}/payment-methods">{{Lang::get('site.nav_payment')}}</a></li>
 			              		<li class="pull-right">
-			              			<a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+			              			<a class="btn btn-social-icon btn-facebook" target="_blank" href="https://www.facebook.com/ParkingLegend.com1">
+			              				<i class="fa fa-facebook"></i>
+			              			</a>
 			              		</li>
 			            	</ul>
 
