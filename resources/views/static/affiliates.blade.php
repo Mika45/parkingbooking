@@ -1,5 +1,9 @@
 @extends('layout')
 
+@section('title')
+    {{Lang::get('site.page_affiliates')}}
+@stop
+
 @section('sidebar')
 	<h1>&nbsp;</h1>
 	<img src="/img/profit.png"/>

@@ -16,6 +16,7 @@ return [
 	| Site generic
 	|--------------------------------------------------------------------------
 	*/
+	'site_title'	=> 'Safe Parkings - Competitive Prices',
 	'nav_faq' 		=> 'FAQ',
 	'nav_contact' 	=> 'Contact Us',
 	'nav_login'  	=> 'Login',
@@ -34,6 +35,14 @@ return [
 
 	'common_na'		=> 'Not available',
 	'common_accept_terms' => 'I accept the <a href="/tscs" target="_blank">Terms & Conditions</a>',
+
+	'page_faq'			=> 'Frequently Asked Questions',
+	'page_contact'		=> 'Contact Us',
+	'page_about'		=> 'About Us',
+	'page_affiliates'	=> 'Affiliates',
+	'page_tscs'			=> 'Terms and Conditions',
+	'page_privacy'		=> 'Privacy Policy',
+	'page_payment'		=> 'Accepted Methods of Payment',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -1,5 +1,9 @@
 @extends('layout')
 
+@section('title')
+    {{Lang::get('site.page_payment')}}
+@stop
+
 @section('sidebar')
 	
 @stop

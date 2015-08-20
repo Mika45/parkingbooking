@@ -1,5 +1,9 @@
 @extends('layout57')
 
+@section('title')
+    {{Lang::get('site.site_title')}}
+@stop
+
 @section('content-left')
 
 	<div class="well well-yellow">

@@ -74,34 +74,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 
 	Route::get('activate/{code}', 'Auth\AuthController@activateAccount');
 
-
-	// taken out due to problems with login
-	/*Route::controllers([
-		'auth' => 'Auth\AuthController',
-		'password' => 'Auth\PasswordController',
-	]);*/
-
-	//Route::get('/indextest', 'PagesController@indextest');
-});
-
-Route::group(['middleware' => 'secure'], function()
-{
 	Route::controllers([
 		'auth' => 'Auth\AuthController',
 		'password' => 'Auth\PasswordController',
 	]);
+
 });
-
-//Route::get('test', 'TestController@test');
-
-
-//Route::post('rates/{id}/create', 'RatesController@store');
-//Route::get('rates/{id}', 'RatesController@view');
-//Route::get('rates/{id}/edit', 'RatesController@edit');
-//Route::post('rates/{id}/edit', 'RatesController@update');
-//Route::post('rates', 'RatesController@store');
-
-//Route::get('book', 'PagesController@book');
 
 Route::get('xml', 'PagesController@getxml');
 Route::get('map', 'PagesController@showmap');
