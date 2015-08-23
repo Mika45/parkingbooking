@@ -308,32 +308,16 @@ function get_tag_translations( $in_parking_id )
 	return $response;
 }
 
-function get_locations_for_search()
+function get_locations_for_search($parent = 'NULL', $child = 'NULL')
 {
-	//$optgroups = DB::table('LOCATION')->whereNull('location_parent_id')->orderBy('name', 'asc')->get();
-
 	$lang = App::getLocale();
-	$locations = DB::select('CALL GetLocations("all", NULL, "'.$lang.'")');
+	$locations = DB::select('CALL GetLocations("all", '.$parent.', "'.$lang.'")');
 
 	$locationsList = array();
-
-	// specify optgroups and options
-	/*foreach ($optgroups as $opt){
-		$sum = NULL;
-
-		foreach ($locations as $loc){
-			if ($loc->optgroup == $opt->name)
-				$sum[$loc->location_id] = $loc->name;
-		}
-
-		$locationsList[$opt->name] = $sum;
-	}*/
 
 	foreach ($locations as $loc){
 		$parents[$loc->parent_id] = $loc->optgroup;
 	}
-
-	//dd($parents);
 
 	foreach ($parents as $key => $opt){
 		$sum = NULL;
@@ -346,9 +330,20 @@ function get_locations_for_search()
 		$locationsList[$opt] = $sum;
 	}
 
-	//dd($locationsList);
-
 	return $locationsList;
+}
+
+function get_locations_for_menu()
+{
+	$lang = App::getLocale();
+	$locations = DB::select('CALL GetLocations("parent", NULL, "'.$lang.'")');
+
+	$links = NULL;
+	foreach ($locations as $loc) {
+		$links = $links.'<li><a href="'.URL::to('/').'/'.$lang.'/'.$loc->slug.'">'.$loc->name.'</a></li>';
+	}
+
+	return $links;
 }
 
 function get_parking_rate_type( $in_parking_id )

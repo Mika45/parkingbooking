@@ -53,7 +53,7 @@
 		<tr>
 			@foreach ($child_locations as $child_location)
 				@if($child_location->slug)
-					<td><a href="{{URL::to('/')}}/{{ $child_location->parent_slug }}/{{ $child_location->slug }}">{{ $child_location->name }}</a></td>
+					<td><a href="{{URL::to('/')}}/{{App::getLocale()}}/{{ $child_location->parent_slug }}/{{ $child_location->slug }}">{{ $child_location->name }}</a></td>
 					@if (($i%2)==0)
 						</tr><tr>
 					@endif

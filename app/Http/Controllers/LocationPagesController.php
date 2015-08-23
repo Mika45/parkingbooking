@@ -81,11 +81,11 @@ class LocationPagesController extends Controller {
 		$map = build_results_map( $location->lat, $location->lng, $data ); //uses helpers.php
 		$mapHelper = new MapHelper();
 
-		$locationsList = get_locations_for_search(); // in helpers.php
+		$locationsList = get_locations_for_search($location->location_id); // in helpers.php
 
 		$defaultLocation = $location->location_id;
 
-		$child_locations = DB::table('LOCATIONS_V')->where('location_parent_id', '=', $location->location_id)->get();
+		$child_locations = DB::select('CALL GetLocations("child", '.$location->location_id.', "'.$lang.'")');
 
 		return view('locations.parent', compact('location', 'map', 'mapHelper', 'translations', 'locationsList', 'defaultLocation', 'child_locations'));
 	}
@@ -112,10 +112,10 @@ class LocationPagesController extends Controller {
 			$location = Location::where('slug', '=', $slug)->first();
 		}
 
-		$parent_loc = DB::table('LOCATIONS_V')->where('parent_slug', '=', $parent)->where('location_id', '=', $location->location_id)->first();
+		/*$parent_loc = DB::table('LOCATIONS_V')->where('parent_slug', '=', $parent)->where('location_id', '=', $location->location_id)->first();
 		if(empty($parent_loc)){
 			App::abort(404, 'Not Found');
-		}
+		}*/
 
 		$translations = get_translation( 'LOCATION', $location->location_id );
 		

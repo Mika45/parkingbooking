@@ -57,6 +57,12 @@
 	          	</div>
 	          	<div id="navbar" class="navbar-collapse collapse">
 	            	<ul class="nav navbar-nav">
+	            		<li class="dropdown">
+				          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{Lang::get('site.nav_locations')}}<span class="caret"></span></a>
+				          	<ul class="dropdown-menu" role="menu">
+				            	{!! get_locations_for_menu() !!}
+				            </ul>
+				        </li>
 		              	<li class="{{ set_active('faq') }}"><a href="/{{App::getLocale()}}/faq">{{Lang::get('site.nav_faq')}}</a></li>
 		              	<li class="{{ set_active('contact') }}"><a href="/{{App::getLocale()}}/contact">{{Lang::get('site.nav_contact')}}</a></li>
 		            </ul>

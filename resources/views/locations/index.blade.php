@@ -16,7 +16,7 @@
 			  <th></th>
 			  <th></th>
 			  <th><small>Translation</small></th>
-			  <th></th>
+			  {{--<th></th>--}}
 			</tr>
 		</thead>
 		<tbody>
@@ -31,7 +31,7 @@
 				<td><a href="/locations/{{ $location->location_id }}/edit" class="btn btn-primary btn-xs">Edit</a></td>
 				<td>  {{-- <a href="#" class="btn btn-danger btn-xs">Delete</a> --}} </td>
 				<td><a href="/translations/location/{{ $location->location_id }}" class="btn btn-success btn-xs">Edit</a></td>
-				<td><a href="/locations/{{ $location->location_id }}" target="_blank" class="btn btn-warning btn-xs">View</a></td>
+				{{--<td><a href="/locations/{{ $location->location_id }}" target="_blank" class="btn btn-warning btn-xs">View</a></td>--}}
 			</tr>
 		@endforeach
 		</tbody>
