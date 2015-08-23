@@ -106,7 +106,7 @@ function build_results_map( $in_lat, $in_lng, $in_data)
 	$map->setHtmlContainerId('map_canvas');
 	$map->setAsync(true);
 	$map->setStylesheetOption('width', '100%');
-	$map->setStylesheetOption('height', '400px');
+	$map->setStylesheetOption('height', '437px');
 	// Sets the center
 	$map->setCenter($in_lat, $in_lng, true);
 	// Sets the zoom

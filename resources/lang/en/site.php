@@ -16,7 +16,8 @@ return [
 	| Site generic
 	|--------------------------------------------------------------------------
 	*/
-	'site_title'	=> 'Safe Parkings - Competitive Prices',
+	'site_title'	=> 'Secure Parking - Competitive Prices',
+	'nav_locations'	=> 'Locations',
 	'nav_faq' 		=> 'FAQ',
 	'nav_contact' 	=> 'Contact Us',
 	'nav_login'  	=> 'Login',

@@ -79,6 +79,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 		'password' => 'Auth\PasswordController',
 	]);
 
+	Route::get('/{slug}', 'LocationPagesController@show');	
+	Route::get('/{parent}/{slug}', 'LocationPagesController@showChild');
+
 });
 
 Route::get('xml', 'PagesController@getxml');
