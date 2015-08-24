@@ -642,8 +642,13 @@ class ParkingsController extends Controller {
 
 		}
 
-		foreach ($input['fields'] as $field){
-			$p_field = ParkingField::firstOrCreate(['parking_id' => $parking->parking_id, 'field_id' => $field, 'required' => 'Y']);
+		if (array_key_exists('fields', $input)) {
+			foreach ($input['fields'] as $field){
+				//$p_field = ParkingField::firstOrCreate(['parking_id' => $parking->parking_id, 'field_id' => $field, 'required' => 'Y']);
+				$p_field = ParkingField::firstOrCreate(['parking_id' => $parking->parking_id, 'field_id' => $field]);
+			}
+		} else {
+			$affectedRows = ParkingField::where('parking_id', '=', $parking->parking_id)->delete();
 		}
 
 		$tagIds = $request->input('tags');

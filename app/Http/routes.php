@@ -14,7 +14,7 @@
 // taken out of the redirection middlewares (admin backend)
 Route::group(['middleware' => 'secure'], function()
 {
-	Route::resource('parking', 'ParkingsController');
+	Route::resource('parking', 'ParkingsController', ['except' => ['show']]);
 	Route::get('parking/{id}/rates', 'RatesController@index');
 	
 	Route::resource('rates', 'RatesController');
@@ -71,7 +71,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	
 	Route::get('locations/{slug}', 'LocationsController@show');
 	Route::get('locations/{parent}/{slug}', 'LocationsController@show');
-
+	Route::get('parking/{id}', 'ParkingsController@show');
 	Route::get('activate/{code}', 'Auth\AuthController@activateAccount');
 
 	Route::controllers([
