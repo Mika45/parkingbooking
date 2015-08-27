@@ -164,6 +164,9 @@ class PagesController extends Controller {
 			else
 				$data[$key]->late_booking = 'N';
 
+			if (!isset($pid->price))
+				$data[$key]->available = 'N';
+
 			$parking = Parking::Find($pid->parking_id);
 
 			$data[$key]->tags = $parking->tags()->lists('name', 'icon_filename');
