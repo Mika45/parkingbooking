@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\Registrar;
 use App\User;
 use Lang;
 use App\Field;
+use URL;
 
 trait AuthenticatesAndRegistersUsers {
 
