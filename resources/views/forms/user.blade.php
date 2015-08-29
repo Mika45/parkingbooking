@@ -15,7 +15,7 @@
 	<div class="form-group">
 		<label for="email" class="col-lg-4 control-label">* {{ Lang::get('site.reg_email') }}</label>
 		<div class="col-lg-8">
-			{!! Form::text('email', null, ['class' => 'form-control', 'id' => 'email', 'disabled' => 'disabled']) !!}
+			{!! Form::text('email', null, ['class' => 'form-control', 'id' => 'email', 'disabled' => 'disabled', 'readonly']) !!}
 		</div>
 	</div>
 	<div class="form-group">
@@ -100,7 +100,7 @@
 	    */
 
 	    if ($('#user-settings').is(':checked')) {
-		    document.getElementById("email").disabled = false;
+		    //document.getElementById("email").disabled = false;
 		    document.getElementById("firstname").disabled = false;
 		    document.getElementById("lastname").disabled = false;
 		    document.getElementById("save").disabled = false;
@@ -110,7 +110,7 @@
 		    document.getElementById("car_reg").disabled = false;
 		    document.getElementById("car_colour").disabled = false;
 		} else {
-		    document.getElementById("email").disabled = true;
+		    //document.getElementById("email").disabled = true;
 		    document.getElementById("firstname").disabled = true;
 		    document.getElementById("lastname").disabled = true;
 		    document.getElementById("save").disabled = true;
