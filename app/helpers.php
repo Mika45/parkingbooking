@@ -76,25 +76,7 @@ function do_markers( $in_data )
 		// Add your info window to the marker
 		$marker->setInfoWindow($infoWindow);
 
-
 		$markers[] = $marker;
-
-
-		/*$event = new Event();
-
-		// Configure your event
-		$event->setInstance($instance);
-		$event->setEventName($eventName);
-		$event->setHandle($handle);
-
-		// It can only be used with a DOM event
-		// By default, the capture flag is false
-		$event->setCapture(true);
-
-		$events[] = $event;*/
-
-		
-
 	}
 
 	return $markers;
@@ -114,7 +96,7 @@ function build_results_map( $in_lat, $in_lng, $in_data)
 	$map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
 	$map->setMapOption('mapTypeId', 'roadmap');
 	
-	$cur_lang = Session::get('applocale');
+	$cur_lang = App::getLocale();
 	$map->setLanguage($cur_lang);
 
 	/* Now do the markers */
