@@ -523,6 +523,8 @@ class ParkingsController extends Controller {
 		//dd($to_time_bd);
 		$hours = get_dropdown_hours(); //helpers.php
 
+		$configArray[] = NULL;
+
 		$config_response = Configuration::where('parking_id', '=', $id)->get();
 		foreach ($config_response as $key => $config) {
 			$configArray[$config->conf_name] = $config->value;
