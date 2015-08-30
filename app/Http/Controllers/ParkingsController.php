@@ -106,7 +106,7 @@ class ParkingsController extends Controller {
 		// Control this request
 		//Session::put('bookingInProcess', $selectedParking);
 
-		Session::keep(['allowedParkings']);
+		//Session::keep(['allowedParkings']);
 		$allowed_pids = Session::get('allowedParkings');
 
 		// if this array is empty then you shouldn't really be here
@@ -146,7 +146,7 @@ class ParkingsController extends Controller {
 
 		// get the traslations of the current locale
 		$translations = get_parking_translation( $id );
-		//dd($translations);
+		
 		$title_attributes = NULL;
 		foreach ($translations as $key2 => $value2) {
 			if ($key2 == 'title'){
@@ -154,7 +154,7 @@ class ParkingsController extends Controller {
 				$translations['title'] = $value2['value'];
 			}
 		}
-		//dd($title_attributes);
+
 		return view('parkings.book', compact('fields', 'id', 'user', 'translations', 'parking', 'title_attributes'));
 	}
 
