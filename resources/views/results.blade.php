@@ -45,9 +45,9 @@
 
 
 						@if ( $parking->available == 'Y' and $parking->late_booking == 'N' )
-							<a href="{{ action('ParkingsController@book', [$parking->parking_id]) }}" class="btn btn-primary">{{ $btn_caption }} {{Lang::get('site.search_results_book_btn')}}</a>
+							<a href="{{ action('ParkingsController@book', [$parking->parking_id]) }}" class="btn btn-primary btn-block">{{ $btn_caption }} {{Lang::get('site.search_results_book_btn')}}</a>
 						@else
-							<a href="{{ action('ParkingsController@book', [$parking->parking_id]) }}" class="btn btn-primary disabled">{{Lang::get('site.common_na')}}</a>
+							<a href="{{ action('ParkingsController@book', [$parking->parking_id]) }}" class="btn btn-primary btn-block disabled">{{Lang::get('site.common_na')}}</a>
 						@endif
 					</td>
 				</tr>
