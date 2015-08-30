@@ -95,6 +95,21 @@
     	<br/><br/><br/>
     	<div class="form-group">
 			<div class="col-lg-4">
+				{!! Form::label('phone1', 'Phone 1:') !!}
+				{!! Form::text('phone1', null, ['class' => 'form-control']) !!}
+    		</div>
+    		<div class="col-lg-4">
+				{!! Form::label('phone2', 'Phone 2:') !!}
+				{!! Form::text('phone2', null, ['class' => 'form-control']) !!}
+    		</div>
+    		<div class="col-lg-4">
+				{!! Form::label('mobile', 'Mobile:') !!}
+				{!! Form::text('mobile', null, ['class' => 'form-control']) !!}
+    		</div>
+    	</div>
+    	<br/><br/><br/>
+    	<div class="form-group">
+			<div class="col-lg-4">
 				{!! Form::label('description', 'Parking description:') !!}
 				{!! Form::textarea('description', null, ['class' => 'form-control']) !!}
     		</div>

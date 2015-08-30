@@ -11,6 +11,7 @@ return array(
     'AddLocationPageNameColumn' => $baseDir . '/database/migrations/2015_08_18_013454_add_location_page_name_column.php',
     'AddLocationSlugColumn' => $baseDir . '/database/migrations/2015_08_16_223213_add_location_slug_column.php',
     'AddParkingEmailColumn' => $baseDir . '/database/migrations/2015_08_08_024554_add_parking_email_column.php',
+    'AddParkingPhoneColumns' => $baseDir . '/database/migrations/2015_08_30_035606_add_parking_phone_columns.php',
     'Adobe_Font_Metrics' => $vendorDir . '/phenx/php-font-lib/classes/Adobe_Font_Metrics.php',
     'Attribute_Translator' => $vendorDir . '/dompdf/dompdf/include/attribute_translator.cls.php',
     'AvailabilityTableSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',

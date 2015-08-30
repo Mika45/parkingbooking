@@ -23,7 +23,10 @@ class Parking extends Model {
 						   'lng',
 						   'timezone',
 						   'non_work_hours',
-						   'email'];
+						   'email',
+						   'phone1',
+						   'phone2',
+						   'mobile'];
 
 
     public function tags()

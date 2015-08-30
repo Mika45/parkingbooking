@@ -23,6 +23,7 @@ return [
 	'common_add'     => 'Address',
 	'common_mob'     => 'Mobile',
 	'common_email'   => 'E-mail',
+	'common_phone'   => 'Contact numbers',
 
 	/*
 	|--------------------------------------------------------------------------

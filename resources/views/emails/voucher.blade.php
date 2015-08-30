@@ -15,7 +15,17 @@
 		@foreach ($booking as $bk)
 			<p>{{Lang::get('emails.common_ref')}}: <strong>{{$bk->booking_ref}}</strong></p>
 			<p>{{$bk->checkin}} - {{$bk->checkout}}</p>
-			<p>{{Lang::get('emails.common_park')}}: {{$bk->parking_name}}, {{$bk->address}}</p>
+			<p>
+				{{Lang::get('emails.common_park')}}: {{$bk->parking_name}}, {{$bk->address}}
+				<br/>
+				{{Lang::get('emails.common_phone')}}: {{$bk->phone1}} 
+				@if($bk->phone2)
+					, {{$bk->phone2}}
+				@endif
+				@if($bk->mobile)
+					, {{$bk->mobile}}
+				@endif
+			</p>
 			<p>{{Lang::get('emails.common_name')}}: {{$bk->title}} {{$bk->firstname}} {{$bk->lastname}}</p>
 			<p>{{Lang::get('emails.common_mob')}}: {{$bk->mobile}}</p>
 			<p>{{Lang::get('emails.common_email')}}: {{$bk->email}}</p>
