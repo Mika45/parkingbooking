@@ -87,8 +87,12 @@ return [
 	'pay_sum_opt_1'		=> 'Pay at car park',
 	'pay_sum_opt_2'		=> 'Pay with Credit/Debit card',
 	'pay_sum_opt_note'	=> 'Payment with Credit/Debit card coming soon',
-	'pay_res_heading'	=> 'Thank you!',
-	'pay_res_body'		=> 'Your booking has been completed!<br/>An E-mail with your booking details and your voucher has been sent to you. Please check your inbox.',
+	'pay_success_head'	=> 'Thank you!',
+	'pay_success_body'	=> 'Your booking has been completed!<br/>An E-mail with your booking details and your voucher has been sent to you. Please check your inbox.',
+	'pay_failure_head'	=> 'We are sorry!',
+	'pay_failure_body'	=> 'Your booking could not be completed!<br/>The card details you provided could not be processed.',
+	'pay_cancel_head'	=> 'We are sorry for that!',
+	'pay_cancel_body'	=> 'You have chosen to cancel the completion of your booking. Why not try different dates?',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -118,6 +118,9 @@ class LocationPagesController extends Controller {
 		}*/
 
 		$translations = get_translation( 'LOCATION', $location->location_id );
+
+		if (empty($translations))
+			Abort(404);
 		
 		$data = DB::select('CALL GetLocationParkings('.$location->location_id.')');
 
