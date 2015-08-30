@@ -71,6 +71,6 @@ BEGIN
 			AND    p.status = 'A'
 			AND    pl.status = 'A'
 			) u
-	ORDER   BY u.available DESC, CASE IFNULL(u.price,0) WHEN 0 THEN 1 ELSE -1 END ASC;
+	ORDER   BY u.available DESC, -u.price DESC;
 
 END
