@@ -107,20 +107,11 @@ class LocationPagesController extends Controller {
 
 		if (!empty($translation)){
 			$location = Location::findOrFail($translation->identifier);
-			//dd($location);
 		} else {
 			$location = Location::where('slug', '=', $slug)->first();
 		}
 
-		/*$parent_loc = DB::table('LOCATIONS_V')->where('parent_slug', '=', $parent)->where('location_id', '=', $location->location_id)->first();
-		if(empty($parent_loc)){
-			App::abort(404, 'Not Found');
-		}*/
-
 		$translations = get_translation( 'LOCATION', $location->location_id );
-
-		if (empty($translations))
-			Abort(404);
 		
 		$data = DB::select('CALL GetLocationParkings('.$location->location_id.')');
 
