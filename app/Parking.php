@@ -34,6 +34,11 @@ class Parking extends Model {
     	return $this->belongsToMany('App\Tag', 'PARKING_TAG')->withTimestamps()->orderBy('name');
     }
 
+    public function fields()
+    {
+    	return $this->belongsToMany('App\Field', 'PARKING_FIELD')->withTimestamps()->orderBy('field_name');
+    }
+
     /**
 	 * Get the value of the model's route key.
 	 *

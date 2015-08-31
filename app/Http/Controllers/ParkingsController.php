@@ -74,13 +74,10 @@ class ParkingsController extends Controller {
 
 		Session::put('selectedParking', $id);
 
-		//dd(Session::all());
 		//$lang = Session::get('applocale');
-		//dd($lang);
 		//$location = DB::select('CALL GetLocations("one", '.$id.', "'.$lang.'")');
 		
 		$pcur = get_parking_currency($id);
-		//dd($pcur);
 
 		// create the google map
 		$map = build_map( $parking->lat, $parking->lng, $parking->parking_name ); //uses helpers.php
@@ -401,18 +398,10 @@ class ParkingsController extends Controller {
 			$p_location->save();
 		}
 
-		foreach ($input['fields'] as $field){
-			$p_field = new ParkingField;
-
-			$p_field->parking_id = $parking->parking_id;
-			$p_field->field_id = $field;
-			$p_field->required = 'Y';
-
-			$p_field->save();
-		}
+		//attach the fields
+		$parking->fields()->attach($request->input('fields'));
 
 		//attach the tags
-		$tagIds = $request->input('tags');
 		$parking->tags()->attach($request->input('tags'));
 
 		if ( $request->input('cancel_threshold') > 0 ){
@@ -543,17 +532,14 @@ class ParkingsController extends Controller {
 	public function update($id, AddParkingRequest $request)
 	{
 		$input = $request->all();
-		//dd($input);
 
 		$files = $request->file('images');
 
-		//dd($files);
 		$files = Input::file('images');
 		$file_count = count($files);
 	    // start count how many uploaded
 	    $uploadcount = 0;
 	    foreach($files as $file) {
-	    	//dd($file);
 			$rules = array('file' => 'required'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
 			$validator = Validator::make(array('file'=> $file), $rules);
 			if($validator->passes()){
@@ -563,7 +549,6 @@ class ParkingsController extends Controller {
 				
 				$upload_success = $file->move($destinationPath, $filename);
 
-				//
 				//$thumbnail = Image::open($destinationPath.$filename)->thumbnail(new Imagine\Image\Box(300,300));
 				$thumbnail = Image::make($destinationPath.$filename, array(
 				    'width' => 75,
@@ -621,8 +606,6 @@ class ParkingsController extends Controller {
 					
 					$cancel_threshold = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CANCEL_THRESHOLD')->first();
 					
-					//$cancel_threshold->value = $request->input('cancel_threshold');
-					//dd($cancel_threshold);
 					$affectedRows = Configuration::where('parking_id', '=', $parking->parking_id)
 												->where('conf_name', '=', 'CANCEL_THRESHOLD')
 												->update(['value' => $request->input('cancel_threshold')]);
@@ -644,18 +627,27 @@ class ParkingsController extends Controller {
 
 		}
 
+		// fetch and update or create
+		$configCurrency = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CURRENCY')->first();
+		if($configCurrency) {
+			$affectedRow1 = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CURRENCY')->update(['value' => $request->input('currency')]);
+			$affectedRow1 = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CURRENCY_ORDER')->update(['value' => $request->input('currency_order')]);
+		}
+		else {
+			$config = new Configuration;
+			$config->parking_id = $parking->parking_id;
+			$config->conf_name = 'CURRENCY';
+			$config->value = $request->input('currency');
+			$config->save();
+		}
+
+		// Update Fields
 		if (array_key_exists('fields', $input)) {
-			foreach ($input['fields'] as $field){
-				//$p_field = ParkingField::firstOrCreate(['parking_id' => $parking->parking_id, 'field_id' => $field, 'required' => 'Y']);
-				$p_field = ParkingField::firstOrCreate(['parking_id' => $parking->parking_id, 'field_id' => $field]);
-			}
+			$parking->fields()->sync($request->input('fields'));
 		} else {
 			$affectedRows = ParkingField::where('parking_id', '=', $parking->parking_id)->delete();
 		}
 
-		$tagIds = $request->input('tags');
-		//dd($tagIds);
-		//$parking->tags()->attach($request->input('tags'));
 		$parking->tags()->sync($request->input('tags'));
 
 		//update_availability($id);

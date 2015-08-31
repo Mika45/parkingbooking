@@ -10,4 +10,9 @@ class Field extends Model {
 
 	protected $fillable = ['field_name', 'type', 'attributes', 'label'];
 
+	public function parkings()
+	{
+		return $this->belongsToMany('App\Parking');
+	}
+
 }
