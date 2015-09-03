@@ -48,7 +48,7 @@ return [
 	*/
 	'voucher_subject' => 'Your Booking Voucher',
 	'voucher_heading' => 'Booking Voucher',
-	'voucher_intro'   => 'Please present your booking voucher at the car park upon arrival. Please note that this booking voucher is the confirmation of your booking made online via ParkingLegend.com. Your booking voucher is not an invoice, therefore it cannot be used as such. The invoice is provided to you by the car park.',
+	'voucher_intro'   => 'Please note that this booking voucher is the confirmation of your booking made online via ParkingLegend.com. Your booking voucher is not an invoice, therefore it cannot be used as such. The invoice is provided to you by the car park.',
 	'voucher_notes'   => 'Reservation notes',
 	'voucher_desc'    => 'Description',
 	'voucher_find'    => 'How to find it',
