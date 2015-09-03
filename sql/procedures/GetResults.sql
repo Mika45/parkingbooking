@@ -21,7 +21,8 @@ BEGIN
 		   u.timezone, 
 		   u.early_booking, 
 		   u.status AS active_status, 
-		   u.available, 
+		   WHEN ( u.slots <= IFNULL(u.checked_in, 0) OR u.slots <= IFNULL(u.checked_in ,0) ) THEN 'N'
+		   ELSE GetAvailability(u.parking_id, in_date_from, in_hour_from, in_date_to, in_hour_to) END AS available,
 		   u.gt_early_bkg, 
 		   u.gt_min_dur, 
 		   IF (IFNULL(u.offer, 0) > 0, u.offer, u.price) AS price, 
@@ -37,8 +38,7 @@ BEGIN
 		   u.currency_order
 	FROM   (
 			SELECT p.*,
-				   CASE WHEN ( p.slots <= IFNULL(b.checked_in, 0) OR p.slots <= IFNULL(b.checked_in ,0) ) THEN 'N'
-				   ELSE GetAvailability(p.parking_id, in_date_from, in_hour_from, in_date_to, in_hour_to) END AS available,
+				   b.checked_in,
 				   CASE WHEN TIMESTAMPDIFF( HOUR, UTC_TIMESTAMP, v_from_datetime ) >= p.early_booking THEN 1 
 				   ELSE 0 
 				   END AS gt_early_bkg,
@@ -71,6 +71,6 @@ BEGIN
 			AND    p.status = 'A'
 			AND    pl.status = 'A'
 			) u
-	ORDER   BY u.available DESC, -u.price DESC;
+	ORDER   BY available DESC, -u.price DESC;
 
 END
