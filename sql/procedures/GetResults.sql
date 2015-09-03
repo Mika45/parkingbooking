@@ -20,7 +20,8 @@ BEGIN
 		   u.parking_name, 
 		   u.timezone, 
 		   u.early_booking, 
-		   u.status AS active_status, 
+		   u.status AS active_status,
+		   CASE WHEN (IFNULL(u.price,0) <= 0) THEN 'N' 
 		   WHEN ( u.slots <= IFNULL(u.checked_in, 0) OR u.slots <= IFNULL(u.checked_in ,0) ) THEN 'N'
 		   ELSE GetAvailability(u.parking_id, in_date_from, in_hour_from, in_date_to, in_hour_to) END AS available,
 		   u.gt_early_bkg, 
