@@ -11,7 +11,7 @@
 
 	<table>
 		<tr>
-			<td width="85%"><h1>{{ $parking->parking_name }}</h1></td>
+			<td width="85%"><h1>{!! $translations['parking_name'] or $parking->parking_name !!}</h1></td>
 		</tr>
 	</table>
 	<h5>{{ $parking->address }}</h5>

@@ -13,7 +13,8 @@
 				{!! Form::select('column_name', ['description' => 'Description',
 				   								 'reserve_notes' => 'Reserve notes',
 				   								 'find_it' => 'Find it',
-                                                 'address' => 'Address'], null, ['class' => 'form-control']) !!}
+                                                 'address' => 'Address',
+                                                 'parking_name' => 'Parking Name'], null, ['class' => 'form-control']) !!}
     		</div>
 
     		
