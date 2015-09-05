@@ -11,6 +11,8 @@ BEGIN
 			   LEFT JOIN TRANSLATION t2 ON (pl.location_id = t2.identifier AND t2.table_name = 'LOCATION' AND t2.column_name = 'name' AND t2.locale = in_locale)
 		WHERE  l.location_parent_id = pl.location_id
 		AND    IFNULL(in_location_id, l.location_parent_id) = l.location_parent_id
+	    AND    pl.status != 'I'
+		AND    l.status != 'I'
 		ORDER  BY 3, 2;
 
 	ELSEIF in_type = 'one' THEN
