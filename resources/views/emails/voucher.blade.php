@@ -22,8 +22,8 @@
 				@if($bk->phone2)
 					, {{$bk->phone2}}
 				@endif
-				@if($bk->mobile)
-					, {{$bk->mobile}}
+				@if($bk->pmobile)
+					, {{$bk->pmobile}}
 				@endif
 			</p>
 			<p>{{Lang::get('emails.common_name')}}: {{$bk->title}} {{$bk->firstname}} {{$bk->lastname}}</p>
