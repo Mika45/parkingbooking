@@ -144,6 +144,9 @@ class LocationsController extends Controller {
 	{
 		$location = Location::findOrFail($id);
 
+		if (empty($request->slug))
+			$request->merge(array('slug' => NULL));
+
 		$location->update($request->all());
 		
 		return redirect('locations');
