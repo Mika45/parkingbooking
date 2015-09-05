@@ -14,6 +14,9 @@
 		<p>{{Lang::get('emails.voucher_intro')}}</p>
 		@foreach ($booking as $bk)
 			<p>{{Lang::get('emails.common_ref')}}: <strong>{{$bk->booking_ref}}</strong></p>
+			<p>{{Lang::get('emails.voucher_price')}}: 
+				@if($bk->currency_order == 'L') {{$bk->currency}} @endif {{$bk->price}} @if($bk->currency_order == 'R') {{$bk->currency}} @endif
+			</p>
 			<p>{{$bk->checkin}} - {{$bk->checkout}}</p>
 			<p>
 				{{Lang::get('emails.common_park')}}: {{$bk->parking_name}}, {{$bk->address}}
