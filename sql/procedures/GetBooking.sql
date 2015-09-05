@@ -22,7 +22,7 @@ BEGIN
 		   p.find_it,
 		   p.phone1,
 		   p.phone2,
-		   p.mobile
+		   p.mobile AS pmobile
 	FROM   BOOKING b, PARKING p
 	WHERE  b.parking_id = p.parking_id
     AND    b.booking_id = in_booking_id;
