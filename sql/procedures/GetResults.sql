@@ -16,12 +16,12 @@ BEGIN
 	SET 	v_from_datetime = CONCAT(in_date_from, ' ', in_hour_from);
 	SET 	v_to_datetime 	= CONCAT(in_date_to, ' ', in_hour_to);
 	
-	SELECT u.parking_id, 
-		   u.parking_name, 
+	SELECT u.parking_id,
+		   IFNULL(u.parking_name_t, u.parking_name) AS parking_name,
 		   u.timezone, 
 		   u.early_booking, 
-		   u.status AS active_status,
-		   CASE WHEN (IFNULL(u.price,0) <= 0) THEN 'N' 
+		   u.status AS active_status, 
+		   CASE WHEN (IFNULL(u.price,0) <= 0) THEN 'N'
 		   WHEN ( u.slots <= IFNULL(u.checked_in, 0) OR u.slots <= IFNULL(u.checked_in ,0) ) THEN 'N'
 		   ELSE GetAvailability(u.parking_id, in_date_from, in_hour_from, in_date_to, in_hour_to) END AS available,
 		   u.gt_early_bkg, 
@@ -39,6 +39,7 @@ BEGIN
 		   u.currency_order
 	FROM   (
 			SELECT p.*,
+				   GROUP_CONCAT(if(t.column_name = 'parking_name', t.value, NULL)) AS parking_name_t,
 				   b.checked_in,
 				   CASE WHEN TIMESTAMPDIFF( HOUR, UTC_TIMESTAMP, v_from_datetime ) >= p.early_booking THEN 1 
 				   ELSE 0 
@@ -60,7 +61,7 @@ BEGIN
 					  FROM   BOOKING
 					  WHERE  IFNULL(status, 'X') != 'C'
 					  GROUP  BY parking_id) b ON b.parking_id = pl.parking_id, 
-				   PARKING p LEFT JOIN TRANSLATION t ON (p.parking_id = t.identifier AND t.table_name = 'PARKING' AND t.column_name = 'address' AND t.locale = in_locale)
+				   PARKING p LEFT JOIN TRANSLATION t ON (p.parking_id = t.identifier AND t.table_name = 'PARKING' AND t.column_name IN ('address', 'parking_name') AND t.locale = in_locale)
 							 LEFT JOIN (SELECT c.parking_id,
 											   GROUP_CONCAT(if(c.conf_name = 'CURRENCY', c.value, NULL)) AS currency,
 											   GROUP_CONCAT(if(c.conf_name = 'CURRENCY_ORDER', c.value, NULL)) AS currency_order
@@ -71,6 +72,7 @@ BEGIN
 			AND    pl.parking_id = p.parking_id
 			AND    p.status = 'A'
 			AND    pl.status = 'A'
+		    GROUP  BY t.identifier
 			) u
 	ORDER   BY available DESC, -u.price DESC;
 
