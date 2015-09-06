@@ -61,10 +61,12 @@ class LocationsController extends Controller {
 	public function store(AddLocationRequest $request)
 	{
 		$input = $request->all();
-		//dd($input);
 
 		if ($input['location_parent_id'] == 'NULL')
 			Input::merge(array('location_parent_id' => NULL));
+
+		if (empty($input['slug']))
+			$request->merge(array('slug' => NULL));
 
 		Location::create($input);
 
@@ -144,7 +146,9 @@ class LocationsController extends Controller {
 	{
 		$location = Location::findOrFail($id);
 
-		if (empty($request->slug))
+		$input = $request->all();
+
+		if (empty($input['slug']))
 			$request->merge(array('slug' => NULL));
 
 		$location->update($request->all());
