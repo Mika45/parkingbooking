@@ -54,14 +54,10 @@ return [
 
 		'mysql' => [
 			'driver'    => 'mysql',
-			/*'host'      => env('DB_HOST', 'localhost'),
-			'database'  => env('DB_DATABASE', 'tmihalis_park'),
-			'username'  => env('DB_USERNAME', 'tmihalis_park'),
-			'password'  => env('DB_PASSWORD', 'r3deye'),*/
-			'host'      => 'localhost',
-			'database'  => 'tmihalis_park',
-			'username'  => 'tmihalis_park',
-			'password'  => 'r3deye',
+			'host'      => env('DB_HOST', 'localhost'),
+			'database'  => env('DB_DATABASE', 'tmihalis_parkdem'),
+			'username'  => env('DB_USERNAME', 'tmihalis_parkdem'),
+			'password'  => env('DB_PASSWORD', 'p4rkd3m'),
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

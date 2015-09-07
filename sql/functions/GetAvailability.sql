@@ -47,6 +47,40 @@ BEGIN
 				SET v_status = 'N';
 		END CASE;
 
+	WHEN p_parking_id = 16 THEN # Parking Kentavron & Ifestou Larisa
+		CASE 
+			WHEN DATE_FORMAT(p_date_from, '%w') BETWEEN 1 AND 5 THEN
+				# From Monday to Friday
+				IF (p_hour_from NOT BETWEEN '08:00' AND '23:00') THEN
+					SET v_status = 'N';
+				END IF;
+			WHEN DATE_FORMAT(p_date_from, '%w') IN (6) THEN
+				# On Saturday
+				IF (p_hour_from NOT BETWEEN '08:00' AND '16:00') THEN
+					SET v_status = 'N';
+				END IF;
+			WHEN DATE_FORMAT(p_date_from, '%w') = 0 THEN 
+				# Closed on Sundays
+				SET v_status = 'N';
+		END CASE;
+
+		CASE
+			# Time to check the pick-up datetime
+			WHEN DATE_FORMAT(p_date_to, '%w') BETWEEN 1 AND 5 THEN
+				# From Monday to Friday
+				IF (p_hour_to NOT BETWEEN '08:00' AND '23:00') THEN
+					SET v_status = 'N';
+				END IF;
+			WHEN DATE_FORMAT(p_date_to, '%w') IN (6) THEN
+				# On Saturday
+				IF (p_hour_to NOT BETWEEN '08:00' AND '16:00') THEN
+					SET v_status = 'N';
+				END IF;
+			WHEN DATE_FORMAT(p_date_to, '%w') = 0 THEN 
+				# Closed on Sundays
+				SET v_status = 'N';
+		END CASE;
+
 	ELSE SET v_status = 'Y';
 	END CASE;
 
