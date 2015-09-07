@@ -29,7 +29,9 @@ BEGIN
 		INTO   v_price
 		FROM   RATE_DAILY rd2 LEFT JOIN RATE_DAILY rd ON rd2.parking_id = rd.parking_id AND rd.day = MOD(v_dur_days, 31)
 		WHERE  rd2.parking_id = p_parking_id
-		AND    rd2.day = 31;
+		AND    rd2.day = (SELECT MAX(day) 
+						  FROM 	 RATE_DAILY rd3
+						  WHERE  rd3.parking_id = rd2.parking_id);
 	END IF;
 
 
