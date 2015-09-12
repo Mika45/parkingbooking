@@ -290,6 +290,21 @@ function get_tag_translations( $in_parking_id )
 	return $response;
 }
 
+function get_results_translation( $in_parking_ids, $in_locale )
+{
+	$lang = App::getLocale();
+	$response = DB::select('CALL GetResultTranslations("'.$in_parking_ids.'", "'.$in_locale.'")');
+
+	$values = array();
+
+	foreach ($response as $key => $trans){
+		$values[$trans->parking_id] = $trans;
+		unset($values[$trans->parking_id]->parking_id);
+	}
+
+	return $values;
+}
+
 function get_locations_for_search($parent = 'NULL', $child = 'NULL')
 {
 	$lang = App::getLocale();

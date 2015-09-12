@@ -23,11 +23,11 @@
 				<tr>
 					<td><img class="media-object" src="/img/default-p.png" alt="..."></td>
 					<td>
-						<a href="{{ action('ParkingsController@show', [$parking->parking_id]) }}"><b>{{ $parking->parking_name }}</b></a>
+						<a href="{{ action('ParkingsController@show', [$parking->parking_id]) }}"><b>{{ $translations[$parking->parking_id]->parking_name or $parking->parking_name }}</b></a>
 						{{-- <b>{{ $parking->parking_name }}</b> --}}
 						<?php //echo '<a href="#" onclick="showBox('.Session::get('JSinstances')[$parking->parking_id].');"><b>'.$parking->parking_name.'</b></a>'; ?>
 						<br>
-						{{ $parking->address }}
+						{{ $translations[$parking->parking_id]->address or $parking->address }}
 						<br>
 						<?php //echo '<a href="#" onclick="showBox('.Session::get('JSinstances')[$parking->parking_id].');">'.Lang::get('site.search_results_find_on_map').'</a>'; ?>
 						

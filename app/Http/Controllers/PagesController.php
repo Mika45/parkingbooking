@@ -195,17 +195,21 @@ class PagesController extends Controller {
 				 'checkout'		=> $checkout,
 				 'currency'		=> $curs_array]);
 
-		//dd(Session::get('currency')[1]);
+		$lang = App::getLocale();
 
-		$lang = Session::get('applocale');
 		$location = DB::select('CALL GetLocations("one", '.$location.', "'.$lang.'")');
 
 		$map = build_results_map( $location[0]->lat, $location[0]->lng, $data ); //uses helpers.php
 		$mapHelper = new MapHelper();
 
-		//dd($data);
+		if(!empty($keys)){
+			$pids = implode(",", $keys);
+			$translations = get_results_translation( $pids, $lang );	
+		} else {
+			$translations = array();
+		}		
 
-		return view('results', compact('data', 'locationsList', 'location', 'count', 'map', 'mapHelper', 'checkin', 'checkout'));
+		return view('results', compact('data', 'translations', 'locationsList', 'location', 'count', 'map', 'mapHelper', 'checkin', 'checkout'));
 	}
 
 	public function about()
