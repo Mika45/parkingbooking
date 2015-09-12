@@ -52,6 +52,7 @@ BEGIN
 		WHERE  l.location_parent_id = in_location_id
 		AND    l.location_parent_id = pl.location_id
 		AND	   l.slug IS NOT NULL
+		AND	   l.status = 'A'
 		ORDER  BY l.location_id;
 
 	END IF;
