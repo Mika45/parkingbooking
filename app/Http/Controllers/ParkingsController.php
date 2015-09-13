@@ -28,6 +28,7 @@ use Carbon;
 use Validator;
 use Image;
 use Imagine;
+use App\PhoneCode;
 
 use Ivory\GoogleMap\Helper\MapHelper;
 
@@ -152,7 +153,15 @@ class ParkingsController extends Controller {
 			}
 		}
 
-		return view('parkings.book', compact('fields', 'id', 'user', 'translations', 'parking', 'title_attributes'));
+		#$pcodes = PhoneCode::all()->toArray();
+		$countries = PhoneCode::all()->lists('name', 'country_id');
+		/*dd($pcodes);
+		foreach ($pcodes as $key => $value) {
+			$countries[] = $value['name'];
+		}*/
+		//dd($pcodes);
+
+		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'parking', 'title_attributes'));
 	}
 
 	public function payment(BookRequest $request)
@@ -208,6 +217,7 @@ class ParkingsController extends Controller {
 			$booking->passengers = $input['passengers'];
 		if( array_key_exists('newsletter', $input) )
 			$booking->newsletter = 'Y';
+		$booking->country_id = $input['country'];
 
 		$booking->save();
 		

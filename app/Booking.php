@@ -24,6 +24,7 @@ class Booking extends Model {
 						   'car_reg',
 						   'car_colour',
 						   'passengers',
-						   'newsletter'];
+						   'newsletter',
+						   'country_id'];
 
 }

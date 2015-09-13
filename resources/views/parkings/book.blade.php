@@ -71,16 +71,19 @@
 				@elseif ($field->type === 'select')
 					<div class="form-group">
 						
-						
 						<?php 
 							//$vlabel = $translations[$field->field_name]['value'];
 							//$vlabel = $translations['title'];
 							//var_dump($vlabel);
-							if (!empty($title_attributes))
+							if ($field->field_name == 'country'){
+								$selectArray = $countries;
+							}
+							elseif (!empty($title_attributes)){
 								$selectArray = json_decode($title_attributes, true);
-							else
+							}
+							else {
 								$selectArray = json_decode($field->attributes, true);
-
+							}
 							
 							//$selectArray['S'] = 'Please select';
 							//array_unshift($selectArray , 'default', 'Please select');
