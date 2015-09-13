@@ -70,6 +70,6 @@ BEGIN
 			AND    p.status = 'A'
 			AND    pl.status = 'A'
 			) u
-	ORDER   BY available DESC, -u.price DESC;
+	ORDER   BY available DESC, -(CASE WHEN IFNULL(u.offer, 0) > 0 THEN u.offer ELSE u.price END) DESC;
 
 END
