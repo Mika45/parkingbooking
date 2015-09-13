@@ -1,6 +1,4 @@
 /node_modules
 /public/img/parkings
 /public/tmp
-/.env
-/config/database.php
 /database
