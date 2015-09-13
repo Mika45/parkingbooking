@@ -4,4 +4,3 @@
 /.env
 /config/database.php
 /database
-/vendor
