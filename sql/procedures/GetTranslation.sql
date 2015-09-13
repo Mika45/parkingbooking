@@ -16,25 +16,16 @@ BEGIN
 		AND    table_name = in_table
 		AND    identifier = in_identifier
 		UNION
-      SELECT #MAX(column_name) AS colum_name, 
-             CASE WHEN column_name IN ('name','attributes') THEN 'title' ELSE column_name END AS column_name,
-             MAX(value) AS value,
-             GROUP_CONCAT(if(column_name = 'attributes', value, NULL)) AS attributes
+		SELECT CASE WHEN column_name IN ('name','attributes') THEN 'title' ELSE column_name END AS column_name,
+			   MAX(value) AS value,
+               GROUP_CONCAT(if(column_name = 'attributes', value, NULL)) AS attributes
 		FROM   TRANSLATION
 		WHERE  locale = in_locale
 		AND    table_name = 'FIELD'
 		AND    identifier IN (SELECT field_id 
-      							  FROM PARKING_FIELD 
-      							  WHERE parking_id = 1)
+							  FROM 	 PARKING_FIELD 
+							  WHERE  parking_id = in_identifier)
       GROUP BY table_name, identifier;
-      
-		/*SELECT column_name, value
-		FROM   TRANSLATION
-		WHERE  locale = in_locale
-		AND    table_name = 'FIELD'
-		AND    identifier IN (SELECT field_id 
-							  FROM PARKING_FIELD 
-							  WHERE parking_id = in_identifier);*/
 	ELSEIF in_name IS NULL THEN
 		SELECT column_name, value, identifier
 		FROM   TRANSLATION
