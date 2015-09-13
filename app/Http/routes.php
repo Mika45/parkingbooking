@@ -12,7 +12,7 @@
 */
 
 // taken out of the redirection middlewares (admin backend)
-Route::group(['middleware' => 'secure'], function()
+Route::group(['middleware' => 'unsecure'], function()
 {
 	Route::resource('parking', 'ParkingsController', ['except' => ['show']]);
 	Route::get('parking/{id}/rates', 'RatesController@index');
@@ -51,7 +51,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 });
 
 // FORCE HTTPS
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect', 'localizationRedirect']], function()
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['unsecure', 'localeSessionRedirect', 'localizationRedirect']], function()
 {
 	Route::post('payment', 'ParkingsController@payment');
 	Route::get('payment/online', 'PaymentsController@bank');
