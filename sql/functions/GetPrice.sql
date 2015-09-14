@@ -11,7 +11,7 @@ BEGIN
 	DECLARE v_price, v_offer DECIMAL(8,2);
 
 	SET v_dur_hours = TIMESTAMPDIFF(HOUR, p_date_from, p_date_to);
-	SET v_dur_days 	= TIMESTAMPDIFF(DAY, p_date_from, p_date_to);
+	SET v_dur_days 	= TIMESTAMPDIFF(DAY, DATE_FORMAT(p_date_from,'%Y-%m-%d'), DATE_FORMAT(p_date_to,'%Y-%m-%d'));
 
 	IF p_rate_type = 'H' THEN
 		SELECT TRUNCATE(IFNULL(rh.price,0) + ((v_dur_hours - MOD(v_dur_hours, 24))/24)* rh2.price, 2)
