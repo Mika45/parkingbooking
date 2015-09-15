@@ -81,6 +81,26 @@ BEGIN
 				SET v_status = 'N';
 		END CASE;
 
+	WHEN p_parking_id IN (15,17) THEN
+	
+		CASE 
+			WHEN DATE_FORMAT(p_date_from, '%w') BETWEEN 1 AND 5 THEN
+				# From Monday to Friday
+				IF (DATE_FORMAT(v_from_datetime,'%H:%i') NOT BETWEEN '07:30' AND '16:00') THEN
+					SET v_status = 'N';
+				END IF;
+			ELSE SET v_status = 'N';
+		END CASE;
+
+		CASE
+			# Time to check the pick-up datetime
+			WHEN DATE_FORMAT(p_date_to, '%w') BETWEEN 0 AND 6 THEN
+				# From Monday to Friday
+				IF (DATE_FORMAT(v_to_datetime,'%H:%i') NOT BETWEEN '07:30' AND '23:59') THEN
+					SET v_status = 'N';
+				END IF;
+		END CASE;
+
 	ELSE SET v_status = 'Y';
 	END CASE;
 
