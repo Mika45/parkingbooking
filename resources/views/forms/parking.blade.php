@@ -22,6 +22,7 @@
     		<div class="col-lg-2">
 				{!! Form::label('rate_type', 'Rate type:') !!}
 				{!! Form::select('rate_type', [
+				   'C' => 'Calendar Daily',
 				   'D' => 'Daily',
 				   'H' => 'Hourly'], null, ['class' => 'form-control']
 				) !!}
