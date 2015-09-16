@@ -24,6 +24,11 @@ return [
 	'common_mob'     => 'Mobile',
 	'common_email'   => 'E-mail',
 	'common_phone'   => 'Contact numbers',
+	'common_car_make' 	=> 'Make',
+	'common_car_model' 	=> 'Model',
+	'common_car_colour' => 'Colour',
+	'common_car_reg' 	=> 'Registration number',
+	'common_passengers' => 'Passengers',
 
 	/*
 	|--------------------------------------------------------------------------

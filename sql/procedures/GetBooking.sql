@@ -17,19 +17,26 @@ BEGIN
 		   b.lastname,
 		   b.mobile,
 		   b.email,
+		   b.car_make,
+		   b.car_model,
 		   b.car_reg,
+		   b.car_colour,
+		   b.passengers,
 		   DATE_FORMAT(b.created_at, '%d/%m/%Y %H:%i') AS booked_at,
 		   p.description,
 		   p.reserve_notes,
 		   p.find_it,
 		   p.phone1,
 		   p.phone2,
-		   p.mobile AS pmobile
-	FROM   BOOKING b, PARKING p
+		   p.mobile AS pmobile,
+		   pc.code AS phone_code
+	FROM   BOOKING b
+		   LEFT JOIN PHONE_CODE pc ON (pc.country_id = b.country_id),
+		   PARKING p
 		   LEFT JOIN CONFIGURATION c ON (c.parking_id = p.parking_id AND c.conf_name in ('CURRENCY', 'CURRENCY_ORDER'))
 	WHERE  b.parking_id = p.parking_id
     AND    b.booking_id = in_booking_id
-    GROUP  BY c.parking_id;
+	GROUP  BY c.parking_id;
 
 END$$
 DELIMITER ;

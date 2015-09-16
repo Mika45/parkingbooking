@@ -24,6 +24,11 @@ return [
 	'common_mob'     => 'Κινητό',
 	'common_email'   => 'E-mail',
 	'common_phone'   => 'Τηλέφωνα επικοινωνίας',
+	'common_car_make' 	=> 'Μάρκα',
+	'common_car_model' 	=> 'Μοντέλο',
+	'common_car_colour' => 'Χρώμα',
+	'common_car_reg' 	=> 'Αριθμός κυκλοφορίας',
+	'common_passengers' => 'Επιβάτες',
 
 	/*
 	|--------------------------------------------------------------------------
