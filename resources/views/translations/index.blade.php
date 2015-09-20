@@ -11,6 +11,9 @@
 	@elseif ( $type == 'tag' )
 		<h1>Edit translations for the Tag: {{ $tag->name }}</h1>
 		<a href="/translations/tag/{{ $tag->tag_id }}/create" class="btn btn-primary btn-xs">Add translation</a>
+	@elseif ( $type == 'article' )
+		<h1>Edit translations for the Article: {{ $article->title }}</h1>
+		<a href="/translations/article/{{ $article->article_id }}/create" class="btn btn-primary btn-xs">Add translation</a>
 	@endif	
 		<table class="table table-condensed table-striped table-hover">
 			<thead>

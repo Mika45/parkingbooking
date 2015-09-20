@@ -9,6 +9,8 @@
 		<h1>Add a new Location Translation for {{ $location->name }}</h1>
 	@elseif ( $type == 'tag' )
 		<h1>Add a new Tag Translation for {{ $tag->name }}</h1>
+	@elseif ( $type == 'article' )
+		<h1>Add a new Article Translation for {{ $article->title }}</h1>
 	@endif
 
 <div class="well">

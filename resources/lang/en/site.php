@@ -18,6 +18,7 @@ return [
 	*/
 	'site_title'	=> 'Secure Parking - Competitive Prices',
 	'nav_locations'	=> 'Locations',
+	'nav_news' 		=> 'News',
 	'nav_faq' 		=> 'FAQ',
 	'nav_contact' 	=> 'Contact Us',
 	'nav_login'  	=> 'Login',
@@ -37,6 +38,7 @@ return [
 	'common_na'		=> 'Not available',
 	'common_accept_terms' => 'I accept the <a href="/tscs" target="_blank">Terms & Conditions</a>',
 
+	'page_news'			=> 'News',
 	'page_faq'			=> 'Frequently Asked Questions',
 	'page_contact'		=> 'Contact Us',
 	'page_about'		=> 'About Us',

@@ -18,6 +18,7 @@ return [
 	*/
 	'site_title'	=> 'Ασφαλή Πάρκινγκ - Ανταγωνιστικές Τιμές',
 	'nav_locations'	=> 'Τοποθεσίες',
+	'nav_news' 		=> 'Νέα',
 	'nav_faq' 		=> 'Συχνές Ερωτήσεις',
 	'nav_contact' 	=> 'Επικοινωνία',
 	'nav_login'  	=> 'Σύνδεση',
@@ -37,6 +38,7 @@ return [
 	'common_na'		=> 'Μη διαθέσιμο',
 	'common_accept_terms' => 'Αποδέχομαι τους <a href="/tscs" target="_blank">Όρους & Προϋποθέσεις</a>',
 
+	'page_news'			=> 'Νέα',
 	'page_faq'			=> 'Συχνές Ερωτήσεις',
 	'page_contact'		=> 'Επικοινωνήστε μαζί μας',
 	'page_about'		=> 'Ποιοί είμαστε',

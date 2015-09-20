@@ -64,7 +64,27 @@
             </div>
 
             {!! Form::hidden('table_name', 'TAG') !!}
-            {!! Form::hidden('identifier', $tag->tag_id) !!} 
+            {!! Form::hidden('identifier', $tag->tag_id) !!}
+
+        @elseif ( $type == 'article' )
+            <div class="col-lg-3">
+                {!! Form::label('locale', 'Locale:') !!}
+                {!! Form::select('locale', $langs, null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="col-lg-3">
+                {!! Form::label('column_name', 'Column:') !!}
+                {!! Form::select('column_name', ['title' => 'Title',
+                                                 'body' => 'Body'], null, ['class' => 'form-control']) !!}
+            </div>
+
+            
+            <div class="col-lg-6">
+                {!! Form::label('value', 'Value:') !!}
+                {!! Form::textarea('value', null, ['class' => 'form-control']) !!}
+            </div>
+
+            {!! Form::hidden('table_name', 'ARTICLE') !!}
+            {!! Form::hidden('identifier', $article->article_id) !!}
 
         @endif
         </div>

@@ -8,6 +8,7 @@ use App\Http\Requests\AddArticleRequest;
 use App\Article;
 use Carbon;
 use DB;
+use Session;
 
 class ArticlesController extends Controller {
 
@@ -73,6 +74,23 @@ class ArticlesController extends Controller {
 	public function show($id)
 	{
 		//
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function showAll()
+	{
+		//$articles = Article::all()->orderBy('article_id', 'desc');
+
+		$lang = Session::get('applocale');
+		$query = 'CALL GetArticles("'.$lang.'")';
+		$articles = DB::select($query);
+
+		return view('articles.show', compact('articles'));
 	}
 
 	/**

@@ -8,6 +8,7 @@ use App\Translation;
 use App\Parking;
 use App\Location;
 use App\Tag;
+use App\Article;
 use App\Http\Requests\AddTranslationRequest;
 use Illuminate\Routing\Route;
 use Config;
@@ -35,9 +36,12 @@ class TranslationsController extends Controller {
 			case 'tag':
 				$tag = Tag::findOrFail($id);
 				break;
+			case 'article':
+				$article = Article::findOrFail($id);
+				break;
 		}
 		
-		return view('translations.index', compact('type', 'translations', 'parking', 'location', 'tag'));
+		return view('translations.index', compact('type', 'translations', 'parking', 'location', 'tag', 'article'));
 	}
 
 	/**
@@ -57,6 +61,9 @@ class TranslationsController extends Controller {
 			case 'tag':
 				$tag = Tag::findOrFail($id);
 				break;
+			case 'article':
+				$article = Article::findOrFail($id);
+				break;
 		}
 
 		foreach (Config::get('app.locales') as $key => $language){
@@ -64,7 +71,7 @@ class TranslationsController extends Controller {
 				$langs[$key] = $language;
 		}
 
-		return view('translations.create', compact('type', 'langs', 'parking', 'location', 'tag'));
+		return view('translations.create', compact('type', 'langs', 'parking', 'location', 'tag', 'article'));
 	}
 
 	/**
@@ -87,6 +94,9 @@ class TranslationsController extends Controller {
 				break;
 			case 'TAG':
 				$type = 'tag';
+				break;
+			case 'ARTICLE':
+				$type = 'article';
 				break;
 		}
 
@@ -130,9 +140,14 @@ class TranslationsController extends Controller {
 				$type = 'tag';
 				$langs[$translation->locale] = $translation->locale;
 				break;
+			case 'ARTICLE':
+				$tag = Article::findOrFail($translation->identifier);
+				$type = 'article';
+				$langs[$translation->locale] = $translation->locale;
+				break;
 		}
 
-		return view('translations.edit', compact('translation', 'type', 'langs', 'parking', 'location', 'tag'));
+		return view('translations.edit', compact('translation', 'type', 'langs', 'parking', 'location', 'tag', 'article'));
 	}
 
 	/**
@@ -155,6 +170,9 @@ class TranslationsController extends Controller {
 				break;
 			case 'TAG':
 				$type = 'tag';
+				break;
+			case 'ARTICLE':
+				$type = 'article';
 				break;
 		}
 

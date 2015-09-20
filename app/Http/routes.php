@@ -44,6 +44,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('about', 'PagesController@about');
 	Route::get('tscs', 'PagesController@tscs');
 	Route::get('contact', 'PagesController@contact');
+	Route::get('news', 'ArticlesController@showAll');
 	Route::get('faq', 'PagesController@faq');
 	Route::get('privacy', 'PagesController@privacy');
 	Route::get('affiliates', 'PagesController@affiliates');
@@ -51,7 +52,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 });
 
 // FORCE HTTPS
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['unsecure', 'localeSessionRedirect', 'localizationRedirect']], function()
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect', 'localizationRedirect']], function()
 {
 	Route::post('payment', 'ParkingsController@payment');
 	Route::get('payment/online', 'PaymentsController@bank');
