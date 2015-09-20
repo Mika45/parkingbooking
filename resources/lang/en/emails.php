@@ -46,6 +46,8 @@ return [
     'reg_act_message' 	   => '<strong>Well done!</strong> Your account has been activated.',
     'reg_act_fail' 	   	   => '<strong>We are sorry.</strong> Your account couldn\'t be activated, please try again',
 
+    'booking_amend_message' => 'Your amendment has been completed.',
+
 	/*
 	|--------------------------------------------------------------------------
 	| Booking voucher (pdf)
@@ -58,6 +60,7 @@ return [
 	'voucher_desc'    => 'Description',
 	'voucher_find'    => 'How to find it',
 	'voucher_price'   => 'Price',
+	'voucher_subject_amend' => 'Your Amended Booking Voucher',
 	
 	'cancel_subject' => 'Ακύρωση Κράτησης',
 	'cancel_message' => 'Ο χρήστης έχει πραγματοποιήσει ακύρωση της κράτησής του.',

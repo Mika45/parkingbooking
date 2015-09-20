@@ -22,6 +22,8 @@ use Request;
 use Input;
 use Lang;
 use Mail;
+use Log;
+use File;
 /********************/
 
 /*
@@ -117,10 +119,22 @@ class UsersController extends Controller {
 		$input = $request->all();
 		//dd($input);
 
-		$checkindate = date('Y-d-m', strtotime($input['checkin']));
+		/*$checkindate = date('Y-d-m', strtotime($input['checkin']));
 		$checkintime = date('H:i:s', strtotime($input['checkin']));
 		$checkoutdate = date('Y-d-m', strtotime($input['checkout']));
-		$checkouttime = date('H:i:s', strtotime($input['checkout']));
+		$checkouttime = date('H:i:s', strtotime($input['checkout']));*/
+
+		/************************************/
+		$checkindate = str_replace("/",".", $input['checkin']);
+		$checkoutdate = str_replace("/",".", $input['checkout']);
+
+		// times
+		$checkintime = date('H:i:s', strtotime($checkindate));
+		$checkouttime = date('H:i:s', strtotime($checkoutdate));
+
+		$checkindate = date('Y-m-d', strtotime($checkindate));
+		$checkoutdate = date('Y-m-d', strtotime($checkoutdate));
+		/*************************************/
 
 		$cid = Session::get('checkindate_init');
 		$cit = Session::get('checkintime_init');
@@ -142,12 +156,14 @@ class UsersController extends Controller {
 
 			//check if we can cancel the booking or not
 
-			$query = 'CALL GetNewAvailability('.$booking->booking_id.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'")';
-			//dd($query);
+			$lang = App::getLocale();
+			//$query = 'CALL GetNewAvailability('.$booking->booking_id.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'")';
+			$query = 'CALL GetResults(NULL, "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", '.$booking->booking_id.', "'.$lang.'")';
 			//a logging proc can go here or wrap the call to a separate API which will include the logging.
+			Log::debug('Query = '.$query);
 			$data = DB::select($query);
 			
-			if (empty($data)){
+			if (empty($data) or empty($data[0]->price) or $data[0]->price == 0){
 				//return redirect()->back()->withInput();
 				return redirect()->back()->with('msg', Lang::get('site.info_no_slots'));
 			} else {
@@ -174,7 +190,47 @@ class UsersController extends Controller {
 			$booking->checkin = $checkindate.' '.$checkintime;
 			$booking->checkout = $checkoutdate.' '.$checkouttime;
 			$booking->price = $request->input('price');
+			$booking->status = 'A';
 			$booking->save();
+
+			// Send all e-mails (this should be wrapped into a helper and be used in ParkingsController as well)
+			$bid = $booking->booking_id;
+			$temp_pdf_name = 'Amended Booking Voucher '.$bid.'.pdf';
+
+			$booking = DB::select('CALL GetBooking('.$booking->booking_id.')');
+			
+			// get the traslations of the current locale
+			$translations = get_parking_translation( $booking[0]->parking_id );
+
+			$pdf = App::make('dompdf');
+			$pdf->loadView('emails.voucher', compact('booking', 'translations'));
+			$pdf->save('tmp/'.$temp_pdf_name);
+
+			// Get the parking model to grab the email address of the parking
+			$parking = Parking::where('parking_id', '=', $booking[0]->parking_id)->first();
+
+			if(!empty($parking->email)) {
+				Mail::send('emails.amend', compact('booking'), function($message) use($temp_pdf_name, $booking, $parking)
+				{
+				    $message->to($parking->email)->subject(Lang::get('emails.voucher_subject_amend'));
+					$message->attach('tmp/'.$temp_pdf_name);
+				});
+			}
+
+			Mail::send('emails.amend', compact('booking'), function($message) use($temp_pdf_name, $booking)
+			{
+			    $message->to($booking[0]->email)->subject(Lang::get('emails.voucher_subject_amend'));
+				$message->attach('tmp/'.$temp_pdf_name);
+			});
+
+			Mail::send('emails.amend', compact('booking'), function($message) use($temp_pdf_name, $booking)
+			{
+			    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject_amend'));
+				$message->attach('tmp/'.$temp_pdf_name);
+			});
+			
+			// Delete the generated pdf after the send
+			File::delete('tmp/'.$temp_pdf_name);
 
 			return redirect('mybookings')->with('message', Lang::get('site.info_amend_ok'));
 

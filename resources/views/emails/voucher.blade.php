@@ -10,12 +10,25 @@
 
 		{{-- <h1>ParkingLegend.com</h1> --}}
 		<img src="http://www.parkinglegend.com/img/logo-blue.jpg" />
-		<h3>{{Lang::get('emails.voucher_heading')}}</h3>
-		<p>{{Lang::get('emails.voucher_intro')}}</p>
+		
 		@foreach ($booking as $bk)
+			@if ($bk->status == 'A')
+				<h3>{{Lang::get('emails.voucher_subject_amend')}}</h3>
+			@else
+				<h3>{{Lang::get('emails.voucher_heading')}}</h3>
+			@endif
+			<p>{{Lang::get('emails.voucher_intro')}}</p>
+
 			<p>{{Lang::get('emails.common_ref')}}: <strong>{{$bk->booking_ref}}</strong></p>
 			<p>{{Lang::get('emails.voucher_price')}}: 
-				@if($bk->currency_order == 'L') {{$bk->currency}} @endif {{$bk->price}} @if($bk->currency_order == 'R') {{$bk->currency}} @endif
+				@if ($bk->currency_order == 'L') {{$bk->currency}} @endif {{$bk->price}} @if($bk->currency_order == 'R') {{$bk->currency}} @endif
+				@if ($bk->status == 'A') 
+					@if ($bk->price_diff < 0)
+						({{$bk->price_old}} {{$bk->price_diff}})
+					@else
+						({{$bk->price_old}} + {{$bk->price_diff}})
+					@endif
+				@endif
 			</p>
 			<p>{{$bk->checkin}} - {{$bk->checkout}}</p>
 			<p>

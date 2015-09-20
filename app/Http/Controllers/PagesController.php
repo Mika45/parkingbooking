@@ -19,6 +19,7 @@ use Ivory\GoogleMap\MapTypeId;
 use Ivory\GoogleMap\Helper\MapHelper;
 use Carbon;
 use stdClass;
+use Log;
 
 class PagesController extends Controller {
 
@@ -91,7 +92,7 @@ class PagesController extends Controller {
 		$checkout = Session::get('checkout');
 
 		$lang = Session::get('applocale');
-		$data = DB::select('CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", "'.$lang.'")');
+		$data = DB::select('CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", NULL, "'.$lang.'")');
 		$locationsList = DB::table('LOCATION')->orderBy('name', 'asc')->lists('name','location_id');
 
 		$parkings_array = array();
@@ -140,7 +141,8 @@ class PagesController extends Controller {
 		$checkout = date('d/m/Y', strtotime($in_to_date)).' '.date('H:i', strtotime($in_to_time));
 
 		$lang = Session::get('applocale');
-		$query = 'CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", "'.$lang.'")';
+		$query = 'CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", NULL, "'.$lang.'")';
+		Log::info('Query = '.$query);
 
 		$data = DB::select($query);
 		$locationsList = DB::table('LOCATION')->orderBy('name', 'asc')->lists('name','location_id');
