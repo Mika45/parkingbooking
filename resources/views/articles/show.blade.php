@@ -14,8 +14,8 @@
 
 	@foreach ($articles as $article)
 
-		<h2>{{$article->title}}</h2>
-		<p>{{$article->body}}</p>
+		<h2>{{ $article->title }}</h2>
+		<p>{!! $article->body !!}</p>
 
 	@endforeach
 
