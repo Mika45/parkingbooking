@@ -7,7 +7,8 @@
 				{!! Form::text('title', null, ['class' => 'form-control']) !!}
     		</div>
     		<div class="col-lg-6">
-				
+				{!! Form::label('slug', 'URL:') !!}
+                {!! Form::text('slug', null, ['class' => 'form-control']) !!}
     		</div>
     		
 

@@ -45,6 +45,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('tscs', 'PagesController@tscs');
 	Route::get('contact', 'PagesController@contact');
 	Route::get('news', 'ArticlesController@showAll');
+	Route::get('news/{slug}', 'ArticlesController@show');
 	Route::get('faq', 'PagesController@faq');
 	Route::get('privacy', 'PagesController@privacy');
 	Route::get('affiliates', 'PagesController@affiliates');

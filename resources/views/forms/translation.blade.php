@@ -74,7 +74,8 @@
             <div class="col-lg-3">
                 {!! Form::label('column_name', 'Column:') !!}
                 {!! Form::select('column_name', ['title' => 'Title',
-                                                 'body' => 'Body'], null, ['class' => 'form-control']) !!}
+                                                 'body' => 'Body',
+                                                 'slug' => 'URL'], null, ['class' => 'form-control']) !!}
             </div>
 
             

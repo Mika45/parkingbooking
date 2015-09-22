@@ -12,11 +12,11 @@
 
 	<h1>{{ Lang::get('site.page_news') }}</h1>
 
-	{{-- @foreach ($article as $art) --}}
+	@foreach ($articles as $article)
 
 		<h2>{{ $article->title }}</h2>
 		<p>{!! $article->body !!}</p>
 
-	{{-- @endforeach --}}
+	@endforeach
 
 @stop

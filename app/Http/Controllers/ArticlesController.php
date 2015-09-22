@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Request;
 use App\Http\Requests\AddArticleRequest;
 use App\Article;
+use App\Translation;
 use Carbon;
 use DB;
 use Session;
@@ -17,7 +18,7 @@ class ArticlesController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['showAll']]);
+        $this->middleware('auth', ['except' => ['showAll', 'show']]);
     }
 
 	/**
@@ -71,9 +72,20 @@ class ArticlesController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($slug)
 	{
-		//
+		$translation = Translation::where('value', '=', $slug)
+									->where('table_name', '=', 'ARTICLE')
+									->where('column_name', '=', 'slug')
+									->first();
+
+		if (!empty($translation)){
+			$article = Article::findOrFail($translation->identifier);
+		} else {
+			$article = Article::where('slug', '=', $slug)->first();
+		}
+
+		return view('articles.show', compact('article'));
 	}
 
 	/**
@@ -90,7 +102,7 @@ class ArticlesController extends Controller {
 		$query = 'CALL GetArticles("'.$lang.'")';
 		$articles = DB::select($query);
 
-		return view('articles.show', compact('articles'));
+		return view('articles.all', compact('articles'));
 	}
 
 	/**
