@@ -19,7 +19,8 @@ return [
 	'home_slogan_1'	=> 'Make your Booking',
 	'home_slogan_2'	=> 'Save Money',
 	'home_slogan_3'	=> 'Secure Parking',
-	'home_slogan_4'	=> 'Secure Payment Online',
+	#'home_slogan_4'	=> 'Secure Payment Online',
+	'home_slogan_4'	=> 'Guaranteed Parking',
 
 	'faq_heading'		=> 'Frequently Asked Questions',
 
