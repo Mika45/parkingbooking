@@ -29,7 +29,7 @@ class RatesController extends Controller {
 			abort(404);
 		}
 
-		if ($parking->rate_type == 'D')
+		if ($parking->rate_type == 'D' or $parking->rate_type == 'C')
 			$rates = RateDaily::where('parking_id', '=', $id)->get();
 		elseif ($parking->rate_type == 'H')
 			$rates = RateHourly::where('parking_id', '=', $id)->get();
@@ -77,7 +77,7 @@ class RatesController extends Controller {
 		
 		$rate_type = get_parking_rate_type( $pid );
 
-		if ($rate_type == 'D') {
+		if ($rate_type == 'D' or $rate_type == 'C') {
 			$rate = new RateDaily;
 			$rate->parking_id = $pid;
 			$rate->day = $input['day'];
@@ -131,7 +131,7 @@ class RatesController extends Controller {
 			abort(404);
 		}
 
-		if ($parking->rate_type == 'D')
+		if ($parking->rate_type == 'D' or $parking->rate_type == 'C')
 			$rate = RateDaily::findOrFail($id);
 		elseif ($parking->rate_type == 'H')
 			$rate = RateHourly::findOrFail($id);
@@ -153,7 +153,7 @@ class RatesController extends Controller {
 
 		$rate_type = get_parking_rate_type( $pid ); //in helpers
 
-		if ($rate_type == 'D')
+		if ($rate_type == 'D' or $rate_type == 'C')
 			$rate = RateDaily::findOrFail($id);
 		elseif ($rate_type == 'H')
 			$rate = RateHourly::findOrFail($id);

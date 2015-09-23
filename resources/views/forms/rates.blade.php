@@ -3,7 +3,7 @@
 
 		<div class="form-group">
 			<div class="col-lg-3">
-                @if ( $parking->rate_type == 'D' )
+                @if ( $parking->rate_type == 'D' or $parking->rate_type == 'C' )
     				{!! Form::label('day', 'Day:') !!}
     				{!! Form::text('day', null, ['class' => 'form-control']) !!}
                 @elseif ( $parking->rate_type == 'H' )

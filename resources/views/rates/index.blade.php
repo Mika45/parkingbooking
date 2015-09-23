@@ -7,7 +7,7 @@
 <table class="table table-condensed table-striped table-hover">
 	<thead>
 		<tr>
-			@if ( $parking->rate_type == 'D' )
+			@if ( $parking->rate_type == 'D' or $parking->rate_type == 'C' )
 				<th><small>Day</small></th>
 			@elseif ( $parking->rate_type == 'H' )
 				<th><small>Hours</small></th>
@@ -21,7 +21,7 @@
 	<tbody>
   	@foreach ($rates as $rate)
 		<tr>
-			@if ( $parking->rate_type == 'D' )
+			@if ( $parking->rate_type == 'D' or $parking->rate_type == 'C' )
 				<td><small>{{ $rate->day }}</small></td>
 			@elseif ( $parking->rate_type == 'H' )
 				<td><small>{{ $rate->hours }}</small></td>
