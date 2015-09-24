@@ -141,7 +141,7 @@ class TranslationsController extends Controller {
 				$langs[$translation->locale] = $translation->locale;
 				break;
 			case 'ARTICLE':
-				$tag = Article::findOrFail($translation->identifier);
+				$article = Article::findOrFail($translation->identifier);
 				$type = 'article';
 				$langs[$translation->locale] = $translation->locale;
 				break;

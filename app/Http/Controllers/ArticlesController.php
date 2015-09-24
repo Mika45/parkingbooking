@@ -85,7 +85,10 @@ class ArticlesController extends Controller {
 			$article = Article::where('slug', '=', $slug)->first();
 		}
 
-		return view('articles.show', compact('article'));
+		// get the traslations of the current locale
+		$translations = get_translation( 'ARTICLE', $article->article_id );
+
+		return view('articles.show', compact('article', 'translations'));
 	}
 
 	/**
