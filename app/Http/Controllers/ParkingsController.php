@@ -180,7 +180,7 @@ class ParkingsController extends Controller {
 
 		// Final check of Availability
 		$lang = Session::get('applocale');
-		$avail_parks = DB::select('CALL GetResults('.$data['location'].', "'.$data['checkindate'].'", "'.$data['checkintime'].'", "'.$data['checkoutdate'].'", "'.$data['checkouttime'].'", "'.$lang.'")');
+		$avail_parks = DB::select('CALL GetResults('.$data['location'].', "'.$data['checkindate'].'", "'.$data['checkintime'].'", "'.$data['checkoutdate'].'", "'.$data['checkouttime'].'", NULL, "'.$lang.'")');
 
 		foreach ($avail_parks as $pid){
 			$pids[] = $pid->parking_id;
