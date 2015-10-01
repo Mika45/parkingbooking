@@ -10,6 +10,7 @@ use App\Translation;
 use Carbon;
 use DB;
 use Session;
+use App;
 
 class ArticlesController extends Controller {
 
@@ -99,9 +100,7 @@ class ArticlesController extends Controller {
 	 */
 	public function showAll()
 	{
-		//$articles = Article::all()->orderBy('article_id', 'desc');
-
-		$lang = Session::get('applocale');
+		$lang = App::getLocale();
 		$query = 'CALL GetArticles("'.$lang.'")';
 		$articles = DB::select($query);
 
