@@ -1,4 +1,4 @@
-@extends('layout57')
+@extends('layout57phone')
 
 @section('title')
     {!! $translations['location_page_name'] or $location->location_page_name !!}
