@@ -25,6 +25,7 @@ class Booking extends Model {
 						   'car_colour',
 						   'passengers',
 						   'newsletter',
-						   'country_id'];
+						   'country_id',
+						   'landline'];
 
 }

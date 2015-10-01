@@ -207,6 +207,8 @@ class ParkingsController extends Controller {
 		$booking->firstname = $input['items']['firstname'];
 		$booking->lastname = $input['items']['lastname'];
 		$booking->mobile = $input['items']['mobile'];
+		if( array_key_exists('landline', $input['items']) )
+			$booking->landline = $input['items']['landline'];
 		$booking->email = $input['items']['email'];
 		$booking->car_make = $input['items']['carmake'];
 		$booking->car_model = $input['items']['carmodel'];
@@ -217,7 +219,8 @@ class ParkingsController extends Controller {
 			$booking->passengers = $input['passengers'];
 		if( array_key_exists('newsletter', $input) )
 			$booking->newsletter = 'Y';
-		$booking->country_id = $input['country'];
+		if( array_key_exists('country', $input) )
+			$booking->country_id = $input['country'];
 
 		$booking->save();
 		
