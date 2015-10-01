@@ -14,7 +14,12 @@
 
 	@foreach ($articles as $article)
 
-		<h2>{{ $article->title }}</h2>
+		@if ($article->slug)
+			<h2><a href="/{{App::getLocale()}}/news/{{$article->slug}}">{{ $article->title }}</a></h2>
+		@else
+			<h2>{{ $article->title }}</h2>
+		@endif
+
 		<p>{!! $article->body !!}</p>
 
 	@endforeach
