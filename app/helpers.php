@@ -13,6 +13,7 @@ use DB;
 use App\Parking;
 use App\Availability;
 use App\Configuration;
+use Log;
 
 // My common functions
 function set_active($uri)
@@ -236,8 +237,11 @@ function build_map( $in_lat, $in_lng, $in_marker_title)
 function get_parking_translation( $in_parking_id )
 {
 	$lang = App::getLocale();
-	$response = DB::select('CALL GetTranslation("'.$lang.'", NULL, "PARKING", '.$in_parking_id.')');
-	//dd($translations);
+
+	$query = 'CALL GetTranslation("'.$lang.'", NULL, "PARKING", '.$in_parking_id.')';
+	Log::info('Query = '.$query);
+	$response = DB::select($query);
+
 	$keys = array();
 	$values = array();
 	foreach ($response as $trans){

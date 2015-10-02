@@ -78,8 +78,11 @@
 							if ($field->field_name == 'country'){
 								$selectArray = $countries;
 							}
-							elseif (!empty($title_attributes)){
+							elseif (!empty($title_attributes) and $field->field_name == 'title'){
 								$selectArray = json_decode($title_attributes, true);
+							}
+							elseif (!empty($title_attributes) and $field->field_name == 'passengers'){
+								$selectArray = json_decode($passengers_attributes, true);
 							}
 							else {
 								$selectArray = json_decode($field->attributes, true);

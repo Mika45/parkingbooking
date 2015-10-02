@@ -150,18 +150,15 @@ class ParkingsController extends Controller {
 			if ($key2 == 'title'){
 				$title_attributes = $value2['attributes'];
 				$translations['title'] = $value2['value'];
+			} elseif ($key2 == 'passengers'){
+				$passengers_attributes = $value2['attributes'];
+				$translations['passengers'] = $value2['value'];
 			}
 		}
 
-		#$pcodes = PhoneCode::all()->toArray();
 		$countries = PhoneCode::all()->lists('name', 'country_id');
-		/*dd($pcodes);
-		foreach ($pcodes as $key => $value) {
-			$countries[] = $value['name'];
-		}*/
-		//dd($pcodes);
 
-		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'parking', 'title_attributes'));
+		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'parking', 'title_attributes', 'passengers_attributes'));
 	}
 
 	public function payment(BookRequest $request)
