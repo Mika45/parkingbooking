@@ -15,7 +15,7 @@ BEGIN
 				   AND	  locale = in_locale), a.body) AS body,
 		   IFNULL(GROUP_CONCAT(IF(column_name = 'slug', value, NULL)), a.slug) AS slug
 	FROM   ARTICLE a
-		   LEFT JOIN TRANSLATION t ON (t.identifier = a.article_id AND t.locale = in_locale)
+		   LEFT JOIN TRANSLATION t ON (t.identifier = a.article_id AND t.table_name = 'ARTICLE' AND t.locale = in_locale)
 	GROUP  BY a.article_id
 	ORDER  BY a.article_id DESC;
 
