@@ -39,6 +39,7 @@ return [
 	"email"                => "The :attribute must be a valid email address.",
 	"email_fixed"          => "Παρακαλώ εισάγετε έγκυρη διεύθυνση E-mail.",
 	"terms"          	   => 'Θα πρέπει να αποδεχτείτε τους Όρους & Προϋποθέσεις.',
+	"country"          	   => 'Θα πρέπει να επιλέξετε τηλεφωνικό Κωδικό Χώρας.',
 	"filled"               => "The :attribute field is required.",
 	"exists"               => "The selected :attribute is invalid.",
 	"image"                => "The :attribute must be an image.",

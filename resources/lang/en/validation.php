@@ -39,6 +39,7 @@ return [
 	"email"                => "The :attribute must be a valid email address.",
 	"email_fixed"          => "The E-mail Address field must be a valid email address.",
 	"terms"          	   => 'You have to accept the Terms & Conditions.',
+	"country"          	   => 'You have to select a country code.',
 	"filled"               => "The :attribute field is required.",
 	"exists"               => "The selected :attribute is invalid.",
 	"image"                => "The :attribute must be an image.",

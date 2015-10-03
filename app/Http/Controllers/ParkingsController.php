@@ -156,7 +156,15 @@ class ParkingsController extends Controller {
 			}
 		}
 
-		$countries = PhoneCode::all()->lists('name', 'country_id');
+		$allPhoneCodes = DB::table('PHONE_CODE')->where('code', '!=', 'NONE')->orderBy('iso2')->get();
+
+		$countries = NULL;
+		foreach ($allPhoneCodes as $country) {
+			$countries[] = ['country_id' => $country->country_id, 
+							'locale' => $country->iso2,
+							'flag' => strtolower($country->iso2),
+							'code' => '(00'.$country->code.')'];
+		}
 
 		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'parking', 'title_attributes', 'passengers_attributes'));
 	}

@@ -77,6 +77,10 @@
 							//var_dump($vlabel);
 							if ($field->field_name == 'country'){
 								$selectArray = $countries;
+								
+								//array_unshift($selectArray, "apple", "raspberry");
+								/*foreach ($selectArray as &$value)
+    								$value = '00'.$value;*/
 							}
 							elseif (!empty($title_attributes) and $field->field_name == 'title'){
 								$selectArray = json_decode($title_attributes, true);
@@ -96,7 +100,16 @@
 
 						<!-- {!! Form::label($field->field_name, $field->label) !!} -->
 						<div class="col-lg-8">
-					    	{!! Form::select($field->field_name, $selectArray, 'default', ['class' => 'form-control'] ) !!}
+					    	@if ($field->field_name == 'country')
+						    	<select class="form-control selectpicker" id="{{$field->field_name}}" name="{{$field->field_name}}" data-showIcon="true" data-width="100%" data-size="10">
+						    		<option value="" selected disabled>Please select</option>
+						    	@foreach ($selectArray as $key => $value)
+						    		<option data-icon="flag-icon flag-icon-{{$value['flag']}}" value="{{$value['country_id']}}">&nbsp;{{$value['locale']}} {{$value['code']}}</option>
+						    	@endforeach
+						    	</select>
+						    @else
+						    	{!! Form::select($field->field_name, $selectArray, 'default', ['class' => 'form-control'] ) !!}
+						    @endif
 					    </div>
 				    </div>
 				@else
@@ -160,3 +173,7 @@
 	  @endif
 	</div>
 @stop
+
+<script>
+	$('select').selectpicker();
+</script>
