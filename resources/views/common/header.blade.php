@@ -34,6 +34,8 @@
 		{!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/css/bootstrap-select.min.css') !!}
 		{!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/js/bootstrap-select.min.js') !!}
 
+		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+
 		<style>
 			.bs-glyphicons-list{padding-left:0;list-style:none}
 			/*.bs-glyphicons li{float:left;width:25%;height:115px;padding:10px;font-size:10px;}*/
