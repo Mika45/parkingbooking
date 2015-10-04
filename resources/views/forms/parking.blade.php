@@ -38,8 +38,8 @@
     		</div>
     		<div class="col-lg-1">
 				{!! Form::label('24hour', '24 Hour:') !!}
-				{!! Form::select('24hour', ['Y' => 'Y',
-				   							'N' => 'N'], null, ['class' => 'form-control']) !!}
+				{!! Form::select('24hour', ['N' => 'N',
+				   							'Y' => 'Y'], null, ['class' => 'form-control']) !!}
     		</div>
     	</div>
     	<br/><br/><br/>
