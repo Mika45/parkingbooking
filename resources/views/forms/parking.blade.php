@@ -32,9 +32,14 @@
 				{!! Form::select('status', ['A' => 'Active',
 				   							'I' => 'Inactive'], null, ['class' => 'form-control']) !!}
     		</div>
-    		<div class="col-lg-2">
+    		<div class="col-lg-1">
 				{!! Form::label('slots', 'Slots:') !!}
 				{!! Form::text('slots', null, ['class' => 'form-control']) !!}
+    		</div>
+    		<div class="col-lg-1">
+				{!! Form::label('24hour', '24 Hour:') !!}
+				{!! Form::select('24hour', ['Y' => 'Y',
+				   							'N' => 'N'], null, ['class' => 'form-control']) !!}
     		</div>
     	</div>
     	<br/><br/><br/>
@@ -83,6 +88,7 @@
 				{!! Form::label('currency', 'Currency:') !!}
 				{!! Form::text('currency', $configArray['CURRENCY'], ['class' => 'form-control']) !!}
     		</div>
+    		
     		<div class="col-lg-2">
 				{!! Form::label('currency_order', 'Currency order:') !!}
 				{!! Form::select('currency_order', ['L' => 'Left',

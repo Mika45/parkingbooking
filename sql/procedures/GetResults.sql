@@ -31,8 +31,12 @@ BEGIN
 		   u.early_booking, 
 		   u.status AS active_status, 
 		   CASE WHEN (IFNULL(u.price,0) <= 0) THEN 'N'
-		   WHEN ( u.slots <= IFNULL(u.checked_in, 0) OR u.slots <= IFNULL(u.checked_in ,0) ) THEN 'N'
-		   ELSE GetAvailability(u.parking_id, in_date_from, in_hour_from, in_date_to, in_hour_to) END AS available,
+				WHEN ( u.slots <= IFNULL(u.checked_in, 0) OR u.slots <= IFNULL(u.checked_out, 0) ) THEN 'N'
+				WHEN ( IFNULL(u.24hour,'N') = 'N' ) AND ( in_available = 0 OR out_available = 0 ) THEN 'N'
+				ELSE 'Y' 
+		   END AS available,
+		   u.in_available,
+		   u.out_available,
 		   u.gt_early_bkg,
 		   u.gt_min_dur,
 		   IF (IFNULL(u.offer, 0) > 0, u.offer, u.price) AS price,
@@ -49,6 +53,7 @@ BEGIN
 	FROM   (
 			SELECT p.*,
 				   b.checked_in,
+				   b.checked_out,
 				   CASE WHEN TIMESTAMPDIFF( HOUR, UTC_TIMESTAMP, v_from_datetime ) >= p.early_booking THEN 1 
 				   ELSE 0 
 				   END AS gt_early_bkg,
@@ -59,7 +64,23 @@ BEGIN
 				   GetOffer(pl.parking_id, p.rate_type, v_from_datetime, v_to_datetime) AS offer,
 				   UTC_TIMESTAMP AS utc,
 				   c.currency,
-				   c.currency_order
+				   c.currency_order,
+				   (SELECT COUNT(*)
+					FROM   DUAL
+					WHERE  EXISTS (SELECT 1 
+								   FROM   PARKING_SCHEDULE ps
+								   WHERE  ps.parking_id = p.parking_id
+								   AND    ps.driving LIKE '%I%'
+								   AND 	  ps.day = DAYOFWEEK(in_date_from)
+								   AND 	  in_hour_from BETWEEN from_hour AND to_hour)) AS in_available,
+				   (SELECT COUNT(*)
+					FROM   DUAL
+					WHERE  EXISTS (SELECT 1 
+								   FROM   PARKING_SCHEDULE ps
+								   WHERE  ps.parking_id = p.parking_id
+								   AND    ps.driving LIKE '%O%'
+								   AND 	  ps.day = DAYOFWEEK(in_date_to)
+								   AND 	  in_hour_to BETWEEN from_hour AND to_hour)) AS out_available
 			FROM   PARKING_LOCATION pl 
 				   LEFT JOIN 
 					 (SELECT parking_id,

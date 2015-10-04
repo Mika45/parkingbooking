@@ -666,7 +666,8 @@ class ParkingsController extends Controller {
 			$affectedRows = ParkingField::where('parking_id', '=', $parking->parking_id)->delete();
 		}
 
-		$parking->tags()->sync($request->input('tags'));
+		if ($request->input('tags'))
+			$parking->tags()->sync($request->input('tags'));
 
 		//update_availability($id);
 
