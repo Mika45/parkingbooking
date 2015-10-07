@@ -26,7 +26,8 @@ class Parking extends Model {
 						   'email',
 						   'phone1',
 						   'phone2',
-						   'mobile'];
+						   'mobile',
+						   '24hour'];
 
 
     public function tags()
