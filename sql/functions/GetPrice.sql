@@ -7,7 +7,7 @@ DELIMITER $$
 CREATE DEFINER=`tmihalis_park`@`localhost` FUNCTION `GetPrice`(p_parking_id INT, p_rate_type VARCHAR(1), p_date_from DATETIME, p_date_to DATETIME) RETURNS decimal(8,2)
 BEGIN # Get the price based on the given parking ID, rate type (H=Hourly, C=Calendar day, D=Daily) and dates
 
-	DECLARE v_dur_hours, v_dur_days INT;
+	DECLARE v_dur_hours, v_dur_days, v_free_mins INT;
 	DECLARE v_price, v_offer DECIMAL(8,2);
 
 	SET v_dur_hours = TIMESTAMPDIFF(HOUR, p_date_from, p_date_to);
@@ -24,13 +24,32 @@ BEGIN # Get the price based on the given parking ID, rate type (H=Hourly, C=Cale
 		WHERE  rh2.parking_id = p_parking_id
 		AND    rh2.hours = 24;
 	ELSEIF p_rate_type IN ('C', 'D') THEN # C=(C)alendar day, D=(D)aily (measures duration in days)
-		SELECT TRUNCATE(IFNULL(rd.price,0) + ((v_dur_days - MOD(v_dur_days, 31))/31)* rd2.price, 2)
-		INTO   v_price
-		FROM   RATE_DAILY rd2 LEFT JOIN RATE_DAILY rd ON rd2.parking_id = rd.parking_id AND rd.day = MOD(v_dur_days, 31)
-		WHERE  rd2.parking_id = p_parking_id
-		AND    rd2.day = (SELECT MAX(day) 
-						  FROM 	 RATE_DAILY rd3
-						  WHERE  rd3.parking_id = rd2.parking_id);
+		IF p_parking_id = 23 THEN
+			
+			SELECT value
+			INTO   v_free_mins
+			FROM   CONFIGURATION
+			WHERE  parking_id = p_parking_id
+			AND	   conf_name = 'FREE_MINUTES';
+
+			SET v_dur_days 	= CEIL(((TIMESTAMPDIFF(MINUTE, p_date_from, p_date_to)-IFNULL(v_free_mins,0))/60)/24);
+
+			SELECT rd.price + CASE WHEN (v_dur_days/30) < 1 THEN (v_dur_days - MOD(v_dur_days,30)) ELSE (MOD(v_dur_days,30)) END *2 price
+			INTO   v_price
+			FROM RATE_DAILY rd
+			WHERE rd.parking_id = p_parking_id
+			AND rd.day = CASE WHEN (v_dur_days/30) < 1 THEN v_dur_days ELSE 30 END;
+
+		ELSE
+
+			SELECT TRUNCATE(IFNULL(rd.price,0) + ((v_dur_days - MOD(v_dur_days, 31))/31)* rd2.price, 2)
+			INTO   v_price
+			FROM   RATE_DAILY rd2 LEFT JOIN RATE_DAILY rd ON rd2.parking_id = rd.parking_id AND rd.day = MOD(v_dur_days, 31)
+			WHERE  rd2.parking_id = p_parking_id
+			AND    rd2.day = (SELECT MAX(day) 
+							  FROM 	 RATE_DAILY rd3
+							  WHERE  rd3.parking_id = rd2.parking_id);
+		END IF;
 	END IF;
 
 
