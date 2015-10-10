@@ -14,7 +14,6 @@ class BookRequest extends Request {
 	 */
 	public function authorize()
 	{
-		//return false;
 		return true;
 	}
 
@@ -27,7 +26,7 @@ class BookRequest extends Request {
 	{
 
 		$rules = array();
-		//dd($this->request);
+		
 		foreach($this->request->get('items') as $key => $val)
 		{
 
@@ -53,10 +52,6 @@ class BookRequest extends Request {
 		if (!array_key_exists('terms', $this->request->get('items')))
 			$rules['items.terms'] = 'required';
 
-		//'checkin'  => 'required',
-		//$rules['items.terms'] = 'required';
-		//dd($rules);
-
 		return $rules;
 	}
 
@@ -64,23 +59,21 @@ class BookRequest extends Request {
 	{
 		$messages = [];
 
-		//$fields = Field::all()->lists('label', 'field_name');
-
 		// the key of this session array is the Parking ID
 		$currentParkingID = key(Session::get('allowedParkings'));
 
 		$translations = get_parking_translation( $currentParkingID );
-		//dd($translations);
+		
 		if (empty($translations))
 			$fields = Field::all()->lists('label', 'field_name');
 
-		//dd($this->request->get('items'));
 	  	foreach($this->request->get('items') as $key => $val)
 	  	{
 	    	
 	    	if ($key == 'email')
 	    		//The E-mail Address field must be a valid email address'
 	    		$messages['items.'.$key.'.email'] = Lang::get('validation.email_fixed');
+
 	    	if ($key == 'terms')
 	    		$messages['items.'.$key.'.required'] = Lang::get('validation.email_fixed');
 	    	else
@@ -95,12 +88,6 @@ class BookRequest extends Request {
 	  	
 	  	if (!array_key_exists('terms', $this->request->get('items')))
 			$messages['items.terms.required'] = Lang::get('validation.terms');
-
-	  	//dd($messages);
-	  	//"items.carcolour.required" => "The field carcolour is required"
-
-	  	
-	  	//dd($fields);
 
 	  	return $messages;
 	}

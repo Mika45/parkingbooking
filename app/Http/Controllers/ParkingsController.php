@@ -224,8 +224,8 @@ class ParkingsController extends Controller {
 			$booking->passengers = $input['passengers'];
 		if( array_key_exists('newsletter', $input) )
 			$booking->newsletter = 'Y';
-		if( array_key_exists('country', $input) )
-			$booking->country_id = $input['country'];
+		if( array_key_exists('country', $input['items']) )
+			$booking->country_id = $input['items']['country'];
 
 		$booking->save();
 		

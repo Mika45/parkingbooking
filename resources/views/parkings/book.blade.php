@@ -27,7 +27,6 @@
 	<h1>{{ Lang::get('site.book_form_heading') }}</h1>
 	<p>
 
-		<!-- {!! Form::open(['url' => '/results', 'class' => 'form-inline']) !!} -->
 		<div class="well bs-component">
 			<br/>
 			
@@ -49,11 +48,11 @@
 			@foreach ($fields as $field)
 				<?php $v_field = 'items['.$field->field_name.']'; ?>
 				@if ($field->type === 'text')
-				    <!-- {!! Form::label($field->field_name, $field->label) !!} -->
+				    
 				    <div class="form-group">
 				    	<label for="{{$field->field_name}}" class="col-lg-4 control-label">{{ $translations[$field->field_name] or $field->label }}</label>
 				    	<div class="col-lg-8">
-				    		<!--{!! Form::text($field->field_name, null, ['class' => 'form-control', 'placeholder' => $field->label]) !!}-->
+				    		
 				    		<?php 
 				    			if (array_key_exists($field->field_name, $translations)){
 				    				$placeholder = $translations[$field->field_name];
@@ -72,15 +71,8 @@
 					<div class="form-group">
 						
 						<?php 
-							//$vlabel = $translations[$field->field_name]['value'];
-							//$vlabel = $translations['title'];
-							//var_dump($vlabel);
 							if ($field->field_name == 'country'){
 								$selectArray = $countries;
-								
-								//array_unshift($selectArray, "apple", "raspberry");
-								/*foreach ($selectArray as &$value)
-    								$value = '00'.$value;*/
 							}
 							elseif (!empty($title_attributes) and $field->field_name == 'title'){
 								$selectArray = json_decode($title_attributes, true);
@@ -91,18 +83,13 @@
 							else {
 								$selectArray = json_decode($field->attributes, true);
 							}
-							
-							//$selectArray['S'] = 'Please select';
-							//array_unshift($selectArray , 'default', 'Please select');
-							//$selectArray = array('default' => 'Please select') + $selectArray;
 						?>
 						<label for="{{$field->field_name}}" class="col-lg-4 control-label">{{ $translations[$field->field_name] or $field->label }}</label>
 
-						<!-- {!! Form::label($field->field_name, $field->label) !!} -->
 						<div class="col-lg-8">
 					    	@if ($field->field_name == 'country')
-						    	<select class="form-control selectpicker" id="{{$field->field_name}}" name="{{$field->field_name}}" data-showIcon="true" data-width="100%" data-size="10">
-						    		<option value="" selected disabled>Please select</option>
+						    	<select class="form-control selectpicker" id="items[{{$field->field_name}}]" name="items[{{$field->field_name}}]" data-showIcon="true" data-width="100%" data-size="10">
+						    		<option value="" selected required>{{ Lang::get('site.book_form_country_list') }}</option>
 						    	@foreach ($selectArray as $key => $value)
 						    		<option data-icon="flag-icon flag-icon-{{$value['flag']}}" value="{{$value['country_id']}}">&nbsp;{{$value['locale']}} {{$value['code']}}</option>
 						    	@endforeach
