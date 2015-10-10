@@ -11,6 +11,7 @@ use App\RateDaily;
 use App\Configuration;
 use App\Field;
 use App\Tag;
+use App\Product;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
@@ -498,10 +499,13 @@ class ParkingsController extends Controller {
 			$p_fields[$field->field_id] = $field->label;
 
 		$tags = Tag::lists('name', 'tag_id');
-
 		$tags_selected = $parking->tags->lists('tag_id');
-		//dd($tags_selected);
 
+		$products = Product::lists('name', 'product_id');
+		$products_selected = $parking->products->lists('product_id');
+
+		// deprecated
+		/*
 		$non_work_hours = json_decode($parking->non_work_hours, true);
 		//dd($non_work_hours);
 
@@ -529,6 +533,7 @@ class ParkingsController extends Controller {
 
 		//dd($to_time_bd);
 		$hours = get_dropdown_hours(); //helpers.php
+		*/
 
 		$configArray[] = NULL;
 
@@ -537,7 +542,7 @@ class ParkingsController extends Controller {
 			$configArray[$config->conf_name] = $config->value;
 		}
 
-		return view('parkings.edit', compact('parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
+		return view('parkings.edit', compact('parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected','products', 'products_selected',
 											'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
 	
@@ -669,7 +674,8 @@ class ParkingsController extends Controller {
 		if ($request->input('tags'))
 			$parking->tags()->sync($request->input('tags'));
 
-		//update_availability($id);
+		if ($request->input('products'))
+			$parking->products()->sync($request->input('products'));
 
 		return redirect('parking');
 	}

@@ -28,4 +28,9 @@ class Booking extends Model {
 						   'country_id',
 						   'landline'];
 
+	public function products()
+    {
+    	return $this->belongsToMany('App\Product', 'BOOKING_PRODUCT')->withTimestamps()->orderBy('name');
+    }
+
 }

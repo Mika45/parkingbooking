@@ -131,119 +131,29 @@
     	</div>
     	
     	<div class="form-group">
-			<div class="col-lg-4">
+			<div class="col-lg-3">
 				<br/>
 				{!! Form::label('locations', 'Associate locations:') !!}
 				{!! Form::select('locations[]', $p_locations, $p_locations_selected, ['multiple', 'class' => 'form-control']) !!}
 			</div>
-			<div class="col-lg-4">
+			<div class="col-lg-3">
 				<br/>
 				{!! Form::label('fields', 'Associate fields:') !!}
 				{!! Form::select('fields[]', $p_fields, $p_fields_selected, ['multiple', 'class' => 'form-control']) !!}
 			</div>
-			<div class="col-lg-4">
+			<div class="col-lg-3">
 				<br/>
 				{!! Form::label('tags', 'Associate tags:') !!}
 				{!! Form::select('tags[]', $tags, $tags_selected, ['multiple', 'class' => 'form-control']) !!}
 			</div>
-		</div>
-
-		{{--
-		<div class="form-group">
-			<div class="col-lg-4">
+			<div class="col-lg-3">
 				<br/>
-				<fieldset class="user-settings-question">
-				    @if ($from_time_bd == 'na')
-				    	{!! Form::checkbox('non-working-hours-1', 1, null, ['id' => 'non-working-hours-1', 'onChange' => 'valueChanged()']) !!}
-				    @else
-				    	{!! Form::checkbox('non-working-hours-1', 1, 1, ['id' => 'non-working-hours-1', 'onChange' => 'valueChanged()']) !!}
-				    @endif
-				    {!! Form::label('non-working-hours-1', 'NON working hours (business days)') !!}
-				</fieldset>
-			</div>
-			<div class="col-lg-4">
-				<br/>
-				<fieldset class="user-settings-question">
-					@if ($from_time_sat == 'na')
-				    	{!! Form::checkbox('non-working-hours-2', 1, null, ['id' => 'non-working-hours-2', 'onChange' => 'valueChanged()']) !!}
-				    @else
-				    	{!! Form::checkbox('non-working-hours-2', 1, 1, ['id' => 'non-working-hours-2', 'onChange' => 'valueChanged()']) !!}
-				    @endif
-				    {!! Form::label('non-working-hours-2', 'NON working hours (Saturdays)') !!}
-				</fieldset>
-			</div>
-			<div class="col-lg-4">
-				<br/>
-				<fieldset class="user-settings-question">
-					@if ($from_time_sun == 'na')
-				    	{!! Form::checkbox('non-working-hours-3', 1, null, ['id' => 'non-working-hours-3', 'onChange' => 'valueChanged()']) !!}
-				    @else
-				    	{!! Form::checkbox('non-working-hours-3', 1, 1, ['id' => 'non-working-hours-3', 'onChange' => 'valueChanged()']) !!}
-				    @endif
-				    {!! Form::label('non-working-hours-3', 'NON working hours (Sundays)') !!}
-				</fieldset>
+				{!! Form::label('products', 'Associate products:') !!}
+				{!! Form::select('products[]', $products, $products_selected, ['multiple', 'class' => 'form-control']) !!}
 			</div>
 		</div>
 
-		<div class="form-group">
-			<div class="col-lg-2">
-				<br/>
-				{!! Form::label('from_time_bd', 'From:') !!}
-				@if ($from_time_bd == 'na')
-					{!! Form::select('from_time_bd', $hours, null, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-				@else
-					{!! Form::select('from_time_bd', $hours, $from_time_bd, ['class' => 'form-control']) !!}
-				@endif
-			</div>
-			<div class="col-lg-2">
-				<br/>
-				{!! Form::label('to_time_bd', 'To:') !!}
-				@if ($to_time_bd == 'na')
-					{!! Form::select('to_time_bd', $hours, null, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-				@else
-					{!! Form::select('to_time_bd', $hours, $to_time_bd, ['class' => 'form-control']) !!}
-				@endif
-			</div>
-			<div class="col-lg-2">
-				<br/>
-				{!! Form::label('from_time_sat', 'From:') !!}
-				@if ($from_time_sat == 'na')
-					{!! Form::select('from_time_sat', $hours, null, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-				@else
-					{!! Form::select('from_time_sat', $hours, $from_time_sat, ['class' => 'form-control']) !!}
-				@endif
-			</div>
-			<div class="col-lg-2">
-				<br/>
-				{!! Form::label('to_time_sat', 'To:') !!}
-				@if ($to_time_sat == 'na')
-					{!! Form::select('to_time_sat', $hours, null, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-				@else
-					{!! Form::select('to_time_sat', $hours, $to_time_sat, ['class' => 'form-control']) !!}
-				@endif
-			</div>
-
-			<div class="col-lg-2">
-				<br/>
-				{!! Form::label('from_time_sun', 'From:') !!}
-				@if ($from_time_sun == 'na')
-					{!! Form::select('from_time_sun', $hours, null, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-				@else
-					{!! Form::select('from_time_sun', $hours, $from_time_sun, ['class' => 'form-control']) !!}
-				@endif
-			</div>
-			<div class="col-lg-2">
-				<br/>
-				{!! Form::label('to_time_sun', 'To:') !!}
-				@if ($to_time_sun == 'na')
-					{!! Form::select('to_time_sun', $hours, null, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-				@else
-					{!! Form::select('to_time_sun', $hours, $to_time_sun, ['class' => 'form-control']) !!}
-				@endif
-			</div>
-		</div>
-		--}}
-		
+		<br/><br/><br/>
 		<div class="form-group">
 			<div class="col-lg-4">
 				

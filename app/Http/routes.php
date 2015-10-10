@@ -20,6 +20,7 @@ Route::group(['middleware' => 'unsecure'], function()
 	Route::resource('rates', 'RatesController');
 	Route::resource('fields', 'FieldsController');
 	Route::resource('tags', 'TagsController');
+	Route::resource('products', 'ProductsController');
 	Route::resource('translations', 'TranslationsController');
 	Route::resource('bookings', 'BookingsController');
 	Route::resource('availabilities', 'AvailabilitiesController');
