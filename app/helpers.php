@@ -539,4 +539,41 @@ function get_browser_language()
 	return $lang;
 }
 
+function get_price_from_excel( $in_parking_id, $in_units )
+{
+	try {
+
+		$xls_path = 'prices/'.$in_parking_id.'.xlsx';
+
+		$file = Excel::selectSheetsByIndex(0)->load($xls_path, function($reader) use ($in_units) {
+
+		    $reader->skip($in_units-1)->take(1);
+
+		})->get();
+
+		$returnArray = array();
+
+		foreach ($file as $key => $value) {
+			$returnArray['hours'] = $value->hours;
+			$returnArray['rate'] = $value->rate;
+		}
+
+	} catch (Exception $e) {
+		return array('hours' => 0, 'rate' => 0 );
+	}
+
+	return $returnArray;
+}
+
+function cmp($a, $b)
+{
+	if ($a->price == 0 and $b->price != 0){
+		return 1;	
+	} elseif ($a->price != 0 and $b->price == 0) {
+		return -1;
+	}
+
+    return strcmp($a->price, $b->price);
+}
+
 ?>

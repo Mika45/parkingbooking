@@ -152,6 +152,14 @@
 				{!! Form::select('products[]', $products, $products_selected, ['multiple', 'class' => 'form-control']) !!}
 			</div>
 		</div>
+		<br/><br/><br/>
+    	<div class="form-group">
+    		<div class="col-lg-12">
+    			<br/>
+    			{!! Form::label('pricelist', 'Pricelist:') !!}
+				{!! Form::file('pricelist[]', array('multiple'=>false)) !!}
+    		</div>
+    	</div>
 
 		<br/><br/><br/>
 		<div class="form-group">

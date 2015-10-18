@@ -364,7 +364,10 @@ class ParkingsController extends Controller {
 
 		$configArray[] = NULL;
 
-		return view('parkings.create', compact('p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
+		$products = Product::lists('name', 'product_id');
+		$products_selected = NULL;
+
+		return view('parkings.create', compact('p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected', 'products', 'products_selected',
 												'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
 
@@ -453,9 +456,25 @@ class ParkingsController extends Controller {
 			$config->save();
 		}
 
+		$excel_files = $request->file('pricelist');
 
-		$sysdate = Carbon\Carbon::now();
-		//$avail = create_availability( $parking->parking_id, $sysdate->format('Y-m-d'), '2017-12-31' );
+		$excel_files = Input::file('pricelist');
+		$excel_file_count = count($excel_files);
+	    // start count how many uploaded
+	    $uploadcount = 0;
+	    foreach($excel_files as $xfile) {
+			$rules = array('file' => 'required|mimes:xls,xlsx'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+			$validator = Validator::make(array('file'=> $file), $rules);
+			if($validator->passes()){
+
+				$destinationPath = 'prices/'.$id.'/';
+				$filename = $file->getClientOriginalName();
+				
+				$upload_success = $file->move($destinationPath, $filename);
+
+				$uploadcount ++;
+			}
+	    }
 
 		return redirect('parking');
 	}
@@ -586,6 +605,27 @@ class ParkingsController extends Controller {
 				$thumbnail->save($destinationPath.'thumb/'.$filename);
 
 				$uploadcount ++;
+			}
+	    }
+
+	    // PRICELIST UPLOAD
+	    $excel_files = $request->file('pricelist');
+
+		$excel_files = Input::file('pricelist');
+		$excel_file_count = count($excel_files);
+	    // start count how many uploaded
+	    $xls_uploadcount = 0;
+	    foreach($excel_files as $xfile) {
+			$rules = array('file' => 'required|mimes:xls,xlsx'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+			$validator = Validator::make(array('file'=> $xfile), $rules);
+			if($validator->passes()){
+
+				$destinationPath = 'prices/';
+				$filename = $xfile->getClientOriginalName();
+				
+				$upload_success = $xfile->move($destinationPath, $filename);
+
+				$xls_uploadcount ++;
 			}
 	    }
 
