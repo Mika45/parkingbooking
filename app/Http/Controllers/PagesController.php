@@ -20,6 +20,7 @@ use Ivory\GoogleMap\Helper\MapHelper;
 use Carbon;
 use stdClass;
 use Log;
+use Excel;
 
 class PagesController extends Controller {
 
@@ -153,8 +154,7 @@ class PagesController extends Controller {
 		foreach ($data as $key => $pid){
 			$trans_merge = array();
 			$keys[] = $pid->parking_id;
-			$values[] = $pid->price;
-			$parkings_array = array_combine($keys, $values);
+			
 			$curs_array[$pid->parking_id] = ['currency' => $pid->currency, 'currency_order' => $pid->currency_order];
 
 			$sysdate = Carbon\Carbon::now($pid->timezone); // current date and time of the Parking
@@ -166,7 +166,18 @@ class PagesController extends Controller {
 			else
 				$data[$key]->late_booking = 'N';
 
-			if (!isset($pid->price))
+			if($pid->rate_type == 'D' or $pid->rate_type == 'C'){
+				$price = get_price_from_excel($pid->parking_id, $pid->duration_days);
+			} else {
+				$price = get_price_from_excel($pid->parking_id, $pid->duration_hours);
+			}
+
+			$data[$key]->price = $price['rate'];
+
+			$values[] = $price['rate'];
+			$parkings_array = array_combine($keys, $values);
+
+			if (!isset($price['rate']) or $price['rate'] == 0)
 				$data[$key]->available = 'N';
 
 			$parking = Parking::Find($pid->parking_id);
@@ -209,7 +220,9 @@ class PagesController extends Controller {
 			$translations = get_results_translation( $pids, $lang );	
 		} else {
 			$translations = array();
-		}		
+		}
+
+		usort($data, "cmp");
 
 		return view('results', compact('data', 'translations', 'locationsList', 'location', 'count', 'map', 'mapHelper', 'checkin', 'checkout'));
 	}
