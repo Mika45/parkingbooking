@@ -467,8 +467,9 @@ class ParkingsController extends Controller {
 			$validator = Validator::make(array('file'=> $file), $rules);
 			if($validator->passes()){
 
-				$destinationPath = 'prices/'.$id.'/';
-				$filename = $file->getClientOriginalName();
+				$destinationPath = 'prices/';
+				//$filename = $file->getClientOriginalName();
+				$filename = $parking->parking_id.'.xlsx';
 				
 				$upload_success = $file->move($destinationPath, $filename);
 
@@ -621,7 +622,7 @@ class ParkingsController extends Controller {
 			if($validator->passes()){
 
 				$destinationPath = 'prices/';
-				$filename = $xfile->getClientOriginalName();
+				$filename = $id.'.xlsx';
 				
 				$upload_success = $xfile->move($destinationPath, $filename);
 
