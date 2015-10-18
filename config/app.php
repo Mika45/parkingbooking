@@ -155,7 +155,8 @@ return [
 		'Barryvdh\DomPDF\ServiceProvider',
 		'Folklore\Image\ImageServiceProvider',
 		'Roumen\Sitemap\SitemapServiceProvider',
-		'Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider'
+		'Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider',
+		'Maatwebsite\Excel\ExcelServiceProvider'
 
 	],
 
@@ -207,7 +208,8 @@ return [
 		'Form'		=> 'Illuminate\Html\FormFacade', 
 		'HTML'		=> 'Illuminate\Html\HtmlFacade',
 		'Image' 	=> 'Folklore\Image\Facades\Image',
-		'LaravelLocalization'   => 'Mcamara\LaravelLocalization\Facades\LaravelLocalization'
+		'LaravelLocalization'   => 'Mcamara\LaravelLocalization\Facades\LaravelLocalization',
+		'Excel' 	=> 'Maatwebsite\Excel\Facades\Excel'
 
 	],
 
