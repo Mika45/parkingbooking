@@ -8,9 +8,12 @@ use Ivory\GoogleMap\Overlays\Marker;
 use Ivory\GoogleMap\Events\Event;
 use Ivory\GoogleMap\Overlays\InfoWindow;
 
+
+use DB;
 use App\Parking;
 use App\Availability;
 use App\Configuration;
+use Log;
 
 // My common functions
 function set_active($uri)
@@ -37,6 +40,7 @@ function do_markers( $in_data )
 {
 
 	$markers = array();
+	//$events = array();
 
 	foreach ($in_data as $parking){
 		$marker = new Marker();
@@ -269,7 +273,10 @@ function get_translation( $in_table, $in_id, $in_column = NULL )
 	else{
 		$response = DB::select('CALL GetTranslation("'.$lang.'", "'.$in_column.'", "'.$in_table.'", '.$in_id.')');
 		$translations = $response;
-	}	
+	}
+
+	//dd($translations);
+	
 
 	return $translations;
 }
@@ -457,6 +464,8 @@ function update_availability( $in_parking_id )
 		$from_time_sun = $non_work_hours['sunday']['from'];
 		$to_time_sun = $non_work_hours['sunday']['to'];
 	}
+
+    //while( $date<$date_end ) {
 	
 	foreach ($availability as $key => $value) {
 
@@ -487,6 +496,7 @@ function update_availability( $in_parking_id )
 		//date_add($date, date_interval_create_from_date_string('1 day'));
     }
 
+    //dd($avail_tbl);
     Availability::insert($avail_tbl);
 
 	return true;
