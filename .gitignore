@@ -4,3 +4,4 @@
 /public/tmp
 /public/prices
 /database
+.env

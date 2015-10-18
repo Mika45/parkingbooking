@@ -31,7 +31,8 @@
         "Barryvdh\\DomPDF\\ServiceProvider",
         "Folklore\\Image\\ImageServiceProvider",
         "Roumen\\Sitemap\\SitemapServiceProvider",
-        "Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider"
+        "Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider",
+        "Maatwebsite\\Excel\\ExcelServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -51,7 +52,8 @@
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
         "Folklore\\Image\\ImageServiceProvider",
-        "Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider"
+        "Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider",
+        "Maatwebsite\\Excel\\ExcelServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
