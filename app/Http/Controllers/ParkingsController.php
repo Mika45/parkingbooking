@@ -458,24 +458,26 @@ class ParkingsController extends Controller {
 
 		$excel_files = $request->file('pricelist');
 
-		$excel_files = Input::file('pricelist');
-		$excel_file_count = count($excel_files);
-	    // start count how many uploaded
-	    $uploadcount = 0;
-	    foreach($excel_files as $xfile) {
-			$rules = array('file' => 'required|mimes:xls,xlsx'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
-			$validator = Validator::make(array('file'=> $file), $rules);
-			if($validator->passes()){
+		if ($excel_files) {
+			$excel_files = Input::file('pricelist');
+			$excel_file_count = count($excel_files);
+		    // start count how many uploaded
+		    $uploadcount = 0;
+		    foreach($excel_files as $xfile) {
+				$rules = array('file' => 'required|mimes:xls,xlsx'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+				$validator = Validator::make(array('file'=> $file), $rules);
+				if($validator->passes()){
 
-				$destinationPath = 'prices/';
-				//$filename = $file->getClientOriginalName();
-				$filename = $parking->parking_id.'.xlsx';
-				
-				$upload_success = $file->move($destinationPath, $filename);
+					$destinationPath = 'prices/';
+					//$filename = $file->getClientOriginalName();
+					$filename = $parking->parking_id.'.xlsx';
+					
+					$upload_success = $file->move($destinationPath, $filename);
 
-				$uploadcount ++;
-			}
-	    }
+					$uploadcount ++;
+				}
+		    }
+		}
 
 		return redirect('parking');
 	}
@@ -612,23 +614,25 @@ class ParkingsController extends Controller {
 	    // PRICELIST UPLOAD
 	    $excel_files = $request->file('pricelist');
 
-		$excel_files = Input::file('pricelist');
-		$excel_file_count = count($excel_files);
-	    // start count how many uploaded
-	    $xls_uploadcount = 0;
-	    foreach($excel_files as $xfile) {
-			$rules = array('file' => 'required|mimes:xls,xlsx'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
-			$validator = Validator::make(array('file'=> $xfile), $rules);
-			if($validator->passes()){
+		if ($excel_files) {
+			$excel_files = Input::file('pricelist');
+			$excel_file_count = count($excel_files);
+		    // start count how many uploaded
+		    $xls_uploadcount = 0;
+		    foreach($excel_files as $xfile) {
+				$rules = array('file' => 'required|mimes:xls,xlsx'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+				$validator = Validator::make(array('file'=> $xfile), $rules);
+				if($validator->passes()){
 
-				$destinationPath = 'prices/';
-				$filename = $id.'.xlsx';
-				
-				$upload_success = $xfile->move($destinationPath, $filename);
+					$destinationPath = 'prices/';
+					$filename = $id.'.xlsx';
+					
+					$upload_success = $xfile->move($destinationPath, $filename);
 
-				$xls_uploadcount ++;
-			}
-	    }
+					$xls_uploadcount ++;
+				}
+		    }
+		}
 
 		$json = '{';
 		if ($request->input('non-working-hours-1') == '1'){
