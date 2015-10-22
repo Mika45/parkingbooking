@@ -180,6 +180,10 @@ class PagesController extends Controller {
 			if (!isset($price['rate']) or $price['rate'] == 0)
 				$data[$key]->available = 'N';
 
+			// to make the sorting algorithm work and put the available='N' to the bottom
+			if ($data[$key]->available == 'N') 
+				$data[$key]->price = 0;
+
 			$parking = Parking::Find($pid->parking_id);
 
 			$data[$key]->tags = $parking->tags()->lists('name', 'icon_filename');
@@ -223,6 +227,8 @@ class PagesController extends Controller {
 		}
 
 		usort($data, "cmp");
+
+		//dd($data);
 
 		return view('results', compact('data', 'translations', 'locationsList', 'location', 'count', 'map', 'mapHelper', 'checkin', 'checkout'));
 	}
