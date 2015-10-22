@@ -553,6 +553,9 @@ function get_price_from_excel( $in_parking_id, $in_units )
 
 		$returnArray = array();
 
+		$returnArray['hours'] = 0;
+		$returnArray['rate'] = 0;
+
 		foreach ($file as $key => $value) {
 			$returnArray['hours'] = $value->hours;
 			$returnArray['rate'] = $value->rate;

@@ -15,8 +15,7 @@
 	@else
 		<h4>{{Lang::choice('site.search_results_count', $count)}}</h4>
 	@endif
-	
-	
+
 	@if ($count>0)
 		<table class="table table-hover">
 		  	@foreach ($data as $parking)

@@ -121,7 +121,7 @@
 	        useCurrent: false,
 	        format: 'DD/MM/YYYY',
     		minDate: moment(),
-    		maxDate: moment().add(1, 'years').calendar()
+    		maxDate: moment().add(0.5, 'years').calendar()
     		//locale: moment.local('el')
 	    });
         $('#datetimepicker2').datetimepicker({
@@ -135,7 +135,7 @@
 	        useCurrent: false,
 	        format: 'DD/MM/YYYY',
     		minDate: moment(),
-    		maxDate: moment().add(1, 'years').calendar()
+    		maxDate: moment().add(0.5, 'years').calendar()
     		//locale: moment.local('el')
 	    });
         $('#datetimepicker4').datetimepicker({
