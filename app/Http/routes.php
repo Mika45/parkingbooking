@@ -12,10 +12,11 @@
 */
 
 // taken out of the redirection middlewares (admin backend)
-Route::group(['middleware' => 'unsecure'], function()
+Route::group(['middleware' => 'secure'], function()
 {
 	Route::resource('parking', 'ParkingsController', ['except' => ['show']]);
 	Route::get('parking/{id}/rates', 'RatesController@index');
+	Route::get('parking/{id}/schedule', 'ParkingScheduleController@index');
 	
 	Route::resource('rates', 'RatesController');
 	Route::resource('fields', 'FieldsController');
@@ -25,11 +26,13 @@ Route::group(['middleware' => 'unsecure'], function()
 	Route::resource('bookings', 'BookingsController');
 	Route::resource('availabilities', 'AvailabilitiesController');
 	Route::resource('articles', 'ArticlesController');
+	Route::resource('schedules', 'ParkingScheduleController');
 	Route::resource('locations', 'LocationsController');
 	Route::get('availabilities/{id}/create', 'AvailabilitiesController@create');
 	Route::get('translations/{type}/{id}', 'TranslationsController@index');
 	Route::get('translations/{type}/{id}/create', 'TranslationsController@create');
 	Route::get('rates/{id}/create', 'RatesController@create');
+	Route::get('schedules/{id}/create', 'ParkingScheduleController@create');
 });
 
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);

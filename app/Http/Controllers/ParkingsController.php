@@ -292,7 +292,8 @@ class ParkingsController extends Controller {
 
 	public function index()
 	{
-		$parkings = Parking::orderBy('parking_name')->paginate(10);
+		//$parkings = Parking::orderBy('parking_name')->paginate(10);
+		$parkings = DB::table('PARKINGS_V')->paginate(10);
 		
 		/*foreach ($parkings as $value) {
 			$rate = RateDaily::where('parking_id', '=', $value->parking_id)->first();
