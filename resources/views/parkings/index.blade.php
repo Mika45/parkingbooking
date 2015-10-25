@@ -35,7 +35,7 @@
 				<td><small>{{ $parking->phone1 }}</small></td>
 				<td><small>{{ $parking->email }}</small></td>
 				<td><small>{{ $parking->created_at }}</small></td>
-				<td><a href="/parking/{{ $parking->parking_id }}/edit" class="btn btn-primary btn-xs">Edit Parking</a></td>
+				<td><a href="/parking/{{ $parking->parking_id }}/edit" class="btn btn-primary btn-xs">Edit</a></td>
 				<td>
 					@if ( $rates[$parking->parking_id]['hasRate'] == 0)
 						<a href="/rates/{{ $parking->parking_id }}/create" class="btn btn-warning btn-xs">Create</a> 
