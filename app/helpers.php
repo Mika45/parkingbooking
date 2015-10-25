@@ -579,4 +579,13 @@ function cmp($a, $b)
     return strcmp($a->price, $b->price);
 }
 
+function add_parking_config( $in_parking_id, $in_config, $in_value )
+{
+	$config = new Configuration;
+	$config->parking_id = $in_parking_id;
+	$config->conf_name = $in_config;
+	$config->value = $in_value;
+	$config->save();
+}
+
 ?>

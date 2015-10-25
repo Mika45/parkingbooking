@@ -411,14 +411,16 @@ class ParkingsController extends Controller {
 
 		$parking = Parking::create($input);
 
-		foreach ($input['locations'] as $loc){
-			$p_location = new ParkingLocation;
+		if ( array_key_exists('locations', $input) ){
+			foreach ($input['locations'] as $loc){
+				$p_location = new ParkingLocation;
 
-			$p_location->parking_id = $parking->parking_id;
-			$p_location->location_id = $loc;
-			$p_location->status = 'A';
+				$p_location->parking_id = $parking->parking_id;
+				$p_location->location_id = $loc;
+				$p_location->status = 'A';
 
-			$p_location->save();
+				$p_location->save();
+			}
 		}
 
 		//attach the fields
@@ -427,36 +429,22 @@ class ParkingsController extends Controller {
 		//attach the tags
 		$parking->tags()->attach($request->input('tags'));
 
+		/*** Parking Config entries - START ***/
 		if ( $request->input('cancel_threshold') > 0 ){
-			
-			$config = new Configuration;
-			$config->parking_id = $parking->parking_id;
-			$config->conf_name = 'CANCELLATIONS';
-			$config->value = 'Y';
-			$config->save();
-
-			$config = new Configuration;
-			$config->parking_id = $parking->parking_id;
-			$config->conf_name = 'CANCEL_THRESHOLD';
-			$config->value = $request->input('cancel_threshold');
-			$config->save();
+			add_parking_config($parking->parking_id, 'CANCELLATIONS', 'Y');
+			add_parking_config($parking->parking_id, 'CANCEL_THRESHOLD', $request->input('cancel_threshold'));
 		}
 
 		if ( $request->input('currency') ){
-			
-			$config = new Configuration;
-			$config->parking_id = $parking->parking_id;
-			$config->conf_name = 'CURRENCY';
-			$config->value = $request->input('currency');
-			$config->save();
-
-			$config = new Configuration;
-			$config->parking_id = $parking->parking_id;
-			$config->conf_name = 'CURRENCY_ORDER';
-			$config->value = $request->input('currency_order');
-			$config->save();
+			add_parking_config($parking->parking_id, 'CURRENCY', $request->input('currency'));
+			add_parking_config($parking->parking_id, 'CURRENCY_ORDER', $request->input('currency_order'));
 		}
 
+		if ( $request->input('free_minutes') )
+			add_parking_config($parking->parking_id, 'FREE_MINUTES', $request->input('free_minutes'));
+		/*** Parking Config entries - END ***/
+
+		/*** EXCEL PRICES ***/
 		$excel_files = $request->file('pricelist');
 
 		if ($excel_files) {
@@ -527,43 +515,16 @@ class ParkingsController extends Controller {
 		$products = Product::lists('name', 'product_id');
 		$products_selected = $parking->products->lists('product_id');
 
-		// deprecated
-		/*
-		$non_work_hours = json_decode($parking->non_work_hours, true);
-		//dd($non_work_hours);
-
-		$from_time_bd = 'na';
-		$to_time_bd = 'na';
-		$from_time_sat = 'na';
-		$to_time_sat = 'na';
-		$from_time_sun = 'na';
-		$to_time_sun = 'na';
-
-		if (!empty($non_work_hours) and array_key_exists('business', $non_work_hours)){
-			$from_time_bd = $non_work_hours['business']['from'];
-			$to_time_bd = $non_work_hours['business']['to'];
-		}
-
-		if (!empty($non_work_hours) and array_key_exists('saturday', $non_work_hours)){
-			$from_time_sat = $non_work_hours['saturday']['from'];
-			$to_time_sat = $non_work_hours['saturday']['to'];
-		}
-
-		if (!empty($non_work_hours) and array_key_exists('sunday', $non_work_hours)){
-			$from_time_sun = $non_work_hours['sunday']['from'];
-			$to_time_sun = $non_work_hours['sunday']['to'];
-		}
-
-		//dd($to_time_bd);
-		$hours = get_dropdown_hours(); //helpers.php
-		*/
-
 		$configArray[] = NULL;
 
 		$config_response = Configuration::where('parking_id', '=', $id)->get();
 		foreach ($config_response as $key => $config) {
 			$configArray[$config->conf_name] = $config->value;
 		}
+
+		// in case Free minutes not define need to manually add the key in the array
+		if (!array_key_exists('FREE_MINUTES', $configArray))
+			$configArray['FREE_MINUTES'] = null;
 
 		return view('parkings.edit', compact('parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected','products', 'products_selected',
 											'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
@@ -708,6 +669,14 @@ class ParkingsController extends Controller {
 			$config->conf_name = 'CURRENCY';
 			$config->value = $request->input('currency');
 			$config->save();
+		}
+
+		$configFreeMins = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'FREE_MINUTES')->first();
+		if($configFreeMins) {
+			$affectedRow1 = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'FREE_MINUTES')->update(['value' => $request->input('free_minutes')]);
+		}
+		else {
+			add_parking_config($parking->parking_id, 'FREE_MINUTES', $request->input('free_minutes'));
 		}
 
 		// Update Fields
