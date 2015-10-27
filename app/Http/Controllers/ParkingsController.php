@@ -385,7 +385,8 @@ class ParkingsController extends Controller {
 		$input = $request->all();
 		//dd($input);
 
-		$json = '{';
+		// Deprecated - to be removed
+		/*$json = '{';
 		if ($request->input('non-working-hours-1') == '1'){
 			$json = $json.'"business":{"from":"'.$request->input('from_time_bd').'", "to":"'.$request->input('to_time_bd').'"},';
 			//{"business":{"from":"00:00", "to":"23:59"}, "saturday":{"from":"07:00", "to":"23:59"},"sunday":{"from":"08:00", "to":"23:00"}}
@@ -410,11 +411,11 @@ class ParkingsController extends Controller {
 		if (strlen($json) > 2)
 			$input['non_work_hours'] = $json;
 		else
-			$input['non_work_hours'] = NULL;
+			$input['non_work_hours'] = NULL;*/
 
 		$parking = Parking::create($input);
 
-		if ( array_key_exists('locations', $input) ){
+		/*if ( array_key_exists('locations', $input) ){
 			foreach ($input['locations'] as $loc){
 				$p_location = new ParkingLocation;
 
@@ -424,7 +425,10 @@ class ParkingsController extends Controller {
 
 				$p_location->save();
 			}
-		}
+		}*/
+
+		//attach the locations
+		$parking->locations()->attach($request->input('locations'));
 
 		//attach the fields
 		$parking->fields()->attach($request->input('fields'));
@@ -491,7 +495,7 @@ class ParkingsController extends Controller {
 		$parking_locations = ParkingLocation::where('parking_id', '=', $parking->parking_id)->get();
 
 		$p_locations_selected[] = NULL;
-		$p_locations[] = NULL;
+		$p_locations = NULL;
 
 		foreach ($parking_locations as $p_loc)
 			$p_locations_selected[] = $p_loc->location_id;
@@ -599,7 +603,8 @@ class ParkingsController extends Controller {
 		    }
 		}
 
-		$json = '{';
+		// Deprecated - to be removed
+		/*$json = '{';
 		if ($request->input('non-working-hours-1') == '1'){
 			$json = $json.'"business":{"from":"'.$request->input('from_time_bd').'", "to":"'.$request->input('to_time_bd').'"},';
 			//{"business":{"from":"00:00", "to":"23:59"}, "saturday":{"from":"07:00", "to":"23:59"},"sunday":{"from":"08:00", "to":"23:00"}}
@@ -623,7 +628,7 @@ class ParkingsController extends Controller {
 		if (strlen($json) > 2)
 			$input['non_work_hours'] = $json;
 		else
-			$input['non_work_hours'] = NULL;
+			$input['non_work_hours'] = NULL;*/
 
 		$parking = Parking::findOrFail($id);
 
@@ -688,6 +693,9 @@ class ParkingsController extends Controller {
 		} else {
 			$affectedRows = ParkingField::where('parking_id', '=', $parking->parking_id)->delete();
 		}
+
+		if ($request->input('locations'))
+			$parking->locations()->sync($request->input('locations'));
 
 		if ($request->input('tags'))
 			$parking->tags()->sync($request->input('tags'));

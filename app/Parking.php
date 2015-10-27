@@ -40,6 +40,11 @@ class Parking extends Model {
     	return $this->belongsToMany('App\Field', 'PARKING_FIELD')->withTimestamps()->orderBy('field_name');
     }
 
+    public function locations()
+    {
+    	return $this->belongsToMany('App\Location', 'PARKING_LOCATION')->withTimestamps()->orderBy('name');
+    }
+
     public function products()
     {
     	return $this->belongsToMany('App\Product', 'PARKING_PRODUCT')->withTimestamps()->orderBy('name');
