@@ -364,6 +364,9 @@ class ParkingsController extends Controller {
 		$hours = get_dropdown_hours(); //helpers.php
 
 		$configArray[] = NULL;
+		// in case Free minutes not define need to manually add the key in the array
+		if (!array_key_exists('FREE_MINUTES', $configArray))
+			$configArray['FREE_MINUTES'] = null;
 
 		$products = Product::lists('name', 'product_id');
 		$products_selected = NULL;
