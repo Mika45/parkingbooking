@@ -35,7 +35,7 @@
 				{{Lang::get('emails.common_park')}}: {{$bk->parking_name}}, {{$bk->address}}
 				<br/>
 				
-				{{Lang::get('emails.common_phone')}}: @if($bk->phone_code) (+{{$bk->phone_code}}) @endif {{$bk->phone1}} 
+				{{Lang::get('emails.common_phone')}}: {{$bk->phone1}} 
 				@if($bk->phone2)
 					, {{$bk->phone2}}
 				@endif
@@ -44,7 +44,7 @@
 				@endif
 			</p>
 			<p>{{Lang::get('emails.common_name')}}: {{$bk->title}} {{$bk->firstname}} {{$bk->lastname}}</p>
-			<p>{{Lang::get('emails.common_mob')}}: {{$bk->mobile}}</p>
+			<p>{{Lang::get('emails.common_mob')}}: @if($bk->phone_code) (+{{$bk->phone_code}}) @endif {{$bk->mobile}}</p>
 			<p>{{Lang::get('emails.common_email')}}: {{$bk->email}}</p>
 			<p>
 				{{Lang::get('emails.common_reg')}}: {{$bk->car_reg}}<br/>
