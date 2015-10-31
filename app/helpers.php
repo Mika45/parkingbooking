@@ -570,13 +570,13 @@ function get_price_from_excel( $in_parking_id, $in_units )
 
 function cmp($a, $b)
 {
-	if ($a->price == 0 and $b->price != 0){
-		return 1;	
-	} elseif ($a->price != 0 and $b->price == 0) {
-		return -1;
-	}
-
-    return strcmp($a->price, $b->price);
+    if ($a->price == 0 or $a->available == 'N') {
+        return 1;
+    }
+    if ($b->price == 0 or $b->available == 'N') {
+        return -1;
+    }
+    return ($a->price < $b->price) ? -1 : 1;
 }
 
 function add_parking_config( $in_parking_id, $in_config, $in_value )
