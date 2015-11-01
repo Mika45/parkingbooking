@@ -40,7 +40,7 @@ class ParkingsController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show', 'book', 'payment']]); 
+        $this->middleware('auth', ['except' => ['show', 'book', 'payment']]); 
     }
 
 	//public function index()
