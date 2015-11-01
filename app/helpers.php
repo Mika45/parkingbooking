@@ -588,4 +588,15 @@ function add_parking_config( $in_parking_id, $in_config, $in_value )
 	$config->save();
 }
 
+function get_parkings_dropdown( $in_location_id = NULL, $in_status = NULL )
+{
+	$parkings = DB::table('PARKING')
+					->join('PARKING_LOCATION', 'PARKING.parking_id', '=', 'PARKING_LOCATION.parking_id')
+					->select('PARKING.parking_id', 'PARKING.parking_name')
+					->orderBy('parking_name')
+					->lists('parking_name', 'PARKING.parking_id');
+
+    return $parkings;
+}
+
 ?>

@@ -17,6 +17,7 @@ Route::group(['middleware' => 'secure'], function()
 	Route::resource('parking', 'ParkingsController', ['except' => ['show']]);
 	Route::get('parking/{id}/rates', 'RatesController@index');
 	Route::get('parking/{id}/schedule', 'ParkingScheduleController@index');
+	Route::get('parking/{id}/products', 'ProductsController@index');
 	
 	Route::resource('rates', 'RatesController');
 	Route::resource('fields', 'FieldsController');
@@ -33,6 +34,7 @@ Route::group(['middleware' => 'secure'], function()
 	Route::get('translations/{type}/{id}/create', 'TranslationsController@create');
 	Route::get('rates/{id}/create', 'RatesController@create');
 	Route::get('schedules/{id}/create', 'ParkingScheduleController@create');
+	Route::get('products/{id}/create', 'ProductsController@create');
 });
 
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);

@@ -7,7 +7,7 @@ class Product extends Model {
 	protected $table = 'PRODUCT';
 	protected $primaryKey = 'product_id';
 
-	protected $fillable = ['name', 'price', 'description'];
+	protected $fillable = ['name', 'parking_id', 'price', 'description'];
 
 	public function bookings()
 	{

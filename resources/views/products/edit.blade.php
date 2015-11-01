@@ -3,6 +3,7 @@
 @section('content')
 
 	<h1>Edit Product</h1>
+	<h4>for {{ $parking_name }}</h4>
 
 	<div class="well">
 	

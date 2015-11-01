@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddProductRequest;
 use Request;
 use App\Product;
+use App\Parking;
 use DB;
 
 class ProductsController extends Controller {
@@ -14,7 +15,7 @@ class ProductsController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth.admin');
     }
 
 	/**
@@ -22,10 +23,15 @@ class ProductsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($id)
 	{
-		$products = DB::table('PRODUCT')->paginate(10);
-		return view('products.index', compact('products'));
+		$parking = Parking::find($id);
+		
+		$parking_name = $parking->parking_name;
+		$parking_id = $parking->parking_id;
+
+		$products = DB::table('PRODUCT')->where('parking_id', $id)->paginate(10);
+		return view('products.index', compact('products', 'parking_name', 'parking_id'));
 	}
 
 	/**
@@ -33,9 +39,15 @@ class ProductsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($id)
 	{
-		return view('products.create');
+		//$parkings = get_parkings_dropdown( NULL, NULL );
+		$parking_id = $id;
+
+		$parking = Parking::find($id);
+		$parking_name = $parking->parking_name;
+
+		return view('products.create', compact('parking_id', 'parking_name'));
 	}
 
 	/**
@@ -46,14 +58,15 @@ class ProductsController extends Controller {
 	public function store(AddProductRequest $request)
 	{
 		$input = $request->all();
-		
+
 		$product = new Product();
 		$product->name = $input['name'];
 		$product->description = $input['description'];
+		$product->parking_id = $input['parking_id'];
 		$product->price = $input['price'];
 		$product->save();
 
-		return redirect('products');
+		return redirect('parking/'.$product->parking_id.'/products');
 	}
 
 	/**
@@ -76,8 +89,12 @@ class ProductsController extends Controller {
 	public function edit($id)
 	{
 		$product = Product::findOrFail($id);
+		$parking_id = $product->parking_id;
 
-		return view('products.edit', compact('product'));
+		$parking = Parking::find($product->parking_id);
+		$parking_name = $parking->parking_name;
+
+		return view('products.edit', compact('product', 'parking_id', 'parking_name'));
 	}
 
 	/**

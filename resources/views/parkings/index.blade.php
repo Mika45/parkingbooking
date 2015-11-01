@@ -15,10 +15,10 @@
 			  <th><small>24 Hour</small></th>
 			  <th><small>Phone</small></th>
 			  <th><small>E-mail</small></th>
-			  <th><small>Created at</small></th>
 			  <th><small></small></th>
 			  <th><small>Rate</small></th>
 			  <th><small>Schedule</small></th>
+			  <th><small>Products</small></th>
 			  <th><small>Translation</small></th>
 			  
 			</tr>
@@ -34,7 +34,6 @@
 				<td><small>{{ $parking->allday }}</small></td>
 				<td><small>{{ $parking->phone1 }}</small></td>
 				<td><small>{{ $parking->email }}</small></td>
-				<td><small>{{ $parking->created_at }}</small></td>
 				<td><a href="/parking/{{ $parking->parking_id }}/edit" class="btn btn-primary btn-xs">Edit</a></td>
 				<td>
 					@if ( $rates[$parking->parking_id]['hasRate'] == 0)
@@ -53,6 +52,7 @@
 						<a href="/parking/{{ $parking->parking_id }}/schedule" class="btn btn-info disabled btn-xs">Edit</a>
 					@endif
 				</td>
+				<td><a href="/parking/{{ $parking->parking_id }}/products" class="btn btn-info btn-xs">Edit</a></td>
 				<td><a href="/translations/parking/{{ $parking->parking_id }}" class="btn btn-success btn-xs">Edit</a></td>
 				{{-- <td><a href="/translations/parking/{{ $parking->parking_id }}/create" class="btn btn-primary btn-xs">Create</a></td> --}}
 				

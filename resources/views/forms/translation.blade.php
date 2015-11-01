@@ -3,91 +3,23 @@
 
 		
 		<div class="form-group">
-        @if ( $type == 'parking' )
-			<div class="col-lg-3">
-				{!! Form::label('locale', 'Locale:') !!}
-				{!! Form::select('locale', $langs, null, ['class' => 'form-control']) !!}
-    		</div>
-			<div class="col-lg-3">
-				{!! Form::label('column_name', 'Column:') !!}
-				{!! Form::select('column_name', ['description' => 'Description',
-				   								 'reserve_notes' => 'Reserve notes',
-				   								 'find_it' => 'Find it',
-                                                 'address' => 'Address',
-                                                 'parking_name' => 'Parking Name'], null, ['class' => 'form-control']) !!}
-    		</div>
 
-    		
-    		<div class="col-lg-6">
-				{!! Form::label('value', 'Value:') !!}
-				{!! Form::textarea('value', null, ['class' => 'form-control']) !!}
-    		</div>
-
-            {!! Form::hidden('table_name', 'PARKING') !!}
-            {!! Form::hidden('identifier', $parking->parking_id) !!}  	
-    	
-        @elseif ( $type == 'location' )
-
-    	   <div class="col-lg-3">
+            <div class="col-lg-3">
                 {!! Form::label('locale', 'Locale:') !!}
                 {!! Form::select('locale', $langs, null, ['class' => 'form-control']) !!}
             </div>
             <div class="col-lg-3">
                 {!! Form::label('column_name', 'Column:') !!}
-                {!! Form::select('column_name', ['description' => 'Description', 'location_page_name' => 'Location Page title', 'name' => 'Name', 'slug' => 'URL alias'], null, ['class' => 'form-control']) !!}
+                {!! Form::select('column_name', $columns, null, ['class' => 'form-control']) !!}
             </div>
-
-            
             <div class="col-lg-6">
                 {!! Form::label('value', 'Value:') !!}
                 {!! Form::textarea('value', null, ['class' => 'form-control']) !!}
             </div>
 
-            {!! Form::hidden('table_name', 'LOCATION') !!}
-            {!! Form::hidden('identifier', $location->location_id) !!} 
+            {!! Form::hidden('table_name', $table_name) !!}
+            {!! Form::hidden('identifier', $identifier) !!}
 
-        @elseif ( $type == 'tag' )
-
-           <div class="col-lg-3">
-                {!! Form::label('locale', 'Locale:') !!}
-                {!! Form::select('locale', $langs, null, ['class' => 'form-control']) !!}
-            </div>
-            <div class="col-lg-3">
-                {!! Form::label('column_name', 'Column:') !!}
-                {!! Form::select('column_name', ['name' => 'Name'], null, ['class' => 'form-control']) !!}
-            </div>
-
-            
-            <div class="col-lg-6">
-                {!! Form::label('value', 'Value:') !!}
-                {!! Form::text('value', null, ['class' => 'form-control']) !!}
-            </div>
-
-            {!! Form::hidden('table_name', 'TAG') !!}
-            {!! Form::hidden('identifier', $tag->tag_id) !!}
-
-        @elseif ( $type == 'article' )
-            <div class="col-lg-3">
-                {!! Form::label('locale', 'Locale:') !!}
-                {!! Form::select('locale', $langs, null, ['class' => 'form-control']) !!}
-            </div>
-            <div class="col-lg-3">
-                {!! Form::label('column_name', 'Column:') !!}
-                {!! Form::select('column_name', ['title' => 'Title',
-                                                 'body' => 'Body',
-                                                 'slug' => 'URL'], null, ['class' => 'form-control']) !!}
-            </div>
-
-            
-            <div class="col-lg-6">
-                {!! Form::label('value', 'Value:') !!}
-                {!! Form::textarea('value', null, ['class' => 'form-control']) !!}
-            </div>
-
-            {!! Form::hidden('table_name', 'ARTICLE') !!}
-            {!! Form::hidden('identifier', $article->article_id) !!}
-
-        @endif
         </div>
         <br/><br/><br/><br/>
         <div class="form-group">

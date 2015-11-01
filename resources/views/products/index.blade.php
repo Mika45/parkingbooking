@@ -3,6 +3,7 @@
 @section('content')
 
 	<h1>Products</h1>
+	<h4>for {{ $parking_name }}</h4>
 
 	<table class="table table-condensed table-striped table-hover">
 		<thead>
@@ -26,6 +27,13 @@
 		@endforeach
 		</tbody>
 	</table>
+
+	<fieldset>
+		<div class="form-group">
+			<div class="col-lg-10"><a href="/products/{{ $parking_id }}/create" class="btn btn-warning btn-xs">Add Product</a></div>
+			<div class="col-lg-2"></div>
+		</div>
+	</fieldset>
 
 	<?php echo $products->render(); ?>
 
