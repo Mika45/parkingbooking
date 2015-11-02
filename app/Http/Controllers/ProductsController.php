@@ -109,7 +109,7 @@ class ProductsController extends Controller {
 		
 		$product->update($request->all());
 		
-		return redirect('products');
+		return redirect('parking/'.$product->parking_id.'/products');
 	}
 
 	/**
