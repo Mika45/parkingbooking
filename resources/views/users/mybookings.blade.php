@@ -50,8 +50,17 @@
 				<td><small>{{ $booking->checkout }}</small></td>
 				<td><small>{{ $booking->price }}</small></td>
 				<td><small>{{ $booking->car_reg }}</small></td>
-				<td><a href="/mybookings/{{ $booking->booking_id }}" target="_blank" class="btn btn-primary btn-sm">{{Lang::get('site.back_book_conf_btn')}}</a></td>
-				<td><a href="/mybookings/{{ $booking->booking_id }}/amend" class="btn btn-danger btn-sm">{{Lang::get('site.back_book_amend_btn')}}</a></td>
+				<td>
+					@if ($booking->can_view == 'Y')
+						<a href="/mybookings/{{ $booking->booking_id }}" target="_blank" class="btn btn-primary btn-sm">{{Lang::get('site.back_book_conf_btn')}}</a></td>
+					@else
+						<a href="/mybookings/{{ $booking->booking_id }}" target="_blank" class="btn btn-primary btn-sm disabled">{{Lang::get('site.back_book_conf_btn')}}</a></td>
+					@endif
+				<td>
+					@if ($booking->can_view == 'Y')
+						<a href="/mybookings/{{ $booking->booking_id }}/amend" class="btn btn-danger btn-sm">{{Lang::get('site.back_book_amend_btn')}}</a>
+					@endif
+				</td>
 			</tr>
 		@endforeach
 		</tbody>
