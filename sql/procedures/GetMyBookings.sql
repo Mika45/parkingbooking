@@ -1,5 +1,5 @@
-DELIMITER $$
-CREATE DEFINER=`tmihalis_park`@`localhost` PROCEDURE `GetMyBookings`(IN `in_email` VARCHAR(50) )
+DROP PROCEDURE IF EXISTS tmihalis_park.GetMyBookings;
+CREATE PROCEDURE tmihalis_park.`GetMyBookings`(IN `in_email` VARCHAR(50) )
 BEGIN
 
 	SELECT b.booking_id, 
@@ -11,7 +11,11 @@ BEGIN
 		    DATE_FORMAT(b.created_at, '%d/%m/%Y') AS booked_at,
 		    p.parking_name,
           CASE WHEN checkin < SYSDATE() THEN 'N' ELSE 'Y' END AS can_view,
-          CASE WHEN checkin < SYSDATE() THEN 'N' ELSE 'Y' END AS can_amend
+          CASE 
+            WHEN checkin < SYSDATE() THEN 'N' 
+            WHEN TIMESTAMPDIFF(HOUR, SYSDATE(), b.checkin) < IFNULL(c.value,0) THEN 'N'
+            ELSE 'Y' 
+          END AS can_amend
 	FROM   BOOKING b,
 		    PARKING p
 	WHERE  b.parking_id = p.parking_id
@@ -19,5 +23,4 @@ BEGIN
 	AND	 IFNULL(b.status,'A') != 'C' /* Not Cancelled */
 	ORDER  BY b.booking_id DESC;
 
-END$$
-DELIMITER ;
+END;
