@@ -20,6 +20,22 @@
 		</p>
 	  </div>
 	</div>
+
+	@if ($products)
+
+		<div class="panel panel-info">
+			<div class="panel-heading">
+		    	<h3 class="panel-title">{{ Lang::get('site.book_sum_heading') }}</h3>
+		  	</div>
+		  	<div class="panel-body">
+		  		@foreach ($products as $product)
+			  		<p>{{ $product->name }}</p><br/>
+			  	@endforeach
+		  	</div>
+		</div>
+
+	@endif
+
 @stop
 
 @section('content')

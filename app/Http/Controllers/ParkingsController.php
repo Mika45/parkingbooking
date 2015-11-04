@@ -29,6 +29,7 @@ use Validator;
 use Image;
 use Imagine;
 use App\PhoneCode;
+use App\Product;
 
 use Ivory\GoogleMap\Helper\MapHelper;
 
@@ -166,7 +167,9 @@ class ParkingsController extends Controller {
 							'code' => '(00'.$country->code.')'];
 		}
 
-		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'parking', 'title_attributes', 'passengers_attributes'));
+		$products = Product::where('parking_id', $parking->parking_id)->get();
+
+		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'parking', 'title_attributes', 'passengers_attributes', 'products'));
 	}
 
 	public function payment(BookRequest $request)
@@ -274,11 +277,11 @@ class ParkingsController extends Controller {
 			$message->attach('tmp/'.$temp_pdf_name);
 		});
 
-		Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
+		/*Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
 		{
 		    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
-		});
+		});*/
 		
 		// Delete the generated pdf after the send
 		File::delete('tmp/'.$temp_pdf_name);
