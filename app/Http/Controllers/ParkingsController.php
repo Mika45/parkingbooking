@@ -633,8 +633,8 @@ class ParkingsController extends Controller {
 		$parking = Parking::findOrFail($id);
 
 		$parking->update($input);
-		
-		if ( $request->input('cancel_threshold') > 0 ){
+
+		if ( $request->input('cancel_threshold') > 0 or empty($request->input('cancel_threshold'))  ){
 			
 			$config = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CANCELLATIONS')->first();
 			
@@ -644,23 +644,12 @@ class ParkingsController extends Controller {
 					
 					$cancel_threshold = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CANCEL_THRESHOLD')->first();
 					
-					$affectedRows = Configuration::where('parking_id', '=', $parking->parking_id)
-												->where('conf_name', '=', 'CANCEL_THRESHOLD')
-												->update(['value' => $request->input('cancel_threshold')]);
+					upd_parking_config( $parking->parking_id, 'CANCEL_THRESHOLD', $request->input('cancel_threshold') );
 				}
 
 			} else {
-				$config = new Configuration;
-				$config->parking_id = $parking->parking_id;
-				$config->conf_name = 'CANCELLATIONS';
-				$config->value = 'Y';
-				$config->save();
-
-				$config = new Configuration;
-				$config->parking_id = $parking->parking_id;
-				$config->conf_name = 'CANCEL_THRESHOLD';
-				$config->value = $request->input('cancel_threshold');
-				$config->save();
+				add_parking_config($parking->parking_id, 'CANCELLATIONS', 'Y');
+				add_parking_config($parking->parking_id, 'CANCEL_THRESHOLD', $request->input('cancel_threshold'));
 			}
 
 		}

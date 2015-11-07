@@ -588,4 +588,19 @@ function add_parking_config( $in_parking_id, $in_config, $in_value )
 	$config->save();
 }
 
+function upd_parking_config( $in_parking_id, $in_config, $in_value )
+{
+	$config = Configuration::where('parking_id', '=', $in_parking_id)->where('conf_name', '=', $in_config)->first();
+
+	if ($config){
+		$affectedRow1 = Configuration::where('parking_id', '=', $in_parking_id)->where('conf_name', '=', $in_config)->update(['value' => $in_value]);
+	} else {
+		$config = new Configuration;
+		$config->parking_id = $in_parking_id;
+		$config->conf_name = $in_config;
+		$config->value = $in_value;
+		$config->save();
+	}
+}
+
 ?>
