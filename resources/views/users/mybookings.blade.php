@@ -57,7 +57,7 @@
 						<a href="/mybookings/{{ $booking->booking_id }}" target="_blank" class="btn btn-primary btn-sm disabled">{{Lang::get('site.back_book_conf_btn')}}</a></td>
 					@endif
 				<td>
-					@if ($booking->can_view == 'Y')
+					@if ($booking->can_amend == 'Y')
 						<a href="/mybookings/{{ $booking->booking_id }}/amend" class="btn btn-danger btn-sm">{{Lang::get('site.back_book_amend_btn')}}</a>
 					@endif
 				</td>
