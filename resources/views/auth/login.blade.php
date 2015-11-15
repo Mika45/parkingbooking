@@ -49,7 +49,7 @@
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">{{ Lang::get('site.login_btn') }}</button>
 
-								<a class="btn btn-link" href="{{ url('/password/email') }}">{{ Lang::get('site.login_forgot') }}</a>
+								{{-- <a class="btn btn-link" href="{{ url('/password/email') }}">{{ Lang::get('site.login_forgot') }}</a> --}}
 							</div>
 						</div>
 					</form>
