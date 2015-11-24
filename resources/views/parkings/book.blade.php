@@ -21,7 +21,7 @@
 	  </div>
 	</div>
 
-	@if ($products)
+	@if (count($products) > 0)
 
 		<div class="panel panel-info">
 			<div class="panel-heading">
