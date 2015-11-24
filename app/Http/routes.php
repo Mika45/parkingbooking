@@ -83,6 +83,12 @@ Route::group(['middleware' => 'secure'], function()
 		return  Response::json($data);
 	});
 
+	Route::get('getRequest', function(){
+		if(Request::ajax()){
+			return 'getRequest has loaded completely';
+		}
+	});
+
 
 	/***************************************************************/
 
@@ -150,6 +156,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('parkings', 'ParkingsController@all'); //was @index
 	Route::get('parkings/{id}', 'ParkingsController@view'); //was @show
 	Route::get('parkings/{id}/book', 'ParkingsController@book');
+	
+	Route::get('parkings/{id}/getRequest', 'ParkingsController@setBookingPrice');
+	/*Route::get('parkings/{id}/getRequest', function(){
+		if(Request::ajax()){
+			//$response = Response::json(Request::all());
+			//$json = json_decode($response, true);
+			//var_dump(Request::all());
+
+			$data = Request::all();
+
+			return ($data['totalPrice']);
+		}
+	});*/
 	
 	Route::get('locations/{slug}', 'LocationsController@show');
 	Route::get('locations/{parent}/{slug}', 'LocationsController@show');

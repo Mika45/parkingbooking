@@ -25,12 +25,20 @@
 
 		<div class="panel panel-info">
 			<div class="panel-heading">
-		    	<h3 class="panel-title">{{ Lang::get('site.book_sum_heading') }}</h3>
+		    	<h3 class="panel-title">{{ Lang::get('site.book_products_heading') }}</h3>
 		  	</div>
 		  	<div class="panel-body">
+		  		
+		  		<div class="checkbox" id="prod_checks">
 		  		@foreach ($products as $product)
-			  		<p>{{ $product->name }}</p><br/>
+		        	<label>
+		            	<input type="checkbox" id="product_option{{ $product->product_id }}" data-price="{{ $product->price }}" name="product_option{{ $product->product_id }}" value="{{ $product->product_id }}"> 
+		            	 	{{ $p_trans[$product->product_id]['name'] or $product->name }} @if($product->description)
+		            	 	 <span class="label label-primary" data-toggle="tooltip" data-placement="bottom" title="{{ $p_trans[$product->product_id]['description'] or $product->description }}">?</span> @endif
+		          	</label>
 			  	@endforeach
+			  	</div>
+
 		  	</div>
 		</div>
 
@@ -170,13 +178,93 @@
 	  </div>
 	  {{-- <div class="panel-footer"><strong>{{ Lang::get('site.book_sum_total') }} {{Session::get('selectedParking')['price']}}</strong></div> --}}
 	  @if ( Session::get('currency')[$parking->parking_id]['currency_order'] == 'L' )
-	  	<div class="panel-footer"><strong>{{ Lang::get('site.book_sum_total') }} {{Session::get('currency')[$parking->parking_id]['currency']}}{{Session::get('selectedParking')['price']}}</strong></div>
+	  	<div id="currencyOrder" style="display: none;">Left</div>
+	  	<div class="panel-footer">
+	  		<strong>
+	  			<table id="priceBreakdown" width="100%">
+	  				<tr>
+	  					<td>{{ Lang::get('site.book_sum_carpark') }}:</td> 
+	  					<td align="right"><span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span> <span id="parkingPrice">{{Session::get('selectedParking')['price']}}</span></td>
+	  				</tr>
+	  			</table>
+	  		</strong>
+	  	</div>
 	  @else
-	  	<div class="panel-footer"><strong>{{ Lang::get('site.book_sum_total') }} {{Session::get('selectedParking')['price']}} {{Session::get('currency')[$parking->parking_id]['currency']}}</strong></div>
+	  	<div id="currencyOrder" style="display: none;">Right</div>
+	  	<div class="panel-footer">
+	  		<strong>
+	  			{{-- {{ Lang::get('site.book_sum_total') }} {{Session::get('selectedParking')['price']}} {{Session::get('currency')[$parking->parking_id]['currency']}} --}}
+	  			<table id="priceBreakdown" width="100%">
+	  				<tr>
+	  					<td>{{ Lang::get('site.book_sum_carpark') }}:</td> 
+	  					<td align="right"><span id="parkingPrice">{{Session::get('selectedParking')['price']}}</span> <span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span></td>
+	  				</tr>
+	  			</table>
+	  		</strong>
+	  	</div>
 	  @endif
-	</div>
-@stop
 
-<script>
-	$('select').selectpicker();
-</script>
+	</div>
+
+	<script>
+
+		$(document).ready(function(){
+
+			$('[data-toggle="tooltip"]').tooltip();
+
+			$('#prod_checks input:checkbox').change(function() {
+				
+				var productsPrice = 0;
+				var totalPrice = 0;
+				var productIds = [];
+
+				$("#prod_checks input:checkbox").each(function() {
+					if($(this).is(':checked')) {
+						productIds.push($(this).val());
+						//alert($(this).val());
+						//var label = $(this).next();
+						productsPrice += parseInt($(this).data('price'));
+					}
+				});
+
+				
+				// show total selected
+				if(productsPrice === 0){
+					$('#breakdown1').remove();
+					$('#breakdown2').remove();
+					totalPrice = parseInt($("#parkingPrice").text());
+				}else{
+					totalPrice = productsPrice + parseInt($("#parkingPrice").text());
+					//$("#priceBreakdown").html("<tr><td>Services:</td><td>" + productsPrice + "</td></tr><tr><td>Total:</td><td>" + totalPrice + "</td></tr>");
+					$('#breakdown1').remove();
+					$('#breakdown2').remove();
+					
+					var cur = $("#currency").text();
+					if($("#currencyOrder").text() == 'Right'){
+						$('#priceBreakdown tr:last').after("<tr id='breakdown1'><td>{{ Lang::get('site.book_sum_products') }}:</td><td align='right'>" + productsPrice + ' ' + cur
+															+ "</td></tr><tr id='breakdown2'><td>{{ Lang::get('site.book_sum_total') }}:</td><td align='right'><span id='total'>" + totalPrice + ' ' + cur + "</span></td></tr>");
+					}else{
+						$('#priceBreakdown tr:last').after("<tr id='breakdown1'><td>{{ Lang::get('site.book_sum_products') }}:</td><td align='right'>" + cur + ' ' + productsPrice 
+															+ "</td></tr><tr id='breakdown2'><td>{{ Lang::get('site.book_sum_total') }}:</td><td align='right'><span id='total'>" + cur + ' ' + totalPrice + "</span></td></tr>");
+					}
+				}
+
+				$.get('getRequest', { totalPrice:totalPrice, productIDs:productIds }, function(data){
+					console.log(data);
+				});
+			});
+
+			/*$('#getRequest').click(function(){
+
+				var total = $('#total').val();
+				
+				$.get('getRequest', { totalPrice:total }, function(data){
+					console.log(data);
+				});
+			});*/
+
+		});
+
+	</script>
+
+@stop

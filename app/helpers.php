@@ -287,6 +287,14 @@ function get_tag_translations( $in_parking_id )
 	return $response;
 }
 
+function get_product_translations( $in_parking_id )
+{
+	$lang = App::getLocale();
+	$response = DB::select('CALL GetParkingProductsTranslations("'.$lang.'",'.$in_parking_id.')');
+
+	return $response;
+}
+
 function get_results_translation( $in_parking_ids, $in_locale )
 {
 	$lang = App::getLocale();

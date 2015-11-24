@@ -78,9 +78,12 @@ class UsersController extends Controller {
 		// get the traslations of the current locale
 		$translations = get_parking_translation( $booking[0]->parking_id );
 
+		$cur_lang = App::getLocale();
+		$products = DB::select('CALL GetVoucherProducts('.$id.',"'.$cur_lang.'")');
+
 		$pdf = App::make('dompdf');
 
-		$pdf->loadView('emails.voucher', compact('booking', 'translations'));
+		$pdf->loadView('emails.voucher', compact('booking', 'products', 'translations'));
 		
 		return $pdf->stream();
 	}

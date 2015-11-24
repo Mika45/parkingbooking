@@ -59,7 +59,8 @@ return [
 	'voucher_notes'   => 'Reservation notes',
 	'voucher_desc'    => 'Description',
 	'voucher_find'    => 'How to find it',
-	'voucher_price'   => 'Price',
+	'voucher_price'   => 'Total Price',
+	'voucher_services' => 'Additional Services',
 	'voucher_subject_amend' => 'Your Amended Booking Voucher',
 	
 	'cancel_subject' => 'Ακύρωση Κράτησης',

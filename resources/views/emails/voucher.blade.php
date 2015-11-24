@@ -22,12 +22,25 @@
 			<p>{{Lang::get('emails.common_ref')}}: <strong>{{$bk->booking_ref}}</strong></p>
 			<p>{{Lang::get('emails.voucher_price')}}: 
 				@if ($bk->currency_order == 'L') {{$bk->currency}} @endif {{$bk->price}} @if($bk->currency_order == 'R') {{$bk->currency}} @endif
+
 				@if ($bk->status == 'A') 
 					@if ($bk->price_diff < 0)
 						({{$bk->price_old}} {{$bk->price_diff}})
 					@else
 						({{$bk->price_old}} + {{$bk->price_diff}})
 					@endif
+				@endif
+
+				@if ($products)
+					<br/>
+					{{Lang::get('emails.voucher_services')}}: <br/>
+					@foreach ($products as $prod)
+						@if ($bk->currency_order == 'L')
+							{{$prod->name}} ({{$bk->currency}}{{$prod->price}}) <br/>
+						@else
+							{{$prod->name}} ({{$prod->price}} {{$bk->currency}}) <br/>
+						@endif
+					@endforeach
 				@endif
 			</p>
 			<p>{{$bk->checkin}} - {{$bk->checkout}}</p>
@@ -55,13 +68,10 @@
 			</p>
 			
 			<h4>{{Lang::get('emails.voucher_notes')}}</h4>
-			<p>{!! $translations['reserve_notes'] or $bk->reserve_notes !!}</p>
-
-			{{-- <h4>{{Lang::get('emails.voucher_desc')}}</h4>
-			<p>{!!$bk->description!!}</p> --}}
+			{!! $translations['reserve_notes'] or $bk->reserve_notes !!}
 
 			<h4>{{Lang::get('emails.voucher_find')}}</h4>
-			<p>{!! $translations['find_it'] or $bk->find_it !!}</p>
+			{!! $translations['find_it'] or $bk->find_it !!}
 		@endforeach
 
 	</body>

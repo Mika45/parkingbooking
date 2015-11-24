@@ -59,7 +59,8 @@ return [
 	'voucher_notes'   => 'Σημειώσεις κράτησης',
 	'voucher_desc'    => 'Περιγραφή',
 	'voucher_find'    => 'Πως να το βρείτε',
-	'voucher_price'   => 'Τιμή',
+	'voucher_price'   => 'Συνολική Τιμή',
+	'voucher_services' => 'Πρόσθετες Υπηρεσίες',
 	'voucher_subject_amend' => 'Κουπόνι Τροποποιημένης Κράτησης',
 
 	'cancel_subject' => 'Ακύρωση Κράτησης',

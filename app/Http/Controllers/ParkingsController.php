@@ -30,6 +30,7 @@ use Image;
 use Imagine;
 use App\PhoneCode;
 use App\Product;
+use App\BookingProduct;
 
 use Ivory\GoogleMap\Helper\MapHelper;
 
@@ -40,7 +41,7 @@ class ParkingsController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['show', 'book', 'payment']]); 
+        $this->middleware('auth', ['except' => ['show', 'book', 'payment', 'setBookingPrice']]); 
     }
 
 	//public function index()
@@ -168,8 +169,41 @@ class ParkingsController extends Controller {
 		}
 
 		$products = Product::where('parking_id', $parking->parking_id)->get();
+		$prod_trans = get_product_translations( $parking->parking_id );
+		
+		$p_trans = null;
+		if(!empty($prod_trans)){
+			foreach ($prod_trans as $value) {
+				$p_trans[$value->product_id] = ['name' => $value->name, 'description' => $value->description];
+			}
+		}
 
-		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'parking', 'title_attributes', 'passengers_attributes', 'products'));
+		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products'));
+	}
+
+	// using Ajax
+	public function setBookingPrice()
+	{
+		if(Request::ajax()){
+			/*$response = Response::json(Request::all());
+			$json = json_decode($response, true);
+			var_dump(Request::all());*/
+
+			$data = Request::all();
+
+			// set a session with the selected Products
+			Session::set('selectedProducts', $data['productIDs']);
+
+			$selectedArray = Session::get('selectedParking');
+			$selectedArray['price'] = $data['totalPrice'];
+			Session::set('selectedParking', $selectedArray);
+
+			$sessions = Session::get('selectedParking');
+
+			return ($sessions);
+		}
+
+		return null;
 	}
 
 	public function payment(BookRequest $request)
@@ -245,16 +279,34 @@ class ParkingsController extends Controller {
 		// Disabled at the moment - querying the booking table for availability
 		//DB::statement('CALL UpdateAvailability('.$selectedId.', "'.$data['checkindate'].'", "'.$data['checkoutdate'].'", "D")');
 
+		// Booking Products section
+		if (Session::has('selectedProducts')){
+
+			$products = Session::get('selectedProducts');
+			//Session::forget('selectedParking');
+			foreach ($products as $prod) {
+				$bookingProduct = new BookingProduct;
+				$bookingProduct->booking_id = $booking->booking_id;
+				$bookingProduct->product_id = $prod;
+				$bookingProduct->save();
+			}
+
+		}
+
+		// Booking Voucher section
 		$bid = $booking->booking_id;
 		$temp_pdf_name = 'Booking Voucher '.$bid.'.pdf';
 
 		$booking = DB::select('CALL GetBooking('.$booking->booking_id.')');
+
+		$cur_lang = App::getLocale();
+		$products = DB::select('CALL GetVoucherProducts('.$bid.',"'.$cur_lang.'")');
 		
 		// get the traslations of the current locale
 		$translations = get_parking_translation( $booking[0]->parking_id );
 
 		$pdf = App::make('dompdf');
-		$pdf->loadView('emails.voucher', compact('booking', 'translations'));
+		$pdf->loadView('emails.voucher', compact('booking', 'products', 'translations'));
 		$pdf->save('tmp/'.$temp_pdf_name);
 
 		// send the email to the booking user, to the admin and to the Park's e-mail if it exists
@@ -264,24 +316,24 @@ class ParkingsController extends Controller {
 		$parking = Parking::where('parking_id', '=', $booking[0]->parking_id)->first();
 
 		if(!empty($parking->email)) {
-			Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking, $parking)
+			Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking, $parking)
 			{
 			    $message->to($parking->email)->subject(Lang::get('emails.voucher_subject'));
 				$message->attach('tmp/'.$temp_pdf_name);
 			});
 		}
 
-		Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
+		Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
 		{
 		    $message->to($booking[0]->email)->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
 		});
 
-		/*Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
+		Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
 		{
 		    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
-		});*/
+		});
 		
 		// Delete the generated pdf after the send
 		File::delete('tmp/'.$temp_pdf_name);
