@@ -4,13 +4,20 @@
 @section('content')
 
 	@if ( $type == 'parking' )
-		<h1>Add a new Parking Translation for {{ $parking->parking_name }}</h1>
+		<h1>Add a new Parking Translation</h1>
+		<h4>for {{ $parking->parking_name }}</h4>
 	@elseif ( $type == 'location' )
-		<h1>Add a new Location Translation for {{ $location->name }}</h1>
+		<h1>Add a new Location Translation</h1>
+		<h4>for {{ $location->name }}</h4>
 	@elseif ( $type == 'tag' )
-		<h1>Add a new Tag Translation for {{ $tag->name }}</h1>
+		<h1>Add a new Tag Translation</h1>
+		<h4>for {{ $tag->name }}</h4>
 	@elseif ( $type == 'article' )
-		<h1>Add a new Article Translation for {{ $article->title }}</h1>
+		<h1>Add a new Article Translation</h1>
+		<h4>for {{ $article->title }}</h4>
+	@elseif ( $type == 'product' )
+		<h1>Add a new Product Translation</h1>
+		<h4>for {{ $product->name }}</h4>
 	@endif
 
 <div class="well">

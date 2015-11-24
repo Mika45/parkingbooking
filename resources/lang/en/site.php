@@ -84,7 +84,10 @@ return [
 	'book_form_country_list' => 'Please select',
 	'book_form_btn'		=> 'Complete Booking',
 	'book_sum_heading'	=> 'BOOKING DETAILS',
-	'book_sum_total'	=> 'TOTAL',
+	'book_products_heading' => 'ADDITIONAL SERVICES',
+	'book_sum_carpark'	=> 'Parking',
+	'book_sum_products'	=> 'Services',
+	'book_sum_total'	=> 'Total',
 
 	'pay_sum_heading'	=> 'PAYMENT OPTIONS',
 	'pay_sum_opt_1'		=> 'Pay at car park',

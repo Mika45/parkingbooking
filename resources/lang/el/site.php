@@ -84,7 +84,10 @@ return [
 	'book_form_country_list' => 'Παρακαλώ επιλέξτε',
 	'book_form_btn'		=> 'Ολοκλήρωση Κράτησης',
 	'book_sum_heading'	=> 'ΣΤΟΙΧΕΙΑ ΚΡΑΤΗΣΗΣ',
-	'book_sum_total'	=> 'ΣΥΝΟΛΟ',
+	'book_products_heading' => 'ΠΡΟΣΘΕΤΕΣ ΥΠΗΡΕΣΙΕΣ',
+	'book_sum_carpark'	=> 'Πάρκινγκ',
+	'book_sum_products'	=> 'Υπηρεσίες',
+	'book_sum_total'	=> 'Σύνολο',
 
 	'pay_sum_heading'	=> 'ΕΠΙΛΟΓΕΣ ΠΛΗΡΩΜΗΣ',
 	'pay_sum_opt_1'		=> 'Πληρωμή στο πάρκινγκ',

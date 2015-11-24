@@ -11,7 +11,6 @@ use App\RateDaily;
 use App\Configuration;
 use App\Field;
 use App\Tag;
-use App\Product;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
@@ -30,6 +29,8 @@ use Validator;
 use Image;
 use Imagine;
 use App\PhoneCode;
+use App\Product;
+use App\BookingProduct;
 
 use Ivory\GoogleMap\Helper\MapHelper;
 
@@ -40,7 +41,7 @@ class ParkingsController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['show', 'book', 'payment']]); 
+        $this->middleware('auth', ['except' => ['show', 'book', 'payment', 'setBookingPrice']]); 
     }
 
 	//public function index()
@@ -167,7 +168,42 @@ class ParkingsController extends Controller {
 							'code' => '(00'.$country->code.')'];
 		}
 
-		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'parking', 'title_attributes', 'passengers_attributes'));
+		$products = Product::where('parking_id', $parking->parking_id)->get();
+		$prod_trans = get_product_translations( $parking->parking_id );
+		
+		$p_trans = null;
+		if(!empty($prod_trans)){
+			foreach ($prod_trans as $value) {
+				$p_trans[$value->product_id] = ['name' => $value->name, 'description' => $value->description];
+			}
+		}
+
+		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products'));
+	}
+
+	// using Ajax
+	public function setBookingPrice()
+	{
+		if(Request::ajax()){
+			/*$response = Response::json(Request::all());
+			$json = json_decode($response, true);
+			var_dump(Request::all());*/
+
+			$data = Request::all();
+
+			// set a session with the selected Products
+			Session::set('selectedProducts', $data['productIDs']);
+
+			$selectedArray = Session::get('selectedParking');
+			$selectedArray['price'] = $data['totalPrice'];
+			Session::set('selectedParking', $selectedArray);
+
+			$sessions = Session::get('selectedParking');
+
+			return ($sessions);
+		}
+
+		return null;
 	}
 
 	public function payment(BookRequest $request)
@@ -243,16 +279,34 @@ class ParkingsController extends Controller {
 		// Disabled at the moment - querying the booking table for availability
 		//DB::statement('CALL UpdateAvailability('.$selectedId.', "'.$data['checkindate'].'", "'.$data['checkoutdate'].'", "D")');
 
+		// Booking Products section
+		if (Session::has('selectedProducts')){
+
+			$products = Session::get('selectedProducts');
+			//Session::forget('selectedParking');
+			foreach ($products as $prod) {
+				$bookingProduct = new BookingProduct;
+				$bookingProduct->booking_id = $booking->booking_id;
+				$bookingProduct->product_id = $prod;
+				$bookingProduct->save();
+			}
+
+		}
+
+		// Booking Voucher section
 		$bid = $booking->booking_id;
 		$temp_pdf_name = 'Booking Voucher '.$bid.'.pdf';
 
 		$booking = DB::select('CALL GetBooking('.$booking->booking_id.')');
+
+		$cur_lang = App::getLocale();
+		$products = DB::select('CALL GetVoucherProducts('.$bid.',"'.$cur_lang.'")');
 		
 		// get the traslations of the current locale
 		$translations = get_parking_translation( $booking[0]->parking_id );
 
 		$pdf = App::make('dompdf');
-		$pdf->loadView('emails.voucher', compact('booking', 'translations'));
+		$pdf->loadView('emails.voucher', compact('booking', 'products', 'translations'));
 		$pdf->save('tmp/'.$temp_pdf_name);
 
 		// send the email to the booking user, to the admin and to the Park's e-mail if it exists
@@ -262,20 +316,20 @@ class ParkingsController extends Controller {
 		$parking = Parking::where('parking_id', '=', $booking[0]->parking_id)->first();
 
 		if(!empty($parking->email)) {
-			Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking, $parking)
+			Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking, $parking)
 			{
 			    $message->to($parking->email)->subject(Lang::get('emails.voucher_subject'));
 				$message->attach('tmp/'.$temp_pdf_name);
 			});
 		}
 
-		Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
+		Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
 		{
 		    $message->to($booking[0]->email)->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
 		});
 
-		Mail::send('emails.booking', compact('booking'), function($message) use($temp_pdf_name, $booking)
+		Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
 		{
 		    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
 			$message->attach('tmp/'.$temp_pdf_name);
@@ -368,10 +422,7 @@ class ParkingsController extends Controller {
 		if (!array_key_exists('FREE_MINUTES', $configArray))
 			$configArray['FREE_MINUTES'] = null;
 
-		$products = Product::lists('name', 'product_id');
-		$products_selected = NULL;
-
-		return view('parkings.create', compact('p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected', 'products', 'products_selected',
+		return view('parkings.create', compact('p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
 												'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
 
@@ -383,49 +434,8 @@ class ParkingsController extends Controller {
 	public function store(AddParkingRequest $request)
 	{
 		$input = $request->all();
-		//dd($input);
-
-		// Deprecated - to be removed
-		/*$json = '{';
-		if ($request->input('non-working-hours-1') == '1'){
-			$json = $json.'"business":{"from":"'.$request->input('from_time_bd').'", "to":"'.$request->input('to_time_bd').'"},';
-			//{"business":{"from":"00:00", "to":"23:59"}, "saturday":{"from":"07:00", "to":"23:59"},"sunday":{"from":"08:00", "to":"23:00"}}
-		}
-		
-		if ($request->input('non-working-hours-2') == '1'){
-			$json = $json.'"saturday":{"from":"'.$request->input('from_time_sat').'", "to":"'.$request->input('to_time_sat').'"},';
-			//{"business":{"from":"00:00", "to":"23:59"}, "saturday":{"from":"07:00", "to":"23:59"},"sunday":{"from":"08:00", "to":"23:00"}}
-		}
-
-		if ($request->input('non-working-hours-3') == '1'){
-			$json = $json.'"sunday":{"from":"'.$request->input('from_time_sun').'", "to":"'.$request->input('to_time_sun').'"}';
-			//{"business":{"from":"00:00", "to":"23:59"}, "saturday":{"from":"07:00", "to":"23:59"},"sunday":{"from":"08:00", "to":"23:00"}}
-		}
-
-		if (substr($json, -1) == ',')
-			$json = substr($json, 0, strlen($json)-1);
-
-		$json = $json.'}';
-		//dd(json_decode($json, true));
-
-		if (strlen($json) > 2)
-			$input['non_work_hours'] = $json;
-		else
-			$input['non_work_hours'] = NULL;*/
 
 		$parking = Parking::create($input);
-
-		/*if ( array_key_exists('locations', $input) ){
-			foreach ($input['locations'] as $loc){
-				$p_location = new ParkingLocation;
-
-				$p_location->parking_id = $parking->parking_id;
-				$p_location->location_id = $loc;
-				$p_location->status = 'A';
-
-				$p_location->save();
-			}
-		}*/
 
 		//attach the locations
 		$parking->locations()->attach($request->input('locations'));
@@ -519,9 +529,6 @@ class ParkingsController extends Controller {
 		$tags = Tag::lists('name', 'tag_id');
 		$tags_selected = $parking->tags->lists('tag_id');
 
-		$products = Product::lists('name', 'product_id');
-		$products_selected = $parking->products->lists('product_id');
-
 		$configArray[] = NULL;
 
 		$config_response = Configuration::where('parking_id', '=', $id)->get();
@@ -533,7 +540,7 @@ class ParkingsController extends Controller {
 		if (!array_key_exists('FREE_MINUTES', $configArray))
 			$configArray['FREE_MINUTES'] = null;
 
-		return view('parkings.edit', compact('parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected','products', 'products_selected',
+		return view('parkings.edit', compact('parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
 											'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
 	
@@ -603,33 +610,6 @@ class ParkingsController extends Controller {
 		    }
 		}
 
-		// Deprecated - to be removed
-		/*$json = '{';
-		if ($request->input('non-working-hours-1') == '1'){
-			$json = $json.'"business":{"from":"'.$request->input('from_time_bd').'", "to":"'.$request->input('to_time_bd').'"},';
-			//{"business":{"from":"00:00", "to":"23:59"}, "saturday":{"from":"07:00", "to":"23:59"},"sunday":{"from":"08:00", "to":"23:00"}}
-		}
-		
-		if ($request->input('non-working-hours-2') == '1'){
-			$json = $json.'"saturday":{"from":"'.$request->input('from_time_sat').'", "to":"'.$request->input('to_time_sat').'"},';
-			//{"business":{"from":"00:00", "to":"23:59"}, "saturday":{"from":"07:00", "to":"23:59"},"sunday":{"from":"08:00", "to":"23:00"}}
-		}
-
-		if ($request->input('non-working-hours-3') == '1'){
-			$json = $json.'"sunday":{"from":"'.$request->input('from_time_sun').'", "to":"'.$request->input('to_time_sun').'"}';
-			//{"business":{"from":"00:00", "to":"23:59"}, "saturday":{"from":"07:00", "to":"23:59"},"sunday":{"from":"08:00", "to":"23:00"}}
-		}
-
-		if (substr($json, -1) == ',')
-			$json = substr($json, 0, strlen($json)-1);
-
-		$json = $json.'}';
-		
-		if (strlen($json) > 2)
-			$input['non_work_hours'] = $json;
-		else
-			$input['non_work_hours'] = NULL;*/
-
 		$parking = Parking::findOrFail($id);
 
 		$parking->update($input);
@@ -688,9 +668,6 @@ class ParkingsController extends Controller {
 
 		if ($request->input('tags'))
 			$parking->tags()->sync($request->input('tags'));
-
-		if ($request->input('products'))
-			$parking->products()->sync($request->input('products'));
 
 		return redirect('parking');
 	}

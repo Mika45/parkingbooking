@@ -135,25 +135,20 @@
     	</div>
     	
     	<div class="form-group">
-			<div class="col-lg-3">
+			<div class="col-lg-4">
 				<br/>
 				{!! Form::label('locations', 'Associate locations:') !!}
 				{!! Form::select('locations[]', $p_locations, $p_locations_selected, ['multiple', 'class' => 'form-control']) !!}
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-4">
 				<br/>
 				{!! Form::label('fields', 'Associate fields:') !!}
 				{!! Form::select('fields[]', $p_fields, $p_fields_selected, ['multiple', 'class' => 'form-control']) !!}
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-4">
 				<br/>
 				{!! Form::label('tags', 'Associate tags:') !!}
 				{!! Form::select('tags[]', $tags, $tags_selected, ['multiple', 'class' => 'form-control']) !!}
-			</div>
-			<div class="col-lg-3">
-				<br/>
-				{!! Form::label('products', 'Associate products:') !!}
-				{!! Form::select('products[]', $products, $products_selected, ['multiple', 'class' => 'form-control']) !!}
 			</div>
 		</div>
 		<br/><br/><br/>

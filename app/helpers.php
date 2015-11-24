@@ -287,6 +287,14 @@ function get_tag_translations( $in_parking_id )
 	return $response;
 }
 
+function get_product_translations( $in_parking_id )
+{
+	$lang = App::getLocale();
+	$response = DB::select('CALL GetParkingProductsTranslations("'.$lang.'",'.$in_parking_id.')');
+
+	return $response;
+}
+
 function get_results_translation( $in_parking_ids, $in_locale )
 {
 	$lang = App::getLocale();
@@ -601,6 +609,17 @@ function upd_parking_config( $in_parking_id, $in_config, $in_value )
 		$config->value = $in_value;
 		$config->save();
 	}
+}
+
+function get_parkings_dropdown( $in_location_id = NULL, $in_status = NULL )
+{
+	$parkings = DB::table('PARKING')
+					->join('PARKING_LOCATION', 'PARKING.parking_id', '=', 'PARKING_LOCATION.parking_id')
+					->select('PARKING.parking_id', 'PARKING.parking_name')
+					->orderBy('parking_name')
+					->lists('parking_name', 'PARKING.parking_id');
+
+    return $parkings;
 }
 
 ?>
