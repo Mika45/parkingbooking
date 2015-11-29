@@ -221,21 +221,17 @@
 				$("#prod_checks input:checkbox").each(function() {
 					if($(this).is(':checked')) {
 						productIds.push($(this).val());
-						//alert($(this).val());
-						//var label = $(this).next();
-						productsPrice += parseInt($(this).data('price'));
+						productsPrice += parseFloat($(this).data('price'));
 					}
 				});
 
-				
 				// show total selected
 				if(productsPrice === 0){
 					$('#breakdown1').remove();
 					$('#breakdown2').remove();
-					totalPrice = parseInt($("#parkingPrice").text());
+					totalPrice = parseFloat($("#parkingPrice").text());
 				}else{
-					totalPrice = productsPrice + parseInt($("#parkingPrice").text());
-					//$("#priceBreakdown").html("<tr><td>Services:</td><td>" + productsPrice + "</td></tr><tr><td>Total:</td><td>" + totalPrice + "</td></tr>");
+					totalPrice = productsPrice + parseFloat($("#parkingPrice").text());
 					$('#breakdown1').remove();
 					$('#breakdown2').remove();
 					
