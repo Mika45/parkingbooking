@@ -11,13 +11,15 @@
 
 @stop
 
-@section('content-left')
-
-	<table>
+@section('content-top')
+<table>
 		<tr>
 			<td width="85%"><h1>{!! $translations['location_page_name'] or $location->location_page_name !!}</h1></td>
 		</tr>
 	</table>
+@stop
+
+@section('content-left')
 
 	<div class="well well-yellow">
 		<legend>
@@ -32,7 +34,6 @@
 @stop
 
 @section('content-right')
-	<h1>&nbsp;</h1>
 
 	@if (isset($location->lat) && isset($location->lng))
 		{!!$mapHelper->renderHtmlContainer($map)!!}

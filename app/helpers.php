@@ -124,7 +124,7 @@ function build_results_map( $in_lat, $in_lng, $in_data)
 		$infoWindow->setPosition(0, 0, true);
 		$infoWindow->setPixelOffset(1.1, 2.1, 'px', 'pt');
 		
-		$content = $parking->parking_name.'<br><b>'.$parking->price;
+		$content = '<h4>'.$parking->parking_name.'</h4><strong>'.$parking->price.'</strong>';
 
 		$infoWindow->setContent($content);
 
