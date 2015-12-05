@@ -18,6 +18,7 @@ BEGIN
    FROM   BOOKING b,
           PARKING p
    WHERE  b.parking_id = p.parking_id
+   AND    IFNULL(b.status, 'A') != 'C'
    ORDER  BY b.booking_id DESC;
 
 END$$
