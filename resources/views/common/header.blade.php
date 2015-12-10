@@ -6,6 +6,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta charset="utf-8" />
+		
+		<meta name="description" content="{{Lang::get('site.meta_description')}}" />
+    	<meta name="keywords" content="{{Lang::get('site.meta_keywords')}}" />
+
+		<meta property="og:url" content="{{Lang::get('site.og_url')}}" />
+    	<meta property="og:title" content="@yield('title')" />
+    	<meta property="og:site_name" content="ParkingLegend.com" />
+    	<meta property="og:type" content="website" />
+    	<meta property="og:description" content="{{Lang::get('site.og_description')}}" />
 
 		{!! HTML::script('js/jquery-1.11.2.min.js') !!}
 
@@ -43,7 +52,7 @@
 		</style>
 
 	</head>
-    <body>
+   <body>
 
     	<!-- Static navbar -->
     	<nav class="navbar navbar-inverse navbar-static-top">

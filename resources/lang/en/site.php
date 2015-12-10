@@ -166,4 +166,14 @@ return [
 	'amend_cancel_btn_no' => 'No',
 	'amend_cancel_btn_yes' => 'Yes',
 
+	/*
+	|--------------------------------------------------------------------------
+	| Meta tags
+	|--------------------------------------------------------------------------
+	*/
+	'meta_keywords' 		=> 'Parking, airport parking, city parking, port parking, parking spaces, book parking',
+	'meta_description' 	=> 'Make your reservation today on ParkingLegend.com with one of our listed car parks and enjoy your trip without any stress, knowing that your vehicle is in good hands. ParkingLegend.com will provide you with secure parking options at very competitive prices.',
+	'og_url' 				=> 'http://www.parkinglegend.com/en',
+	'og_description'		=> 'Make your reservation today on ParkingLegend.com with one of our listed car parks and enjoy your trip without any stress, knowing that your vehicle is in good hands. ParkingLegend.com will provide you with secure parking options at very competitive prices.',
+
 ];

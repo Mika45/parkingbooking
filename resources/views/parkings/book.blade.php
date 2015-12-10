@@ -36,6 +36,7 @@
 		            	 	{{ $p_trans[$product->product_id]['name'] or $product->name }} @if($product->description)
 		            	 	 <span class="label label-primary" data-toggle="tooltip" data-placement="bottom" title="{{ $p_trans[$product->product_id]['description'] or $product->description }}">?</span> @endif
 		          	</label>
+		          	<br/>
 			  	@endforeach
 			  	</div>
 
