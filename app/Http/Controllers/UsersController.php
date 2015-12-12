@@ -64,7 +64,7 @@ class UsersController extends Controller {
 		$userId = Auth::user()->user_id;
 		$user = User::findOrFail($userId);
 
-		$bookings = DB::select('CALL GetMyBookings("'.$user->email.'")');
+		$bookings = DB::select('CALL GetMyBookings("'.$user->email.'", '.$user->user_id.')');
 
 		$locationsList = get_locations_for_search();
 
