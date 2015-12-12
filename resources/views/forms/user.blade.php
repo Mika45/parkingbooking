@@ -16,7 +16,9 @@
 		<label for="email" class="col-lg-4 control-label">* {{ Lang::get('site.reg_email') }}</label>
 		<div class="col-lg-8">
 			{!! Form::text('email', null, ['class' => 'form-control', 'id' => 'email', 'disabled' => 'disabled', 'readonly']) !!}
+			{!! Form::hidden('email', $user->email) !!}
 		</div>
+
 	</div>
 	<div class="form-group">
 		<label for="firstname" class="col-lg-4 control-label">* {{ Lang::get('site.reg_firstname') }}</label>
