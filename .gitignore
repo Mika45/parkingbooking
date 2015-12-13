@@ -3,5 +3,6 @@
 /public/img/icons
 /public/tmp
 /public/prices
+/public/sitemap.xml
 /database
 .env
