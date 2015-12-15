@@ -21,6 +21,8 @@ use Carbon;
 use stdClass;
 use Log;
 use Excel;
+use URL;
+use LaravelLocalization;
 
 class PagesController extends Controller {
 
@@ -391,20 +393,53 @@ class PagesController extends Controller {
 	public function sitemap()
 	{
 		// create new sitemap object
-	    $sitemap = App::make("sitemap");
+		$sitemap = App::make("sitemap");
 
-	    // add items to the sitemap (url, date, priority, freq)
-	    $sitemap->add(url(), '2015-08-13T20:10:00+02:00', '1.0', 'daily');
-	    $sitemap->add(url('faq'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
-	    $sitemap->add(url('contact'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
-	    $sitemap->add(url('about'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
-	    $sitemap->add(url('affiliates'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
-	    $sitemap->add(url('tscs'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
-	    $sitemap->add(url('privacy'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
-	    $sitemap->add(url('payment-methods'), '2015-08-13T12:30:00+02:00', '0.9', 'monthly');
+		$currentLocale = App::getLocale();
+		$locales = LaravelLocalization::getSupportedLocales();
+      unset($locales[$currentLocale]);
 
-	    // generate your sitemap (format, filename)
-	    $sitemap->store('xml', 'sitemap');
+      $urls = array('', 'faq', 'about', 'affiliates', 'tscs', 'privacy', 'payment-methods');
+      foreach ($urls as $page) {
+      	foreach ($locales as $lng => $locale) {
+				$translations = [ ['language' => $lng, 'url' => url($lng.'/'.$page)] ];
+			}
+			$sitemap->add(url($currentLocale.'/'.$page), '2015-08-13T20:10:00+02:00', '1.0', 'daily', [], null, $translations);	
+      }
+      
+      $query = 'CALL GetLocationPages("'.$currentLocale.'")';
+      $locationPages = DB::select($query);
+
+      $mainArray = array();
+
+      foreach ($locationPages as $value) {
+      	$mainArray[$value->location_id] = $value->url;
+      }
+
+      $locales = LaravelLocalization::getSupportedLocales();
+      unset($locales[$currentLocale]);
+
+      foreach ($locales as $lng => $locale) {
+      	$query = 'CALL GetLocationPages("'.$lng.'")';
+      	$data = DB::select($query);
+      	foreach ($data as $value) {
+      		$transArray[$value->location_id] = $value->url;
+      	}
+      	$translatedPages[$lng] = $transArray;
+      }
+
+      foreach ($mainArray as $locId => $url) {
+      	foreach ($translatedPages as $lng => $value) {
+      		$trans = [
+      						['language' => $lng, 'url' => url($lng.$value[$locId])]
+							];
+      	}
+      	$sitemap->add(url($currentLocale.$url), '2015-08-13T12:30:00+02:00', '0.9', 'monthly', [], null, $trans);
+      }
+
+	   // generate your sitemap (format, filename)
+	   $sitemap->store('xml', 'sitemap');
+	   return $sitemap->render('xml');
 	}
 
 }

@@ -116,7 +116,7 @@ Route::group(['middleware' => 'secure'], function()
 });
 
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
-Route::get('sitemap', 'PagesController@sitemap');
+//Route::get('sitemap', 'PagesController@sitemap');
 // FORCE HTTP - NOT SECURE - NON CRITICAL ROUTES ONLY
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect', 'localizationRedirect']], function() //can use unsecure also
 {
@@ -134,6 +134,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('privacy', 'PagesController@privacy');
 	Route::get('affiliates', 'PagesController@affiliates');
 	Route::get('payment-methods', 'PagesController@payment_methods');
+
+	Route::get('sitemap', 'PagesController@sitemap');
+	Route::get('/sitemap.xml', 'PagesController@sitemap');
 });
 
 // FORCE HTTPS
@@ -180,12 +183,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 		'password' => 'Auth\PasswordController',
 	]);
 
-	Route::get('/{slug}', 'LocationPagesController@show');	
+	Route::get('/{slug}', 'LocationPagesController@show');
 	Route::get('/{parent}/{slug}', 'LocationPagesController@showChild');
 
 });
 
-Route::get('xml', 'PagesController@getxml');
+//Route::get('xml', 'PagesController@getxml');
 Route::get('map', 'PagesController@showmap');
 Route::get('map2', 'PagesController@showmap2');
 Route::get('pdf', 'PagesController@generatePDF');
