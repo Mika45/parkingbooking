@@ -4,6 +4,18 @@
 		<title>ParkingLegend.com: @yield('title')</title>
 		<meta name="google-site-verification" content="JRnT1QScbmi8ajN_F8ZzCAXr7gwQVbgj1-Ub5DbdVpk" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta charset="utf-8" />
+
+		<meta name="keywords" content="@yield('meta_keywords')" />
+		<meta name="description" content="@yield('meta_description')" />
+
+		<meta property="og:url" content="{{Request::url()}}" />
+    	<meta property="og:title" content="@yield('title')" />
+    	<meta property="og:site_name" content="ParkingLegend.com" />
+    	<meta property="og:type" content="website" />
+    	<meta property="og:description" content="@yield('meta_description')" />
+
 		{!! HTML::script('js/jquery-1.11.2.min.js') !!}
 
 		{!! HTML::script('js/jquery-migrate-1.2.1.min.js') !!}

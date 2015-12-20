@@ -1,7 +1,27 @@
 @extends('layout57phone')
 
-@section('title')
-    {!! $translations['location_page_name'] or $location->location_page_name !!}
+@section('title'){{ $translations['location_page_name'] or $location->location_page_name }}@stop
+
+@section('meta_keywords')
+<?php 
+	if(array_key_exists('meta_keywords', $translations)) 
+	{
+		echo $translations['meta_keywords'];
+	} else {
+		echo $location->meta_keywords;
+	} 
+?>
+@stop
+
+@section('meta_description')
+<?php 
+	if(array_key_exists('meta_description', $translations)) 
+	{
+		echo $translations['meta_description'];
+	} else {
+		echo $location->meta_description;
+	} 
+?>
 @stop
 
 @section('sidebar-left')

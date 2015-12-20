@@ -70,7 +70,12 @@ class TranslationsController extends Controller {
 				break;
 			case 'location':
 				$location = Location::findOrFail($id);
-				$columns = array('description' => 'Description', 'location_page_name' => 'Location Page title', 'name' => 'Name', 'slug' => 'URL alias');
+				$columns = array(	'description' => 'Description', 
+										'location_page_name' => 'Location Page title', 
+										'name' => 'Name', 
+										'slug' => 'URL alias',
+										'meta_keywords' => 'Meta keywords',
+										'meta_description' => 'Meta description' );
 				$identifier = $location->location_id;
 				break;
 			case 'tag':

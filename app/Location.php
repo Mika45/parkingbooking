@@ -7,7 +7,7 @@ class Location extends Model {
 	protected $table = 'LOCATION';
 	protected $primaryKey = 'location_id';
 
-	protected $fillable = ['name', 'status', 'location_parent_id', 'lat', 'lng', 'currency', 'currency_order', 'description', 'slug', 'location_page_name'];
+	protected $fillable = ['name', 'status', 'location_parent_id', 'lat', 'lng', 'currency', 'currency_order', 'description', 'slug', 'location_page_name', 'meta_keywords', 'meta_description'];
 
 	public function parkings()
 	{

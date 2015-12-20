@@ -51,6 +51,21 @@
                 {!! Form::label('description', 'Description:') !!}
                 {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
             </div>
+            
+        </div>
+        &nbsp;
+        <div class="form-group">
+            <div class="col-lg-12">
+                {!! Form::label('meta_keywords', 'Meta keywords:') !!}
+                {!! Form::text('meta_keywords', null, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+        &nbsp;
+        <div class="form-group">
+            <div class="col-lg-12">
+                {!! Form::label('meta_description', 'Meta description:') !!}
+                {!! Form::textarea('meta_description', null, ['class' => 'form-control']) !!}
+            </div>
         </div>
     	<br/><br/><br/><br/>
     	<div class="form-group">
