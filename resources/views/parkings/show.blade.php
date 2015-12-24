@@ -59,13 +59,13 @@
 				@foreach ($url as $value)
 					{{-- <img src='https://www.parkinglegend.com/img/parkings/{{$parking->parking_id}}/thumb/{{ $value }}' /> --}}
 					<a class="test-popup-link{{$i}}" href="#">
-						<img src='https://www.parkinglegend.com/img/parkings/{{$parking->parking_id}}/thumb/{{ $value }}' />
+						<img src='{{url()}}/img/parkings/{{$parking->parking_id}}/thumb/{{ $value }}' />
 					</a>
 
 					<script>
 						$('.test-popup-link{{$i}}').magnificPopup({ 
 							items: {
-						      src: 'https://www.parkinglegend.com/img/parkings/{{$parking->parking_id}}/{{ $value }}'
+						      src: '{{url()}}/img/parkings/{{$parking->parking_id}}/{{ $value }}'
 						    },
 						  	type: 'image',
 							gallery: {

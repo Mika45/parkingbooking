@@ -65,10 +65,6 @@ class ParkingsController extends Controller {
 			$is_admin = $user->is_admin;
 		}
 
-		/*if (!in_array($id, $allowedList) && $is_admin != 'Y') {
-		    App::abort(403, 'Unauthorized');
-		}*/
-
 		$parking = Parking::findOrFail($id);
 		$parking->price = Session::get('allowedParkings')[$parking->parking_id];
 
@@ -76,9 +72,6 @@ class ParkingsController extends Controller {
 		$translations = get_parking_translation( $id );
 
 		Session::put('selectedParking', $id);
-
-		//$lang = Session::get('applocale');
-		//$location = DB::select('CALL GetLocations("one", '.$id.', "'.$lang.'")');
 		
 		$pcur = get_parking_currency($id);
 
@@ -86,16 +79,11 @@ class ParkingsController extends Controller {
 		$map = build_map( $parking->lat, $parking->lng, $parking->parking_name ); //uses helpers.php
 		$mapHelper = new MapHelper();
 
-		$images = glob('img/parkings/'.$id.'/thumb/*.{jpg,png,gif}', GLOB_BRACE);
+		$images = glob('img/parkings/'.$id.'/thumb/*.{jpg,JPG,png,PNG}', GLOB_BRACE);
 		$url = null;
 
 		foreach($images as $img) {
 			$url[] = basename($img);
-			/*Image::make($img,array(
-			    'width' => 300,
-			    'height' => 300,
-			    'grayscale' => true
-			))->save('/img/parkings/.jpg');*/
 		}
 
 		return view('parkings.show', compact('parking', 'map', 'mapHelper', 'translations', 'pcur', 'url'));
@@ -557,7 +545,9 @@ class ParkingsController extends Controller {
 		$files = $request->file('images');
 
 		$files = Input::file('images');
+
 		$file_count = count($files);
+
 	    // start count how many uploaded
 	    $uploadcount = 0;
 	    foreach($files as $file) {
