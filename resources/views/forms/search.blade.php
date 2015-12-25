@@ -5,7 +5,7 @@
 			if (isset($defaultLocation))
 				$default = $defaultLocation;
 			else
-				$default = 14; // Larisa
+				$default = 18; // Athens airport
 		?>
 
 		<div class="col-lg-12">
