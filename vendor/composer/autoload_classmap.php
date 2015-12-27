@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Absolute_Positioner' => $vendorDir . '/dompdf/dompdf/include/absolute_positioner.cls.php',
     'Abstract_Renderer' => $vendorDir . '/dompdf/dompdf/include/abstract_renderer.cls.php',
+    'AddAffiliateIdColumn' => $baseDir . '/database/migrations/2015_12_27_011216_add_affiliate_id_column.php',
     'AddArticleSlugColumn' => $baseDir . '/database/migrations/2015_09_22_021130_add_article_slug_column.php',
     'AddBookingCountryIdColumn' => $baseDir . '/database/migrations/2015_09_13_220332_add_booking_country_id_column.php',
     'AddBookingLandlineColumn' => $baseDir . '/database/migrations/2015_10_01_013021_add_booking_landline_column.php',
@@ -35,6 +36,7 @@ return array(
     'Canvas_Factory' => $vendorDir . '/dompdf/dompdf/include/canvas_factory.cls.php',
     'Cellmap' => $vendorDir . '/dompdf/dompdf/include/cellmap.cls.php',
     'ConfigurationTableSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
+    'CreateAffiliateTable' => $baseDir . '/database/migrations/2015_12_22_003140_create_affiliate_table.php',
     'CreateAmendmentTable' => $baseDir . '/database/migrations/2015_05_07_231811_create_amendment_table.php',
     'CreateArticleTable' => $baseDir . '/database/migrations/2015_06_28_020823_create_article_table.php',
     'CreateAvailabilityTable' => $baseDir . '/database/migrations/2015_03_16_165514_create_availability_table.php',

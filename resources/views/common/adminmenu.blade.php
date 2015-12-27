@@ -11,4 +11,6 @@
 	<li><a href="/bookings">Bookings</a></li>
 	<li><a href="/articles/create">Add a new Article</a></li>
 	<li><a href="/articles">Articles</a></li>
+	<li><a href="/partners/create">Add a new Affiliate</a></li>
+	<li><a href="/partners">Affiliates</a></li>
 </ul>

@@ -26,7 +26,8 @@ class Booking extends Model {
 						   'passengers',
 						   'newsletter',
 						   'country_id',
-						   'landline'];
+						   'landline',
+						   'affiliate_id'];
 
 	public function products()
     {

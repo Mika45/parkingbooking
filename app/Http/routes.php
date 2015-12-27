@@ -107,6 +107,7 @@ Route::group(['middleware' => 'secure'], function()
 	Route::resource('articles', 'ArticlesController');
 	Route::resource('schedules', 'ParkingScheduleController');
 	Route::resource('locations', 'LocationsController');
+	Route::resource('partners', 'PartnersController');
 	Route::get('availabilities/{id}/create', 'AvailabilitiesController@create');
 	Route::get('translations/{type}/{id}', 'TranslationsController@index');
 	Route::get('translations/{type}/{id}/create', 'TranslationsController@create');
@@ -124,7 +125,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('results', 'PagesController@getsearch');
 	Route::post('results', 'PagesController@search');
 	Route::get('results/{location_id}/{from_date}/{from_time}/{to_date}/{to_time}', 'PagesController@geturlsearch');
-
+	Route::get('/noaf={id}&ref={ref}', 'PartnersController@setCookie');
 	Route::get('about', 'PagesController@about');
 	Route::get('tscs', 'PagesController@tscs');
 	Route::get('contact', 'PagesController@contact');

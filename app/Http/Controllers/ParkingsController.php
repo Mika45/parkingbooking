@@ -31,6 +31,7 @@ use Imagine;
 use App\PhoneCode;
 use App\Product;
 use App\BookingProduct;
+use Cookie;
 
 use Ivory\GoogleMap\Helper\MapHelper;
 
@@ -261,6 +262,12 @@ class ParkingsController extends Controller {
 			$code = 'PL'.$year;
 
 		$booking->booking_ref = $code.$booking->booking_id;
+
+		$affiliate_id = Request::cookie('noaf');
+		if((!empty($affiliate_id)) and $affiliate_id != 0) {
+			$booking->affiliate_id = $affiliate_id;
+		}
+
 		$booking->save();
 
 		// Update the availability - Decrease
@@ -326,7 +333,7 @@ class ParkingsController extends Controller {
 		// Delete the generated pdf after the send
 		File::delete('tmp/'.$temp_pdf_name);
 
-		return view('static.payment', compact('fields'));
+		return response()->view('static.payment')->withCookie(Cookie::forget('noaf'));
 	}
 
 	/*****************************************/
