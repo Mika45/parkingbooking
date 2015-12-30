@@ -119,7 +119,7 @@ class PartnersController extends Controller {
 		if ($affiliate->referrer != $ref)
 			App::abort(403, 'Unauthorized');
 
-		return redirect('/')->withCookie(cookie('noaf', $id, 15));
+		return redirect('/')->withCookie(cookie('noaf', $id, 360));
 	}
 
 }
