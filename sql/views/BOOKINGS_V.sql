@@ -20,9 +20,11 @@ AS
           `b`.`car_colour` AS `car_colour`,
           `b`.`passengers` AS `passengers`,
           `b`.`status` AS `status`,
+          `a`.`referrer` AS `referrer`,
           date_format(`b`.`created_at`, '%d/%m/%Y %H:%i') AS `created_at`,
           date_format(`b`.`updated_at`, '%d/%m/%Y %H:%i') AS `updated_at`
-     FROM (`BOOKING` `b` JOIN `PARKING` `p`)
-    WHERE (`b`.`parking_id` = `p`.`parking_id`)
-      AND IFNULL(b.status, 'A') != 'C'
+     FROM `BOOKING` `b` 
+          JOIN `PARKING` `p` ON `b`.`parking_id` = `p`.`parking_id`
+          LEFT JOIN `AFFILIATE` `a` ON `b`.`affiliate_id` = `a`.`affiliate_id`
+    WHERE IFNULL(b.status, 'A') != 'C'
     ORDER BY `b`.`booking_id` DESC;

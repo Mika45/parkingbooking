@@ -28,8 +28,8 @@ class ParkingScheduleController extends Controller {
 	public function index($id)
 	{
 		$times = DB::table('SCHEDULE_V')->where('parking_id', $id)->get();
-
-		return view('schedules.index', compact('times', 'id'));
+		$page_title = 'Parking Schedule';
+		return view('admin.schedules.index', compact('times', 'id', 'page_title'));
 	}
 
 	/**
@@ -50,8 +50,10 @@ class ParkingScheduleController extends Controller {
 		{
 			abort(404);
 		}
+
+		$page_title = 'Add new Schedule entry';
 		
-		return view('schedules.create', compact('parking'));
+		return view('admin.schedules.create', compact('parking', 'page_title'));
 	}
 
 	/**
@@ -72,7 +74,7 @@ class ParkingScheduleController extends Controller {
 		$schedule->driving = $input['driving'];
 		$schedule->save();
 
-		return redirect('parking/'.$pid.'/schedule');
+		return redirect('admin/parking/'.$pid.'/schedule');
 	}
 
 	/**
@@ -95,8 +97,8 @@ class ParkingScheduleController extends Controller {
 	public function edit($id)
 	{
 		$schedule = ParkingSchedule::findOrFail($id);
-
-		return view('schedules.edit', compact('schedule'));
+		$page_title = 'Edit Schedule entry';
+		return view('admin.schedules.edit', compact('schedule', 'page_title'));
 	}
 
 	/**
@@ -110,7 +112,7 @@ class ParkingScheduleController extends Controller {
 		$schedule = ParkingSchedule::findOrFail($id);
 		$schedule->update($request->all());
 
-		return redirect('parking/'.$schedule->parking_id.'/schedule');
+		return redirect('admin/parking/'.$schedule->parking_id.'/schedule');
 	}
 
 	/**
@@ -124,7 +126,7 @@ class ParkingScheduleController extends Controller {
 		$schedule = ParkingSchedule::findOrFail($id);
 		$pid = $schedule->parking_id;
 		$schedule->delete();
-		return redirect('parking/'.$pid.'/schedule');
+		return redirect('admin/parking/'.$pid.'/schedule');
 	}
 
 }

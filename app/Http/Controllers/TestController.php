@@ -15,6 +15,11 @@ use Ivory\GoogleMap\Helper\MapHelper;
 
 class TestController extends Controller {
 
+	public function admin()
+	{
+		return view('admin.dashboard');
+	}
+
 	public function test()
 	{
 		$avail = create_availability( 1, '2015-06-11', '2016-12-31' );

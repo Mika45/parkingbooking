@@ -15,7 +15,12 @@ use App\Configuration;
 // My common functions
 function set_active($uri)
 {
-    return Request::is($uri) ? 'active' : '';
+    return Request::is($uri) ? 'active' : null;
+}
+
+function set_parent_active($uri)
+{
+    return Request::is($uri.'*') ? 'active' : null;
 }
 
 function link_to_route_icon($properties, $lang_icon)

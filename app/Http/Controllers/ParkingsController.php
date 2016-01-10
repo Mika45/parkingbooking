@@ -49,7 +49,7 @@ class ParkingsController extends Controller {
 	public function all()
 	{
 		$parkings = Parking::all();
-
+		
 		return view('parkings.index', compact('parkings'));
 	}
 
@@ -341,40 +341,9 @@ class ParkingsController extends Controller {
 
 	public function index()
 	{
-		//$parkings = Parking::orderBy('parking_name')->paginate(10);
-		$parkings = DB::table('PARKINGS_V')->paginate(10);
-		
-		/*foreach ($parkings as $value) {
-			$rate = RateDaily::where('parking_id', '=', $value->parking_id)->first();
-			if
-
-			if (!is_null($rate))
-				$rates[$value->parking_id] = ['hasRate' => 1, 'rateType' => 'D'];
-		}*/
-
-		$response_daily = DB::table('RATE_DAILY')
-								->select(DB::raw('parking_id, "D" as rate_type, count(*) as rate_count'))
-			                    ->groupBy('parking_id');
-			                    //->get();
-
-		$response_hourly = DB::table('RATE_HOURLY')
-								->select(DB::raw('parking_id, "H" as rate_type, count(*) as rate_count'))
-			                    ->groupBy('parking_id')
-			                    ->union($response_daily)
-			                    ->get();
-
-        foreach ($response_hourly as $value){
-        	if ($value->rate_count > 0)
-        		$rates[$value->parking_id] = ['hasRate' => 1, 'rateType' => $value->rate_type];
-        }
-
-        foreach ($parkings as $value){
-        	if (!array_key_exists($value->parking_id, $rates))
-        		$rates[$value->parking_id] = ['hasRate' => 0, 'rateType' => $value->rate_type];
-        }
-
-		//return $parkings;
-		return view('parkings.index', compact('parkings', 'rates'));
+		$parkings = DB::table('PARKINGS_V')->get();
+		$page_title = 'Parkings';
+		return view('admin.parkings.index', compact('parkings', 'page_title'));
 	}
 
 	/**
@@ -417,7 +386,8 @@ class ParkingsController extends Controller {
 		if (!array_key_exists('FREE_MINUTES', $configArray))
 			$configArray['FREE_MINUTES'] = null;
 
-		return view('parkings.create', compact('p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
+		$page_title = 'Add a new Parking';
+		return view('admin.parkings.create', compact('page_title', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
 												'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
 
@@ -480,7 +450,7 @@ class ParkingsController extends Controller {
 		    }
 		}
 
-		return redirect('parking');
+		return redirect('admin.parking');
 	}
 
 	/**
@@ -535,7 +505,8 @@ class ParkingsController extends Controller {
 		if (!array_key_exists('FREE_MINUTES', $configArray))
 			$configArray['FREE_MINUTES'] = null;
 
-		return view('parkings.edit', compact('parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
+		$page_title = 'Edit Parking';
+		return view('admin.parkings.edit', compact('page_title', 'parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
 											'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
 	
@@ -666,7 +637,7 @@ class ParkingsController extends Controller {
 		if ($request->input('tags'))
 			$parking->tags()->sync($request->input('tags'));
 
-		return redirect('parking');
+		return redirect('/admin/parking');
 	}
 
 

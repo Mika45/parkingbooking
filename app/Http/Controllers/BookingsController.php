@@ -18,8 +18,12 @@ class BookingsController extends Controller {
 	public function index()
 	{
 		//$bookings = DB::select('CALL GetBookings()')->paginate(15);
-		$bookings = DB::table('BOOKINGS_V')->paginate(10);
-		return view('bookings.index', compact('bookings'));
+		//$bookings = DB::table('BOOKINGS_V')->paginate(10);
+		$bookings = DB::table('BOOKINGS_V')->get();
+
+		$page_title = 'Bookings';
+
+		return view('admin.bookings.index', compact('bookings', 'page_title'));
 	}
 
 	/**
