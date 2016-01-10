@@ -30,29 +30,31 @@ class TranslationsController extends Controller {
 		switch ($type) {
 			case 'parking':
 				$parking = Parking::findOrFail($id);
-				$subtitle = 'for the Parking: '.$parking->parking_name;
+				$page_description = 'for the Parking: '.$parking->parking_name;
 				break;
 			case 'location':
 				$location = Location::findOrFail($id);
-				$subtitle = 'for the Location: '.$location->name;
+				$page_description = 'for the Location: '.$location->name;
 				break;
 			case 'tag':
 				$tag = Tag::findOrFail($id);
-				$subtitle = 'for the Tag: '.$tag->name;
+				$page_description = 'for the Tag: '.$tag->name;
 				break;
 			case 'article':
 				$article = Article::findOrFail($id);
-				$subtitle = 'for the Article: '.$article->title;
+				$page_description = 'for the Article: '.$article->title;
 				break;
 			case 'product':
 				$product = Product::findOrFail($id);
-				$subtitle = 'for the Product: '.$product->name;
+				$page_description = 'for the Product: '.$product->name;
 				break;
 		}
 
 		$identifier = $id;
+
+		$page_title = 'Translations';
 		
-		return view('translations.index', compact('type', 'translations', 'parking', 'location', 'tag', 'article', 'product', 'subtitle', 'identifier'));
+		return view('admin.translations.index', compact('page_title', 'page_description', 'type', 'translations', 'parking', 'location', 'tag', 'article', 'product', 'identifier'));
 	}
 
 	/**
@@ -67,6 +69,7 @@ class TranslationsController extends Controller {
 				$parking = Parking::findOrFail($id);
 				$columns = array('description' => 'Description', 'reserve_notes' => 'Reserve notes', 'find_it' => 'Find it', 'address' => 'Address', 'parking_name' => 'Parking Name');
 				$identifier = $parking->parking_id;
+				$page_description = 'for the Parking: '.$parking->parking_name;
 				break;
 			case 'location':
 				$location = Location::findOrFail($id);
@@ -77,21 +80,25 @@ class TranslationsController extends Controller {
 										'meta_keywords' => 'Meta keywords',
 										'meta_description' => 'Meta description' );
 				$identifier = $location->location_id;
+				$page_description = 'for the Location: '.$location->name;
 				break;
 			case 'tag':
 				$tag = Tag::findOrFail($id);
 				$columns = array('name' => 'Name');
 				$identifier = $tag->tag_id;
+				$page_description = 'for the Tag: '.$tag->name;
 				break;
 			case 'article':
 				$article = Article::findOrFail($id);
 				$columns = array('title' => 'Title', 'body' => 'Body', 'slug' => 'URL');
 				$identifier = $article->article_id;
+				$page_description = 'for the Article: '.$article->title;
 				break;
 			case 'product':
 				$product = Product::findOrFail($id);
 				$columns = array('name' => 'Name', 'description' => 'Description');
 				$identifier = $product->product_id;
+				$page_description = 'for the Product: '.$product->name;
 				break;
 		}
 
@@ -104,7 +111,9 @@ class TranslationsController extends Controller {
 
 		asort($columns);
 
-		return view('translations.create', compact('type', 'langs', 'parking', 'location', 'tag', 'article', 'product', 'columns', 'table_name', 'identifier'));
+		$page_title = 'Create Translations';
+
+		return view('admin.translations.create', compact('page_title', 'page_description', 'type', 'langs', 'parking', 'location', 'tag', 'article', 'product', 'columns', 'table_name', 'identifier'));
 	}
 
 	/**
@@ -150,24 +159,28 @@ class TranslationsController extends Controller {
 				$langs[$translation->locale] = $translation->locale;
 				$all_columns = array('description' => 'Description', 'reserve_notes' => 'Reserve notes', 'find_it' => 'Find it', 'address' => 'Address', 'parking_name' => 'Parking Name');
 				$identifier = $parking->parking_id;
+				$page_description = 'for the Parking '.$parking->parking_name;
 				break;
 			case 'LOCATION':
 				$location = Location::findOrFail($translation->identifier);
 				$langs[$translation->locale] = $translation->locale;
 				$all_columns = array('description' => 'Description', 'location_page_name' => 'Location Page title', 'name' => 'Name', 'slug' => 'URL alias');
 				$identifier = $location->location_id;
+				$page_description = 'for the Location '.$location->name;
 				break;
 			case 'TAG':
 				$tag = Tag::findOrFail($translation->identifier);
 				$langs[$translation->locale] = $translation->locale;
 				$all_columns = array('name' => 'Name');
 				$identifier = $tag->tag_id;
+				$page_description = 'for the Tag '.$tag->name;
 				break;
 			case 'ARTICLE':
 				$article = Article::findOrFail($translation->identifier);
 				$langs[$translation->locale] = $translation->locale;
 				$all_columns = array('title' => 'Title', 'body' => 'Body', 'slug' => 'URL');
 				$identifier = $article->article_id;
+				$page_description = 'for the Article '.$article->title;
 				break;
 			case 'PRODUCT':
 				$product = Product::findOrFail($translation->identifier);
@@ -181,7 +194,9 @@ class TranslationsController extends Controller {
 		$table_name = strtoupper($type);
 		$columns[$translation->column_name] = $all_columns[$translation->column_name];
 
-		return view('translations.edit', compact('translation', 'type', 'langs', 'columns', 'table_name', 'identifier'));
+		$page_title = 'Edit Translations';
+
+		return view('admin.translations.edit', compact('page_title', 'page_description', 'translation', 'type', 'langs', 'columns', 'table_name', 'identifier'));
 	}
 
 	/**

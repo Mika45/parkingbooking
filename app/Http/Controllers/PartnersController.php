@@ -26,8 +26,9 @@ class PartnersController extends Controller {
 	 */
 	public function index()
 	{
-		$affiliates = DB::table('AFFILIATE')->paginate(15);
-		return view('partners.index', compact('affiliates'));
+		$affiliates = DB::table('AFFILIATE')->get();
+		$page_title = 'Affiliates';
+		return view('admin.partners.index', compact('affiliates', 'page_title'));
 	}
 
 	/**
@@ -37,7 +38,8 @@ class PartnersController extends Controller {
 	 */
 	public function create()
 	{
-		return view('partners.create');
+		$page_title = 'Add a new Affiliate';
+		return view('admin.partners.create', compact('page_title'));
 	}
 
 	/**
@@ -62,7 +64,7 @@ class PartnersController extends Controller {
 
 		$affiliate->save();
 
-		return redirect('partners');
+		return redirect('admin/partners');
 	}
 
 	/**
@@ -85,7 +87,8 @@ class PartnersController extends Controller {
 	public function edit($id)
 	{
 		$affiliate = Affiliate::findOrFail($id);
-		return view('partners.edit', compact('affiliate'));
+		$page_title = 'Edit Affiliate';
+		return view('admin.partners.edit', compact('affiliate', 'page_title'));
 	}
 
 	/**
@@ -98,7 +101,7 @@ class PartnersController extends Controller {
 	{
 		$affiliate = Affiliate::findOrFail($id);
 		$affiliate->update($request->all());
-		return redirect('partners');
+		return redirect('/admin/partners');
 	}
 
 	/**

@@ -24,8 +24,9 @@ class TagsController extends Controller {
 	 */
 	public function index()
 	{
-		$tags = DB::table('TAG')->paginate(10);
-		return view('tags.index', compact('tags'));
+		$tags = DB::table('TAG')->get();
+		$page_title = 'Parking Features';
+		return view('admin.tags.index', compact('tags', 'page_title'));
 	}
 
 	/**
@@ -35,7 +36,8 @@ class TagsController extends Controller {
 	 */
 	public function create()
 	{
-		return view('tags.create');
+		$page_title = 'Add a new Parking Feature';
+		return view('admin.tags.create', compact('page_title'));
 	}
 
 	/**
@@ -54,11 +56,9 @@ class TagsController extends Controller {
 		$tag->icon_filename = $imageName;
 		$tag->save();
 
-		//dd(base_path());
+	   $request->file('icon_filename')->move( base_path() . '/public/img/icons/', $imageName );
 
-	    $request->file('icon_filename')->move( base_path() . '/public/img/icons/', $imageName );
-
-		return redirect('tags');
+		return redirect('/admin/tags');
 	}
 
 	/**
@@ -81,15 +81,8 @@ class TagsController extends Controller {
 	public function edit($id)
 	{
 		$tag = Tag::findOrFail($id);
-
-		//$response = Location::where('location_parent_id', '=', NULL)->orWhere('location_parent_id', '=', 0)->orderBy('name')->get();
-
-		//$parents[' '] = NULL;
-
-		//foreach ($response as $loc)
-			//$parents[$loc->location_id] = $loc->name;
-
-		return view('tags.edit', compact('tag'));
+		$page_title = 'Edit a Parking Feature';
+		return view('admin.tags.edit', compact('tag', 'page_title'));
 	}
 
 	/**
@@ -104,7 +97,7 @@ class TagsController extends Controller {
 
 		$tag->update($request->all());
 		
-		return redirect('tags');
+		return redirect('/admin/tags');
 	}
 
 	/**

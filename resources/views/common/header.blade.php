@@ -106,7 +106,8 @@
 
 		            		@if(Auth::user()->is_admin == 'Y')
 		            			<li class="dropdown">
-						          	@include('common.adminmenu')
+						          	{{-- @include('common.adminmenu') --}}
+						          	<a href="/admin/bookings"><strong>Admin</strong></a>
 						        </li>
 						    @endif
 

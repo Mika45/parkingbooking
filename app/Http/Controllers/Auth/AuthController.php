@@ -21,7 +21,7 @@ class AuthController extends Controller {
 	*/
 
 	use AuthenticatesAndRegistersUsers;
-	protected $redirectTo = '/';
+	protected $redirectTo = '/admin/bookings';
 	/**
 	 * Create a new authentication controller instance.
 	 *

@@ -29,8 +29,9 @@ class ArticlesController extends Controller {
 	 */
 	public function index()
 	{
-		$articles = DB::table('ARTICLE')->paginate(15);
-		return view('articles.index', compact('articles'));
+		$articles = DB::table('ARTICLE')->get();
+		$page_title = 'Articles';
+		return view('admin.articles.index', compact('articles', 'page_title'));
 	}
 
 	/**
@@ -40,7 +41,8 @@ class ArticlesController extends Controller {
 	 */
 	public function create()
 	{
-		return view('articles.create');
+		$page_title = 'Add a new Article';
+		return view('admin.articles.create', compact('page_title'));
 	}
 
 	/**
@@ -61,10 +63,11 @@ class ArticlesController extends Controller {
 		$article->created_at = $sysdate;
 		$article->updated_at = $sysdate;
 		$article->published_at = $sysdate;
+		$article->slug = $input['slug'];
 
 		$article->save();
 
-		return redirect('articles');
+		return redirect('/admin/articles');
 	}
 
 	/**
@@ -116,7 +119,8 @@ class ArticlesController extends Controller {
 	public function edit($id)
 	{
 		$article = Article::findOrFail($id);
-		return view('articles.edit', compact('article'));
+		$page_title = 'Edit article';
+		return view('admin.articles.edit', compact('article', 'page_title'));
 	}
 
 	/**
@@ -131,7 +135,7 @@ class ArticlesController extends Controller {
 
 		$article->update($request->all());
 		
-		return redirect('articles');
+		return redirect('/admin/articles');
 	}
 
 	/**

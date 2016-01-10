@@ -92,28 +92,27 @@ Route::group(['middleware' => 'secure'], function()
 
 	/***************************************************************/
 
-	Route::resource('parking', 'ParkingsController', ['except' => ['show']]);
-	Route::get('parking/{id}/rates', 'RatesController@index');
-	Route::get('parking/{id}/schedule', 'ParkingScheduleController@index');
-	Route::get('parking/{id}/products', 'ProductsController@index');
-	
-	Route::resource('rates', 'RatesController');
-	Route::resource('fields', 'FieldsController');
-	Route::resource('tags', 'TagsController');
-	Route::resource('products', 'ProductsController');
-	Route::resource('translations', 'TranslationsController');
-	Route::resource('bookings', 'BookingsController');
-	Route::resource('availabilities', 'AvailabilitiesController');
-	Route::resource('articles', 'ArticlesController');
-	Route::resource('schedules', 'ParkingScheduleController');
-	Route::resource('locations', 'LocationsController');
-	Route::resource('partners', 'PartnersController');
-	Route::get('availabilities/{id}/create', 'AvailabilitiesController@create');
-	Route::get('translations/{type}/{id}', 'TranslationsController@index');
-	Route::get('translations/{type}/{id}/create', 'TranslationsController@create');
-	Route::get('rates/{id}/create', 'RatesController@create');
-	Route::get('schedules/{id}/create', 'ParkingScheduleController@create');
-	Route::get('products/{id}/create', 'ProductsController@create');
+	Route::resource('parking', 'ParkingsController', ['except' => ['show']]); // to remove
+	Route::resource('admin/parking', 'ParkingsController', ['except' => ['show']]);
+	//Route::get('parking/{id}/rates', 'RatesController@index');
+	Route::get('admin/parking/{id}/schedule', 'ParkingScheduleController@index');
+	Route::get('admin/parking/{id}/products', 'ProductsController@index');
+	//Route::resource('rates', 'RatesController');
+	//Route::resource('fields', 'FieldsController');
+	Route::resource('admin/tags', 'TagsController');
+	Route::resource('admin/products', 'ProductsController');
+	Route::resource('admin/translations', 'TranslationsController');
+	Route::resource('admin/bookings', 'BookingsController');
+	Route::resource('admin/articles', 'ArticlesController');
+	Route::resource('admin/schedules', 'ParkingScheduleController');
+	Route::resource('admin/locations', 'LocationsController');
+	Route::resource('admin/partners', 'PartnersController');
+	Route::get('admin/translations/{type}/{id}', 'TranslationsController@index');
+	Route::get('admin/translations/{type}/{id}/create', 'TranslationsController@create');
+	//Route::get('rates/{id}/create', 'RatesController@create');
+	Route::get('admin/schedules/{id}/create', 'ParkingScheduleController@create');
+	Route::get('admin/products/{id}/create', 'ProductsController@create');
+	//Route::get('test', 'TestController@admin');
 });
 
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
@@ -162,17 +161,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('parkings/{id}/book', 'ParkingsController@book');
 	
 	Route::get('parkings/{id}/getRequest', 'ParkingsController@setBookingPrice');
-	/*Route::get('parkings/{id}/getRequest', function(){
-		if(Request::ajax()){
-			//$response = Response::json(Request::all());
-			//$json = json_decode($response, true);
-			//var_dump(Request::all());
-
-			$data = Request::all();
-
-			return ($data['totalPrice']);
-		}
-	});*/
 	
 	Route::get('locations/{slug}', 'LocationsController@show');
 	Route::get('locations/{parent}/{slug}', 'LocationsController@show');

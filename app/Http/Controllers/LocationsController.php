@@ -30,8 +30,9 @@ class LocationsController extends Controller {
 	 */
 	public function index()
 	{
-		$locations = DB::table('LOCATIONS_V')->paginate(10);
-		return view('locations.index', compact('locations'));
+		$locations = DB::table('LOCATIONS_V')->get();
+		$page_title = 'Locations';
+		return view('admin.locations.index', compact('locations', 'page_title'));
 	}
 
 	/**
@@ -48,9 +49,8 @@ class LocationsController extends Controller {
 		foreach ($response as $loc)
 			$parents[$loc->location_id] = $loc->name;
 
-		//dd($parents);
-		
-		return view('locations.create', compact('parents'));
+		$page_title = 'Add a new Location';
+		return view('admin.locations.create', compact('parents', 'page_title'));
 	}
 
 	/**
@@ -70,7 +70,7 @@ class LocationsController extends Controller {
 
 		Location::create($input);
 
-		return redirect('locations');
+		return redirect('/admin/locations');
 	}
 
 	/**
@@ -133,7 +133,8 @@ class LocationsController extends Controller {
 		foreach ($response as $loc)
 			$parents[$loc->location_id] = $loc->name;
 
-		return view('locations.edit', compact('location', 'parents'));
+		$page_title = 'Edit a Location';
+		return view('admin.locations.edit', compact('location', 'parents', 'page_title'));
 	}
 
 	/**
@@ -153,7 +154,7 @@ class LocationsController extends Controller {
 
 		$location->update($request->all());
 		
-		return redirect('locations');
+		return redirect('/admin/locations');
 	}
 
 	/**
