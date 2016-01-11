@@ -41,7 +41,11 @@
             &nbsp;
 
             <div class="form-group">
-                <div class="col-lg-12">
+                <div class="col-lg-3">
+                    {!! Form::label('users', 'Associate a user:') !!}
+                    {!! Form::select('users[]', $p_users, $p_users_selected, ['class' => 'form-control']) !!}
+                </div>
+                <div class="col-lg-9">
                     {!! Form::label('comments', 'Comments:') !!}
                     {!! Form::textarea('comments', null, ['class' => 'form-control']) !!}
                 </div>

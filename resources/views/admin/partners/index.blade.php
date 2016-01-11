@@ -21,7 +21,9 @@
 							<th><small>Mobile</small></th>
 							<th><small>Referrer URL</small></th>
 							<th><small>Tracking Link</small></th>
-							<th><small>Actions</small></th>
+							<th><small>User</small></th>
+							<th><small>&nbsp;</small></th>
+							<th><small>&nbsp;</small></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -40,9 +42,9 @@
 									/noaf={{$affiliate->affiliate_id}}&ref={{$affiliate->referrer}}
 								@endif
 							</small></td>
-
-							<td><a href="/admin/partners/{{ $affiliate->affiliate_id }}/edit" class="btn btn-primary btn-xs">Edit</a>
-								<a href="#" class="btn btn-danger btn-xs">Delete</a></td>
+							<td><small>{{ $affiliate->user_email }}</small></td>
+							<td><a href="/admin/partners/{{ $affiliate->affiliate_id }}/edit" class="btn btn-primary btn-xs">Edit</a></td>
+							<td><a href="#" class="btn btn-danger btn-xs">Delete</a></td>
 						</tr>
 						@endforeach
 					</tbody>

@@ -36,6 +36,7 @@
 			  <th><small>{{Lang::get('site.back_book_checkout')}}</small></th>
 			  <th><small>{{Lang::get('site.back_book_price')}}</small></th>
 			  <th><small>{{Lang::get('site.back_book_car_reg')}}</small></th>
+			  <th><small>{{Lang::get('site.back_book_ref')}}</small></th>
 			  <th></th>
 			  <th></th>
 			</tr>
@@ -50,6 +51,7 @@
 				<td><small>{{ $booking->checkout }}</small></td>
 				<td><small>{{ $booking->price }}</small></td>
 				<td><small>{{ $booking->car_reg }}</small></td>
+				<td><small>{{ $booking->referrer }}</small></td>
 				<td>
 					@if ($booking->can_view == 'Y')
 						<a href="/mybookings/{{ $booking->booking_id }}" target="_blank" class="btn btn-primary btn-sm">{{Lang::get('site.back_book_conf_btn')}}</a></td>
