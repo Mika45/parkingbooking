@@ -124,7 +124,7 @@
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
-              <img src="/img/admin/user14-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="/img/admin/user{{ Auth::user()->user_id }}-160x160.jpg" class="img-circle" alt="User Image">
               <p>
                 {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
               </p>
