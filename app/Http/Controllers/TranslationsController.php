@@ -159,34 +159,35 @@ class TranslationsController extends Controller {
 				$langs[$translation->locale] = $translation->locale;
 				$all_columns = array('description' => 'Description', 'reserve_notes' => 'Reserve notes', 'find_it' => 'Find it', 'address' => 'Address', 'parking_name' => 'Parking Name');
 				$identifier = $parking->parking_id;
-				$page_description = 'for the Parking '.$parking->parking_name;
+				$page_description = 'for the Parking: '.$parking->parking_name;
 				break;
 			case 'LOCATION':
 				$location = Location::findOrFail($translation->identifier);
 				$langs[$translation->locale] = $translation->locale;
 				$all_columns = array('description' => 'Description', 'location_page_name' => 'Location Page title', 'name' => 'Name', 'slug' => 'URL alias');
 				$identifier = $location->location_id;
-				$page_description = 'for the Location '.$location->name;
+				$page_description = 'for the Location: '.$location->name;
 				break;
 			case 'TAG':
 				$tag = Tag::findOrFail($translation->identifier);
 				$langs[$translation->locale] = $translation->locale;
 				$all_columns = array('name' => 'Name');
 				$identifier = $tag->tag_id;
-				$page_description = 'for the Tag '.$tag->name;
+				$page_description = 'for the Tag: '.$tag->name;
 				break;
 			case 'ARTICLE':
 				$article = Article::findOrFail($translation->identifier);
 				$langs[$translation->locale] = $translation->locale;
 				$all_columns = array('title' => 'Title', 'body' => 'Body', 'slug' => 'URL');
 				$identifier = $article->article_id;
-				$page_description = 'for the Article '.$article->title;
+				$page_description = 'for the Article: '.$article->title;
 				break;
 			case 'PRODUCT':
 				$product = Product::findOrFail($translation->identifier);
 				$langs[$translation->locale] = $translation->locale;
 				$all_columns = array('name' => 'Name', 'description' => 'Description');
 				$identifier = $product->product_id;
+				$page_description = 'for the Product: '.$product->name;
 				break;
 		}
 

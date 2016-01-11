@@ -41,7 +41,7 @@
 							            </div>
 							            <div class="modal-footer">
 							                
-							                {!! Form::open(['method' => 'DELETE', 'route' => ['translations.destroy', $translation->translation_id]]) !!}
+							                {!! Form::open(['method' => 'DELETE', 'route' => ['admin.translations.destroy', $translation->translation_id]]) !!}
 							                		<button type="button" class="btn btn-default" data-dismiss="modal">No</button>	
 							                		{!! Form::submit('Yes', ['class' => 'btn btn-default']) !!}
 							                {!! Form::close() !!}

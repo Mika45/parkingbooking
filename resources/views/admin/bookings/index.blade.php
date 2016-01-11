@@ -30,7 +30,7 @@
 					<tbody>
 				  	@foreach ($bookings as $booking)
 						<tr>
-							<td><small><b>{{ $booking->booking_ref }}</b></small></td>
+							<td><small><strong>{{ $booking->booking_ref }}</strong></small></td>
 							<td><small>{{ $booking->parking_name }}</small></td>
 							<td><small>{{ $booking->checkin }}</small></td>
 							<td><small>{{ $booking->checkout }}</small></td>
@@ -67,9 +67,9 @@
             "paging": true,
             "lengthChange": true,
             "searching": true,
-            "ordering": true,
+            "ordering": false,
             "info": true,
-            "autoWidth": false
+            "autoWidth": false,
           });
       } );
     </script>
