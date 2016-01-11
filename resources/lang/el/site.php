@@ -133,6 +133,7 @@ return [
 	'back_book_checkout' 	=> 'Έξοδος',
 	'back_book_price' 		=> 'Τιμή',
 	'back_book_car_reg' 	=> 'Αρ. Κυκλοφορίας',
+	'back_book_ref'			=> 'Παραπομπή',
 	'back_book_conf_btn' 	=> 'Προβολή Κράτησης',
 	'back_book_amend_btn' 	=> 'Τροποποίηση Κράτησης',
 	'back_book_cancel_btn' 	=> 'Ακύρωση Κράτησης',

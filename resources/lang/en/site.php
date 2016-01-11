@@ -133,6 +133,7 @@ return [
 	'back_book_checkout' 	=> 'Pick-Up Date',
 	'back_book_price' 		=> 'Price',
 	'back_book_car_reg' 	=> 'Vehicle Reg. No',
+	'back_book_ref'			=> 'Referrer',
 	'back_book_conf_btn' 	=> 'View Booking Confirmation',
 	'back_book_amend_btn' 	=> 'Amend Booking',
 	'back_book_cancel_btn' 	=> 'Cancel Booking',
