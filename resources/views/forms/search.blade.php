@@ -87,7 +87,7 @@
 	
 	<div class="form-group">
 		<div class="col-lg-12">
-			{!! Form::submit(Lang::get('site.search'), ['class' => 'btn btn-info form-control']) !!}
+			{!! Form::submit(Lang::get('site.search'), ['class' => 'btn btn-info btn-lg form-control']) !!}
 		</div>
 	</div>
 
