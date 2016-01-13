@@ -26,8 +26,8 @@
 							<td><small>{{ $tag->name }}</small></td>
 							<td><small><img src='/img/icons/{{ $tag->icon_filename }}' /></small></td>
 							<td><small>{{ $tag->icon_filename }}</small></td>
-							<td><a href="/tags/{{ $tag->tag_id }}/edit" class="btn btn-primary btn-xs">Edit</a>
-								 <a href="/translations/tag/{{ $tag->tag_id }}" class="btn btn-success btn-xs">Edit Translation</a></td>
+							<td><a href="/admin/tags/{{ $tag->tag_id }}/edit" class="btn btn-primary btn-xs">Edit</a>
+								 <a href="/admin/translations/tag/{{ $tag->tag_id }}" class="btn btn-success btn-xs">Edit Translation</a></td>
 						</tr>
 						@endforeach
 					</tbody>
