@@ -42,7 +42,7 @@
 							            </div>
 							            <div class="modal-footer">
 							                
-							                {!! Form::open(['method' => 'DELETE', 'route' => ['schedules.destroy', $time->schedule_id]]) !!}
+							                {!! Form::open(['method' => 'DELETE', 'route' => ['admin.schedules.destroy', $time->schedule_id]]) !!}
 							                		<button type="button" class="btn btn-default" data-dismiss="modal">No</button>	
 							                		{!! Form::submit('Yes', ['class' => 'btn btn-default']) !!}
 							                	
@@ -75,10 +75,10 @@
       $(document).ready(function() {
       	$('[data-toggle="tooltip"]').tooltip();
          $('#partners').DataTable({
-           "paging": true,
-           "lengthChange": true,
-           "searching": true,
-           "ordering": true,
+           "paging": false,
+           "lengthChange": false,
+           "searching": false,
+           "ordering": false,
            "info": true,
            "autoWidth": false
          });
