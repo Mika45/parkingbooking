@@ -450,7 +450,7 @@ class ParkingsController extends Controller {
 		    }
 		}
 
-		return redirect('admin.parking');
+		return redirect('admin/parking');
 	}
 
 	/**
