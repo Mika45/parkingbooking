@@ -102,13 +102,6 @@
 						    </ul>
 						</li>
 		            	@if(Auth::check())
-
-		            		@if(Auth::user()->is_admin == 'Y')
-		            			<li class="dropdown">
-						          	@include('common.adminmenu')
-						        </li>
-						    @endif
-
 		            		<li class="dropdown">
 					          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong>{{Lang::get('site.nav_account')}}</strong><span class="caret"></span></a>
 					          	<ul class="dropdown-menu" role="menu">

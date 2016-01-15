@@ -5,7 +5,7 @@
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><strong>PL</strong></span>
     <!-- logo for regular state and mobile devices -->
-    <img alt="Brand" src="/img/logo.png">
+    <img alt="Brand" src="/img/logo-sm.png">
   </a>
 
   <!-- Header Navbar -->

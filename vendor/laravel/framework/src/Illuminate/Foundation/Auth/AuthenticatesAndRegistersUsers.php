@@ -174,7 +174,13 @@ trait AuthenticatesAndRegistersUsers {
 			return $this->redirectPath;
 		}
 
-		return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
+		if ($this->auth->user()->is_admin == 'Y'){
+			$redirectProperty = property_exists($this, 'redirectAdminsTo') ? $this->redirectAdminsTo : '/';
+		} else {
+			$redirectProperty = property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
+		}
+
+		return $redirectProperty;
 	}
 
 	/**
