@@ -85,9 +85,9 @@
 				            	{!! get_locations_for_menu() !!}
 				            </ul>
 				        </li>
-		              	<li class="{{ set_active('blog') }}"><a href="/{{App::getLocale()}}/news">{{Lang::get('site.nav_news')}}</a></li>
-		              	<li class="{{ set_active('faq') }}"><a href="/{{App::getLocale()}}/faq">{{Lang::get('site.nav_faq')}}</a></li>
-		              	<li class="{{ set_active('contact') }}"><a href="/{{App::getLocale()}}/contact">{{Lang::get('site.nav_contact')}}</a></li>
+		              	<li class="{{ set_active(App::getLocale().'/blog') }}"><a href="/{{App::getLocale()}}/news">{{Lang::get('site.nav_news')}}</a></li>
+		              	<li class="{{ set_active(App::getLocale().'/faq') }}"><a href="/{{App::getLocale()}}/faq">{{Lang::get('site.nav_faq')}}</a></li>
+		              	<li class="{{ set_active(App::getLocale().'/contact') }}"><a href="/{{App::getLocale()}}/contact">{{Lang::get('site.nav_contact')}}</a></li>
 		              	<p class="navbar-text">(+30) 218 21 89 914</p>
 		            </ul>
 		            <ul class="nav navbar-nav navbar-right">

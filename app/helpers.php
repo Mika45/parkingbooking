@@ -15,7 +15,7 @@ use App\Configuration;
 // My common functions
 function set_active($uri)
 {
-    return Request::is($uri) ? 'active' : null;
+	return Request::is($uri) ? 'active' : null;
 }
 
 function set_parent_active($uri)
