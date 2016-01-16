@@ -5,7 +5,8 @@
 @stop
 
 @section('sidebar')
-
+	<h1>&nbsp;</h1>
+	<img src="/img/news.png"/>
 @stop
 
 @section('content')
