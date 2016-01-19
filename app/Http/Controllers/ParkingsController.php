@@ -167,6 +167,9 @@ class ParkingsController extends Controller {
 			}
 		}
 
+		// reset the session in case of any selected products that have left in the session
+		Session::forget('selectedProducts');
+
 		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products'));
 	}
 
@@ -181,6 +184,7 @@ class ParkingsController extends Controller {
 			$data = Request::all();
 
 			// set a session with the selected Products
+			Session::forget('selectedProducts');
 			Session::set('selectedProducts', $data['productIDs']);
 
 			$selectedArray = Session::get('selectedParking');
