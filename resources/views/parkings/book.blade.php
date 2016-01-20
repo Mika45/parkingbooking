@@ -246,7 +246,7 @@
 					}
 				}
 
-				$.get('getRequest', { totalPrice:totalPrice, productIDs:productIds }, function(data){
+				$.get('getRequest', { totalPrice:totalPrice, productsPrice:productsPrice, productIDs:productIds }, function(data){
 					console.log(data);
 				});
 			});

@@ -185,10 +185,23 @@ class ParkingsController extends Controller {
 
 			// set a session with the selected Products
 			Session::forget('selectedProducts');
-			Session::set('selectedProducts', $data['productIDs']);
+			
+			if (array_key_exists('productIDs', $data))
+				Session::set('selectedProducts', $data['productIDs']);
+
+			/*$selectedArray = Session::get('selectedParking');
+			$selectedArray['price'] = $data['totalPrice'];
+			Session::set('selectedParking', $selectedArray);*/
 
 			$selectedArray = Session::get('selectedParking');
-			$selectedArray['price'] = $data['totalPrice'];
+			$selectedArray['productsPrice'] = $data['productsPrice'];
+
+			if (array_key_exists('productIDs', $data)){
+				$selectedArray['selectedProducts'] = $data['productIDs'];
+			} else {
+				$selectedArray['selectedProducts'] = 0;
+			}
+
 			Session::set('selectedParking', $selectedArray);
 
 			$sessions = Session::get('selectedParking');
@@ -210,6 +223,7 @@ class ParkingsController extends Controller {
 
 		$selectedId = $selectedArray['parking_id'];
 		$selectedPrice = $selectedArray['price'];
+		$selectedProductsPrice = $selectedArray['productsPrice'];
 
 		$data = Session::all();
 
@@ -237,7 +251,7 @@ class ParkingsController extends Controller {
 
 		$booking->checkin = $data['checkindate'].' '.$data['checkintime'];
 		$booking->checkout = $data['checkoutdate'].' '.$data['checkouttime'];
-		$booking->price = $selectedPrice;
+		$booking->price = $selectedPrice + $selectedProductsPrice;
 		$booking->title = $input['title'];
 		$booking->firstname = $input['items']['firstname'];
 		$booking->lastname = $input['items']['lastname'];
@@ -278,18 +292,27 @@ class ParkingsController extends Controller {
 		// Disabled at the moment - querying the booking table for availability
 		//DB::statement('CALL UpdateAvailability('.$selectedId.', "'.$data['checkindate'].'", "'.$data['checkoutdate'].'", "D")');
 
+		$checkProdPrice = 0;
+
 		// Booking Products section
 		if (Session::has('selectedProducts')){
 
 			$products = Session::get('selectedProducts');
-			//Session::forget('selectedParking');
+
+			foreach ($products as $prod) {
+				$product = Product::find($prod);
+				$checkProdPrice = $checkProdPrice + $product->price;
+			}
+
+			if ($checkProdPrice != $selectedArray['productsPrice'])
+				App::abort(403, 'Unauthorized');
+
 			foreach ($products as $prod) {
 				$bookingProduct = new BookingProduct;
 				$bookingProduct->booking_id = $booking->booking_id;
 				$bookingProduct->product_id = $prod;
 				$bookingProduct->save();
 			}
-
 		}
 
 		// Booking Voucher section
@@ -336,6 +359,9 @@ class ParkingsController extends Controller {
 		
 		// Delete the generated pdf after the send
 		File::delete('tmp/'.$temp_pdf_name);
+
+		// remove all sessions
+		Session::flush();
 
 		return response()->view('static.payment')->withCookie(Cookie::forget('noaf'));
 	}
