@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddProductRequest;
 use Request;
 use App\Product;
+use App\BookingProduct;
 use App\Parking;
 use DB;
 
@@ -127,7 +128,15 @@ class ProductsController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		$booking = BookingProduct::where('product_id', $id)->first();
+		if (isset($booking)){
+			\Session::flash('flash_message', 'You cannot delete this Product. It has been found to be used in existing booking(s).');
+		} else {
+			$product = Product::findOrFail($id);
+			$product->delete();
+		}
+
+		return redirect()->back()->withInput();
 	}
 
 }

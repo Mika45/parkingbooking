@@ -10,6 +10,13 @@
          	<a href="/admin/products/{{ $parking_id }}/create" class="btn btn-warning btn-xs">Add Product</a>
        	</div><!-- /.box-header -->
 			<div class="box-body">
+				@if (Session::has('flash_message'))
+				<div class="alert alert-danger alert-dismissable">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              	<h4><i class="icon fa fa-ban"></i> Error!</h4>
+              	{{ Session::get('flash_message') }}
+            </div>
+            @endif
 				<table id="partners" class="table table-bordered table-hover">
 					<thead>
 						<tr>
@@ -24,7 +31,30 @@
 							<td><small>{{ $product->name }}</small></td>
 							<td><small>{{ $product->price }}</small></td>
 							<td><a href="/admin/products/{{ $product->product_id }}/edit" class="btn btn-primary btn-xs">Edit</a>
-								 <a href="/admin/translations/product/{{ $product->product_id }}" class="btn btn-success btn-xs">Edit Translation</a></td>
+								 <a href="/admin/translations/product/{{ $product->product_id }}" class="btn btn-success btn-xs">Edit Translation</a>
+								 <a href="#" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#basicModal{{$product->product_id}}">Delete</a></td>
+
+							<div class="modal fade" id="basicModal{{$product->product_id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+							    <div class="modal-dialog">
+							        <div class="modal-content">
+							            <div class="modal-header">
+								            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								            <h4 class="modal-title" id="myModalLabel">Delete Product</h4>
+							            </div>
+							            <div class="modal-body">
+							                <p>Are you sure you want to delete this product?</p>
+							            </div>
+							            <div class="modal-footer">
+							                
+							                {!! Form::open(['method' => 'DELETE', 'route' => ['admin.products.destroy', $product->product_id]]) !!}
+							                		<button type="button" class="btn btn-default" data-dismiss="modal">No</button>	
+							                		{!! Form::submit('Yes', ['class' => 'btn btn-default']) !!}
+							                {!! Form::close() !!}
+							        	</div>
+							    </div>
+							  </div>
+							</div>
+
 						</tr>
 						@endforeach
 					</tbody>
