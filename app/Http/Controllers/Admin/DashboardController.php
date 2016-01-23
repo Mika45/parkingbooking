@@ -27,4 +27,12 @@ class DashboardController extends Controller {
 		return view('admin.dashboard', compact('page_title', 'stats'));
 	}
 
+	/**
+     * Instantiate a new ParkingsController instance.
+     */
+	public function __construct()
+	{
+		$this->middleware('auth.admin');
+	}
+
 }

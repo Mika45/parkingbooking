@@ -17,7 +17,7 @@ class PartnersController extends Controller {
 
 	public function __construct()
     {
-        $this->middleware('auth', ['except' => ['show', 'setCookie']]);
+        $this->middleware('auth.admin', ['except' => ['show', 'setCookie']]);
     }
 
 	/**
