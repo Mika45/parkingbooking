@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'unsecure'], function()
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'secure'], function()
 {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
 	Route::controller('dashboard', 'DashboardController');
