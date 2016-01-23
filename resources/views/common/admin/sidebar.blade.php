@@ -32,6 +32,7 @@
     <ul class="sidebar-menu">
       <li class="header">MENU</li>
       <!-- Optionally, you can add icons to the links -->
+      <li class="{{ set_active('admin/dashboard') }}"><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
       <li class="{{ set_active('admin/bookings') }}"><a href="/admin/bookings"><i class="fa fa-book"></i> <span>Bookings</span></a></li>
       <li class="treeview {{ set_parent_active('admin/partners') }}">
         <a href="#"><i class="fa fa-users"></i> <span>Affiliates</span> <i class="fa fa-angle-left pull-right"></i></a>
