@@ -223,7 +223,11 @@ class ParkingsController extends Controller {
 
 		$selectedId = $selectedArray['parking_id'];
 		$selectedPrice = $selectedArray['price'];
-		$selectedProductsPrice = $selectedArray['productsPrice'];
+
+		if (array_key_exists('productsPrice', $selectedArray))
+			$selectedProductsPrice = $selectedArray['productsPrice'];
+		else
+			$selectedProductsPrice = 0;
 
 		$data = Session::all();
 
