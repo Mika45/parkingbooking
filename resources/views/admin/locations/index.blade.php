@@ -30,8 +30,10 @@
 								<td><small>{{ $location->parent_name }}</small></td>
 								<td><small>{{ $location->lat }}</small></td>
 								<td><small>{{ $location->lng }}</small></td>
-								<td><a href="/admin/locations/{{ $location->location_id }}/edit" class="btn btn-primary btn-xs">Edit location</a>
-									 <a href="/admin/translations/location/{{ $location->location_id }}" class="btn btn-success btn-xs">Edit translations</a></td>
+								<td>
+									<a href="/admin/locations/{{ $location->location_id }}/edit" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Location"><i class="fa fa-fw fa-edit"></i></a>
+									<a href="/admin/translations/location/{{ $location->location_id }}" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Translations"><i class="fa fa-fw fa-globe"></i></a>
+								</td>
 							</tr>
 							@endforeach
 						</tbody>

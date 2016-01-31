@@ -29,9 +29,9 @@
 								<td>@if($article->slug) <a href="/{{App::getLocale()}}/news/{{ $article->slug }}" target="_blank" class="btn btn-primary btn-xs">View</a> @endif</td>
 								<td><small>{{ $article->published_at }}</small></td>
 
-								<td><a href="/admin/articles/{{ $article->article_id }}/edit" class="btn btn-primary btn-xs">Edit article</a>
-									<a href="#" class="btn btn-danger btn-xs">Delete article</a>
-									<a href="/admin/translations/article/{{ $article->article_id }}" class="btn btn-success btn-xs">Edit translation</a></td>
+								<td><a href="/admin/articles/{{ $article->article_id }}/edit" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Article"><i class="fa fa-fw fa-edit"></i></a>
+									<a href="#" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete Article"><i class="fa fa-fw fa-remove"></i></a>
+									<a href="/admin/translations/article/{{ $article->article_id }}" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Translations"><i class="fa fa-fw fa-globe"></i></a></td>
 							</tr>
 							@endforeach
 						</tbody>

@@ -33,7 +33,7 @@ class ProductsController extends Controller {
 
 		$products = DB::table('PRODUCT')->where('parking_id', $id)->get();
 
-		$page_title = 'Products';
+		$page_title = 'Services';
 		$page_description = 'of the Parking: '.$parking->parking_name;
 
 		return view('admin.products.index', compact('products', 'page_title', 'page_description', 'parking_id'));
@@ -50,7 +50,7 @@ class ProductsController extends Controller {
 
 		$parking = Parking::find($id);
 
-		$page_title = 'Add a new Product';
+		$page_title = 'Add a new Service';
 		$page_description = 'for the Parking: '.$parking->parking_name;
 
 		return view('admin.products.create', compact('parking_id', 'page_title', 'page_description'));
@@ -99,7 +99,7 @@ class ProductsController extends Controller {
 
 		$parking = Parking::find($product->parking_id);
 
-		$page_title = 'Edit Product';
+		$page_title = 'Edit Service';
 		$page_description = 'for the Parking: '.$parking->parking_name;
 
 		return view('admin.products.edit', compact('product', 'parking_id', 'page_title', 'page_description'));
@@ -130,7 +130,7 @@ class ProductsController extends Controller {
 	{
 		$booking = BookingProduct::where('product_id', $id)->first();
 		if (isset($booking)){
-			\Session::flash('flash_message', 'You cannot delete this Product. It has been found to be used in existing booking(s).');
+			\Session::flash('flash_message', 'You cannot delete this Service. It has been found to be used in existing booking(s).');
 		} else {
 			$product = Product::findOrFail($id);
 			$product->delete();

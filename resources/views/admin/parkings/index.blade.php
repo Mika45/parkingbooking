@@ -21,10 +21,7 @@
 								<th><small>24 Hour</small></th>
 								<th><small>Phone</small></th>
 								<th><small>E-mail</small></th>
-								<th><small></small></th>
-								<th><small>Schedule</small></th>
-								<th><small>Products</small></th>
-								<th><small>Translation</small></th>
+								<th><small>Actions</small></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -37,17 +34,16 @@
 								<td><small>{{ $parking->allday }}</small></td>
 								<td><small>{{ $parking->phone1 }}</small></td>
 								<td><small>{{ $parking->email }}</small></td>
-								<td><a href="/admin/parking/{{ $parking->parking_id }}/edit" class="btn btn-primary btn-xs">Edit</a></td>
 								<td>
+									<a href="/admin/parking/{{ $parking->parking_id }}/edit" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Parking"><i class="fa fa-fw fa-edit"></i></div></a>
 									@if ( $parking->allday == 'No')
-										<a href="/admin/parking/{{ $parking->parking_id }}/schedule" class="btn btn-info btn-xs">Edit</a>
+										<a href="/admin/parking/{{ $parking->parking_id }}/schedule" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Schedule"><i class="fa fa-fw fa-calendar"></i></a>
 									@else
-										<a href="/admin/parking/{{ $parking->parking_id }}/schedule" class="btn btn-info disabled btn-xs">Edit</a>
+										<a href="/admin/parking/{{ $parking->parking_id }}/schedule" class="btn btn-warning disabled btn-xs"><i class="fa fa-fw fa-calendar"></i></a>
 									@endif
+									<a href="/admin/parking/{{ $parking->parking_id }}/products" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Services"><i class="fa fa-fw fa-shopping-cart"></i></a>
+									<a href="/admin/translations/parking/{{ $parking->parking_id }}" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Translations"><i class="fa fa-fw fa-globe"></i></a>
 								</td>
-								<td><a href="/admin/parking/{{ $parking->parking_id }}/products" class="btn btn-info btn-xs">Edit</a></td>
-								<td><a href="/admin/translations/parking/{{ $parking->parking_id }}" class="btn btn-success btn-xs">Edit</a></td>
-								
 							</tr>
 							@endforeach
 						</tbody>
@@ -70,6 +66,9 @@
 @section('javascript')
     <script>
       $(document).ready(function() {
+
+      	$('[data-toggle="tooltip"]').tooltip();
+
           $('#parkings').DataTable({
             "paging": true,
             "lengthChange": true,

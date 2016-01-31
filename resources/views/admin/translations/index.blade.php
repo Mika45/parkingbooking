@@ -16,8 +16,7 @@
 							<th><small>Locale</small></th>
 							<th><small>Column</small></th>
 							<th><small>Value</small></th>
-							<th><small></small></th>
-							<th><small></small></th>
+							<th><small>Actions</small></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -26,8 +25,12 @@
 							<td><small>{{ $translation->locale }}</small></td>
 							<td><small>{{ $translation->column_name }}</small></td>
 							<td><small>{{ $translation->value }}</small></td>
-							<td><a href="/admin/translations/{{ $translation->translation_id }}/edit" class="btn btn-primary btn-xs">Edit</a></td>
-							<td><a href="#" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#basicModal{{$translation->translation_id}}">Delete</a></td>
+							<td>
+								<a href="/admin/translations/{{ $translation->translation_id }}/edit" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Translation"><i class="fa fa-fw fa-edit"></i></a>
+								<span data-toggle="modal" data-target="#basicModal{{$translation->translation_id}}">
+									<a href="#" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete Translation"><i class="fa fa-fw fa-remove"></i></a>
+								</span>
+							</td>
 
 							<div class="modal fade" id="basicModal{{$translation->translation_id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 							    <div class="modal-dialog">

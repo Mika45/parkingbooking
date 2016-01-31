@@ -3,7 +3,7 @@
         <fieldset>
             <div class="form-group">
                 <div class="col-lg-8">
-                    {!! Form::label('name', 'Product name:') !!}
+                    {!! Form::label('name', 'Service name:') !!}
                     {!! Form::text('name', null, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-lg-4">

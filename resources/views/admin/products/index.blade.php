@@ -7,7 +7,7 @@
      	<div class="box">
 			<div class="box-header">
 				@if (isset($box_title))<h3 class="box-title">{{ $box_title or null }}</h3><br/>@endif
-         	<a href="/admin/products/{{ $parking_id }}/create" class="btn btn-warning btn-xs">Add Product</a>
+         	<a href="/admin/products/{{ $parking_id }}/create" class="btn btn-warning btn-xs">Add Service</a>
        	</div><!-- /.box-header -->
 			<div class="box-body">
 				@if (Session::has('flash_message'))
@@ -22,7 +22,7 @@
 						<tr>
 							<th><small>Name</small></th>
 							<th><small>Price</small></th>
-							<th></th>
+							<th><small>Actions</small></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -30,19 +30,23 @@
 						<tr>
 							<td><small>{{ $product->name }}</small></td>
 							<td><small>{{ $product->price }}</small></td>
-							<td><a href="/admin/products/{{ $product->product_id }}/edit" class="btn btn-primary btn-xs">Edit</a>
-								 <a href="/admin/translations/product/{{ $product->product_id }}" class="btn btn-success btn-xs">Edit Translation</a>
-								 <a href="#" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#basicModal{{$product->product_id}}">Delete</a></td>
+							<td>
+								<a href="/admin/products/{{ $product->product_id }}/edit" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Service"><i class="fa fa-fw fa-edit"></i></a>
+								<a href="/admin/translations/product/{{ $product->product_id }}" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Translations"><i class="fa fa-fw fa-globe"></i></a>
+								<span data-toggle="modal" data-target="#basicModal{{$product->product_id}}">
+									<a href="#" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete Service"><i class="fa fa-fw fa-remove"></i></a>
+								</span>
+							</td>
 
 							<div class="modal fade" id="basicModal{{$product->product_id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 							    <div class="modal-dialog">
 							        <div class="modal-content">
 							            <div class="modal-header">
 								            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								            <h4 class="modal-title" id="myModalLabel">Delete Product</h4>
+								            <h4 class="modal-title" id="myModalLabel">Delete Service</h4>
 							            </div>
 							            <div class="modal-body">
-							                <p>Are you sure you want to delete this product?</p>
+							                <p>Are you sure you want to delete this parking service?</p>
 							            </div>
 							            <div class="modal-footer">
 							                

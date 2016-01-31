@@ -26,8 +26,10 @@
 							<td><small>{{ $tag->name }}</small></td>
 							<td><small><img src='/img/icons/{{ $tag->icon_filename }}' /></small></td>
 							<td><small>{{ $tag->icon_filename }}</small></td>
-							<td><a href="/admin/tags/{{ $tag->tag_id }}/edit" class="btn btn-primary btn-xs">Edit</a>
-								 <a href="/admin/translations/tag/{{ $tag->tag_id }}" class="btn btn-success btn-xs">Edit Translation</a></td>
+							<td>
+								<a href="/admin/tags/{{ $tag->tag_id }}/edit" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Feature"><i class="fa fa-fw fa-edit"></i></a>
+								<a href="/admin/translations/tag/{{ $tag->tag_id }}" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Translations"><i class="fa fa-fw fa-globe"></i></a>
+							</td>
 						</tr>
 						@endforeach
 					</tbody>

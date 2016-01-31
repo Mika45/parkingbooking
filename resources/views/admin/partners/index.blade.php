@@ -22,8 +22,7 @@
 							<th><small>Referrer URL</small></th>
 							<th><small>Tracking Link</small></th>
 							<th><small>User</small></th>
-							<th><small>&nbsp;</small></th>
-							<th><small>&nbsp;</small></th>
+							<th><small>Actions</small></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,8 +42,10 @@
 								@endif
 							</small></td>
 							<td><small>{{ $affiliate->user_email }}</small></td>
-							<td><a href="/admin/partners/{{ $affiliate->affiliate_id }}/edit" class="btn btn-primary btn-xs">Edit</a></td>
-							<td><a href="#" class="btn btn-danger btn-xs">Delete</a></td>
+							<td>
+								<a href="/admin/partners/{{ $affiliate->affiliate_id }}/edit" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Edit Affiliate"><i class="fa fa-fw fa-edit"></i></a>
+								<a href="#" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Remove Affiliate"><i class="fa fa-fw fa-remove"></i></a>
+							</td>
 						</tr>
 						@endforeach
 					</tbody>
