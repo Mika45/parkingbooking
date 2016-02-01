@@ -105,6 +105,8 @@
 
 </fieldset>
 
+<?php $someVar = 1; ?>
+
 <script>
 	$('#location_list').select2({
 		//placeholder: "Choose a Location",
@@ -115,35 +117,44 @@
 </script>
 
 <script>
-    $(function () {
-        $('#datetimepicker1').datetimepicker({
-	        //format: 'YYYY-MM-DD H:mm',
-	        useCurrent: false,
-	        format: 'DD/MM/YYYY',
+	$(function () {
+		
+		var dateLimit = new Date();
+ 		dateLimit.setMonth(dateLimit .getMonth() + 6);
+ 		
+		var appLocale = "<?php echo App::getLocale(); ?>";
+
+		$('#datetimepicker1').datetimepicker({
+			//format: 'YYYY-MM-DD H:mm',
+	      locale: moment.locale(appLocale),
+	      useCurrent: false,
+	      format: 'DD/MM/YYYY',
     		minDate: moment(),
-    		maxDate: moment().add(0.5, 'years').calendar()
-    		//locale: moment.local('el')
-	    });
-        $('#datetimepicker2').datetimepicker({
-	        //format: 'YYYY-MM-DD H:mm',
-	        useCurrent: false,
-	        format: 'H:mm',
+    		maxDate: dateLimit
+	   });
+
+      $('#datetimepicker2').datetimepicker({
+	      //format: 'YYYY-MM-DD H:mm',
+	      useCurrent: false,
+	      format: 'H:mm',
     		stepping: 10
-	    });
-	    $('#datetimepicker3').datetimepicker({
-	        //format: 'YYYY-MM-DD H:mm',
-	        useCurrent: false,
-	        format: 'DD/MM/YYYY',
+	   });
+	   
+	   $('#datetimepicker3').datetimepicker({
+	      //format: 'YYYY-MM-DD H:mm',
+	      locale: moment.locale(appLocale),
+	      useCurrent: false,
+	      format: 'DD/MM/YYYY',
     		minDate: moment(),
-    		maxDate: moment().add(0.5, 'years').calendar()
-    		//locale: moment.local('el')
-	    });
-        $('#datetimepicker4').datetimepicker({
-	        //format: 'YYYY-MM-DD H:mm',
-	        useCurrent: false,
-	        format: 'H:mm',
+    		maxDate: dateLimit
+	   });
+      
+      $('#datetimepicker4').datetimepicker({
+	      //format: 'YYYY-MM-DD H:mm',
+	      useCurrent: false,
+	      format: 'H:mm',
     		stepping: 10
-	    });
+	   });
 	    /*$("#datetimepicker1").on("dp.change", function (e) {
 			$('#datetimepicker3').data("DateTimePicker").minDate(e.date);
         });

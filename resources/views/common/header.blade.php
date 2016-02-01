@@ -20,6 +20,7 @@
 
 		{!! HTML::script('js/jquery-migrate-1.2.1.min.js') !!}
 		{!! HTML::script('js/moment.js') !!}
+		{!! HTML::script('js/moment-with-locales.js') !!}
 		{!! HTML::style('css/bootswatch.min.css') !!}
 		{!! HTML::script('js/bootstrap.js') !!}
 
