@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
+use SoapClient;
+
 class PaymentsController extends Controller {
 
 	/**
@@ -17,6 +19,31 @@ class PaymentsController extends Controller {
 
 	public function bank()
 	{	
+		$client = new SoapClient("https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx?WSDL");
+
+		$parameters = null;
+
+		$params = array(
+			'AcquirerId' => 14,
+			'MerchantId' => 2133613386,
+			'PosId' => 2139909353,
+			'Username' => 'KA009598',
+			'Password' => '64c2b64daff31c1e427a0f383713f030',
+			'RequestType' => '02',
+			'CurrencyCode' => 978,
+			'MerchantReference' => 'PL1501',
+			'Amount' => 20,
+			'Installments' => 0,
+			'ExpirePreauth' => 0,
+			'Bnpl' => 0,
+			'Parameters' => $parameters
+		);
+
+		$response = $client->IssueNewTicket(array('Request' => $params));
+		// $client->IssueNewTicket($search_query);
+
+		dd($response);
+
 		return view('payments.bank');
 	}
 
