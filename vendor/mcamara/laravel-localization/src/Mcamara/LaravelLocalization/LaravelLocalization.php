@@ -229,9 +229,8 @@ class LaravelLocalization {
             {
                 return $this->getURLFromRouteNameTranslated($locale, $this->routeName, $attributes);
             }
-
-            $url = $this->request->fullUrl();
-
+            //$url = $this->request->fullUrl();
+            $url = $this->request->url();
         }
         
         if ( $locale && $translatedRoute = $this->findTranslatedRouteByUrl($url, $attributes, $this->currentLocale) )
