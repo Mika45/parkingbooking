@@ -15,6 +15,7 @@ class VerifyCsrfToken implements Middleware {
 	 * @var \Illuminate\Contracts\Encryption\Encrypter
 	 */
 	protected $encrypter;
+	protected $excludedRouteGroups = ['results'];
 
 	/**
 	 * Create a new middleware instance.
@@ -38,7 +39,7 @@ class VerifyCsrfToken implements Middleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->isReading($request) || $this->tokensMatch($request))
+		if ($this->isReading($request) || $this->tokensMatch($request) || ($this->excludedRoutes($request)))
 		{
 			return $this->addCookieToResponse($request, $next($request));
 		}
@@ -89,6 +90,17 @@ class VerifyCsrfToken implements Middleware {
 	protected function isReading($request)
 	{
 		return in_array($request->method(), ['HEAD', 'GET', 'OPTIONS']);
+	}
+
+	protected function excludedRoutes($request)
+	{
+		foreach($this->excludedRouteGroups as $route) {
+	   	if ($request->segment(2) === $route) {
+	         return true;
+	      }
+		}
+
+		return false;
 	}
 
 }

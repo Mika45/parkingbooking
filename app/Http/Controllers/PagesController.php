@@ -23,6 +23,8 @@ use Log;
 use Excel;
 use URL;
 use LaravelLocalization;
+use Cookie;
+use App\Affiliate;
 
 class PagesController extends Controller {
 
@@ -84,7 +86,7 @@ class PagesController extends Controller {
 	// Not currently in use (could be used if the results page would contain the search form)
 	public function getsearch(SearchCombinedRequest $request)
 	{
-		
+		dd('Post variable: '.$_POST["pl_location"]);
 		$location = Session::get('location');
 		$checkindate = Session::get('checkindate');
 		$checkintime = Session::get('checkintime');
@@ -131,7 +133,7 @@ class PagesController extends Controller {
 		
 	}
 
-	public function geturlsearch($in_location_id, $in_from_date, $in_from_time, $in_to_date, $in_to_time)
+	public function geturlsearch($in_location_id, $in_from_date, $in_from_time, $in_to_date, $in_to_time, $in_id = null, $in_ref = null)
 	{
 		$location = $in_location_id;
 
@@ -230,7 +232,14 @@ class PagesController extends Controller {
 
 		usort($data, "cmp");
 
-		//dd($data);
+		if (isset($in_id) and isset($in_ref)){
+			$affiliate = Affiliate::findOrFail($in_id);
+
+			if ($affiliate->referrer != $in_ref)
+				App::abort(403, 'Unauthorized');
+
+			return response()->view('results', compact('data', 'translations', 'locationsList', 'location', 'count', 'map', 'mapHelper', 'checkin', 'checkout'))->withCookie(cookie('noaf', $in_id, 360));
+		}
 
 		return view('results', compact('data', 'translations', 'locationsList', 'location', 'count', 'map', 'mapHelper', 'checkin', 'checkout'));
 	}
