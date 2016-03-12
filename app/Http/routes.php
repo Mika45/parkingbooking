@@ -94,6 +94,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect', 'localizationRedirect']], function()
 {
 	Route::post('payment', 'ParkingsController@payment');
+	Route::get('checkout', 'ParkingsController@checkout');
+	Route::post('checkout', 'ParkingsController@checkout');
 	Route::get('payment/online', 'PaymentsController@bank');
 	Route::get('payment/result/{name?}', 'PaymentsController@result');
 	
@@ -110,6 +112,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('parkings', 'ParkingsController@all'); //was @index
 	Route::get('parkings/{id}', 'ParkingsController@view'); //was @show
 	Route::get('parkings/{id}/book', 'ParkingsController@book');
+	Route::post('parkings/{id}/book', 'ParkingsController@book');
 	
 	Route::get('parkings/{id}/getRequest', 'ParkingsController@setBookingPrice');
 	

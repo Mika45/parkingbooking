@@ -56,6 +56,7 @@
 			<br/>
 			
 			{!! Form::open(['action' => 'ParkingsController@payment', 'class' => 'form-horizontal', 'id' => 'payment']) !!}
+			{{-- {!! Form::open(['url' => 'https://paycenter.piraeusbank.gr/redirection/pay.aspx', 'class' => 'form-horizontal', 'id' => 'payment']) !!} --}}
 			<fieldset>
 
 			@if (count($errors) > 0)
@@ -167,13 +168,15 @@
 	    <h3 class="panel-title">{{ Lang::get('site.pay_sum_heading') }}</h3>
 	  </div>
 	  <div class="panel-body">
-	  	{!! Form::radio('sex', 'male', true) !!}
-	  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
-	  	<br/>
-	  	<input type="radio" name="foo" value="N" disabled>
+	  	{!! Form::radio('payment', 'online', true) !!}
 	  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
-	  	<p><small>{{Lang::get('site.pay_sum_opt_note')}}</small></p>
 	  	<br/>
+	  	{{-- <input type="radio" name="foo" value="N" disabled> --}}
+	  	{!! Form::radio('payment', 'atcarpark', false) !!}
+	  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
+	  	{{-- <p><small>{{Lang::get('site.pay_sum_opt_note')}}</small></p> --}}
+
+	  	<br/><br/>
 	  	{!! Form::submit(Lang::get('site.book_form_btn'), ['class' => 'btn btn-primary form-control']) !!}
 	  	{!! Form::close() !!}
 	  </div>

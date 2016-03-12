@@ -7,7 +7,6 @@ use App\ParkingLocation;
 use App\Booking;
 use App\Location;
 use App\User;
-use App\RateDaily;
 use App\Configuration;
 use App\Field;
 use App\Tag;
@@ -17,9 +16,7 @@ use DB;
 use App;
 use Auth;
 use Request;
-use Mail;
 use Storage;
-use File;
 use Lang;
 use App\Http\Requests\BookRequest;
 use App\Http\Requests\AddParkingRequest;
@@ -28,12 +25,13 @@ use Carbon;
 use Validator;
 use Image;
 use Imagine;
-use App\PhoneCode;
 use App\Product;
-use App\BookingProduct;
 use Cookie;
 
 use Ivory\GoogleMap\Helper\MapHelper;
+use Illuminate\Support\Facades\Redirect;
+
+use App\Commands\BookParking;
 
 class ParkingsController extends Controller {
 
@@ -42,7 +40,7 @@ class ParkingsController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth.admin', ['except' => ['show', 'book', 'payment', 'setBookingPrice']]); 
+        $this->middleware('auth.admin', ['except' => ['show', 'book', 'payment', 'setBookingPrice', 'checkout']]); 
     }
 
 	//public function index()
@@ -214,160 +212,26 @@ class ParkingsController extends Controller {
 
 	public function payment(BookRequest $request)
 	{
-		//Session::forget('bookingInProcess');
+		$this->dispatch(
+			new BookParking($request)
+		);
 
-		$input = $request->all();
-
-		$selectedArray = Session::get('selectedParking');
-		Session::forget('selectedParking');
-
-		$selectedId = $selectedArray['parking_id'];
-		$selectedPrice = $selectedArray['price'];
-
-		if (array_key_exists('productsPrice', $selectedArray))
-			$selectedProductsPrice = $selectedArray['productsPrice'];
-		else
-			$selectedProductsPrice = 0;
-
-		$data = Session::all();
-
-		// Final check of Availability
-		$lang = Session::get('applocale');
-		$avail_parks = DB::select('CALL GetResults('.$data['location'].', "'.$data['checkindate'].'", "'.$data['checkintime'].'", "'.$data['checkoutdate'].'", "'.$data['checkouttime'].'", NULL, "'.$lang.'")');
-
-		foreach ($avail_parks as $pid){
-			$pids[] = $pid->parking_id;
+		if ($request->payment == 'online') {
+			$page = 'payments.bank';
+			$ticket = Session::get('TranTicket');
+			dd($ticket);
+			return response()->view($page)->withCookie(Cookie::forget('noaf'));
+		} else {
+			$page = 'static.payment';
+			return response()->view($page)->withCookie(Cookie::forget('noaf'));
 		}
 
-		if (!in_array($selectedId, $pids)) {
-			// Sorry, this parking is not available anymore for the given dates and times
-		    App::abort(403, 'Unauthorized');
-		}
+		return response()->view($page)->withCookie(Cookie::forget('noaf'));
+	}
 
-		// Save a Booking
-		$booking = new Booking;
-
-		$booking->parking_id = $selectedId;
-
-		$user = Auth::user();
-		if($user)
-			$booking->user_id = $user->user_id;
-
-		$booking->checkin = $data['checkindate'].' '.$data['checkintime'];
-		$booking->checkout = $data['checkoutdate'].' '.$data['checkouttime'];
-		$booking->price = $selectedPrice + $selectedProductsPrice;
-		$booking->title = $input['title'];
-		$booking->firstname = $input['items']['firstname'];
-		$booking->lastname = $input['items']['lastname'];
-		$booking->mobile = $input['items']['mobile'];
-		if( array_key_exists('landline', $input['items']) )
-			$booking->landline = $input['items']['landline'];
-		$booking->email = $input['items']['email'];
-		$booking->car_make = $input['items']['carmake'];
-		$booking->car_model = $input['items']['carmodel'];
-		$booking->car_reg = $input['items']['carreg'];
-		if( array_key_exists('carcolour', $input['items']) )
-			$booking->car_colour = $input['items']['carcolour'];
-		if( array_key_exists('passengers', $input) )
-			$booking->passengers = $input['passengers'];
-		if( array_key_exists('newsletter', $input) )
-			$booking->newsletter = 'Y';
-		if( array_key_exists('country', $input['items']) )
-			$booking->country_id = $input['items']['country'];
-
-		$booking->save();
-		
-		$year = substr(date("Y"), -2);
-		if ($user and $user->is_affiliate == 'Y')
-			$code = 'AF'.$year;
-		else
-			$code = 'PL'.$year;
-
-		$booking->booking_ref = $code.$booking->booking_id;
-
-		$affiliate_id = Request::cookie('noaf');
-		if((!empty($affiliate_id)) and $affiliate_id != 0) {
-			$booking->affiliate_id = $affiliate_id;
-		}
-
-		$booking->save();
-
-		// Update the availability - Decrease
-		// Disabled at the moment - querying the booking table for availability
-		//DB::statement('CALL UpdateAvailability('.$selectedId.', "'.$data['checkindate'].'", "'.$data['checkoutdate'].'", "D")');
-
-		$checkProdPrice = 0;
-
-		// Booking Products section
-		if (Session::has('selectedProducts')){
-
-			$products = Session::get('selectedProducts');
-
-			foreach ($products as $prod) {
-				$product = Product::find($prod);
-				$checkProdPrice = $checkProdPrice + $product->price;
-			}
-
-			if ($checkProdPrice != $selectedArray['productsPrice'])
-				App::abort(403, 'Unauthorized');
-
-			foreach ($products as $prod) {
-				$bookingProduct = new BookingProduct;
-				$bookingProduct->booking_id = $booking->booking_id;
-				$bookingProduct->product_id = $prod;
-				$bookingProduct->save();
-			}
-		}
-
-		// Booking Voucher section
-		$bid = $booking->booking_id;
-		$temp_pdf_name = 'Booking Voucher '.$bid.'.pdf';
-
-		$booking = DB::select('CALL GetBooking('.$booking->booking_id.')');
-
-		$cur_lang = App::getLocale();
-		$products = DB::select('CALL GetVoucherProducts('.$bid.',"'.$cur_lang.'")');
-		
-		// get the traslations of the current locale
-		$translations = get_parking_translation( $booking[0]->parking_id );
-
-		$pdf = App::make('dompdf');
-		$pdf->loadView('emails.voucher', compact('booking', 'products', 'translations'));
-		$pdf->save('tmp/'.$temp_pdf_name);
-
-		// send the email to the booking user, to the admin and to the Park's e-mail if it exists
-		// Need to save the generated PDF to a temp directory and then include its path as the attachment
-		
-		// Get the parking model to grab the email address of the parking
-		$parking = Parking::where('parking_id', '=', $booking[0]->parking_id)->first();
-
-		if(!empty($parking->email)) {
-			Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking, $parking)
-			{
-			    $message->to($parking->email)->subject(Lang::get('emails.voucher_subject'));
-				$message->attach('tmp/'.$temp_pdf_name);
-			});
-		}
-
-		Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
-		{
-		    $message->to($booking[0]->email)->subject(Lang::get('emails.voucher_subject'));
-			$message->attach('tmp/'.$temp_pdf_name);
-		});
-
-		Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
-		{
-		    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
-			$message->attach('tmp/'.$temp_pdf_name);
-		});
-		
-		// Delete the generated pdf after the send
-		File::delete('tmp/'.$temp_pdf_name);
-
-		// remove all sessions
-		Session::flush();
-
-		return response()->view('static.payment')->withCookie(Cookie::forget('noaf'));
+	public function checkout()
+	{
+		return view('static.checkout');
 	}
 
 	/*****************************************/
