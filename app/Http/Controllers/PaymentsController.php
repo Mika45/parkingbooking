@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use SoapClient;
+use Session;
 
 class PaymentsController extends Controller {
 
@@ -31,7 +32,7 @@ class PaymentsController extends Controller {
 			'Password' => '64c2b64daff31c1e427a0f383713f030',
 			'RequestType' => '02',
 			'CurrencyCode' => 978,
-			'MerchantReference' => 'PL1501',
+			'MerchantReference' => 'PL1506',
 			'Amount' => 20,
 			'Installments' => 0,
 			'ExpirePreauth' => 0,
@@ -40,9 +41,8 @@ class PaymentsController extends Controller {
 		);
 
 		$response = $client->IssueNewTicket(array('Request' => $params));
-		// $client->IssueNewTicket($search_query);
 
-		dd($response);
+		Session::put('TranTicket', $response);
 
 		return view('payments.bank');
 	}

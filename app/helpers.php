@@ -11,6 +11,7 @@ use Ivory\GoogleMap\Overlays\InfoWindow;
 use App\Parking;
 use App\Availability;
 use App\Configuration;
+use App\ConfigurationGlobal;
 
 // My common functions
 function set_active($uri)
@@ -625,6 +626,12 @@ function get_parkings_dropdown( $in_location_id = NULL, $in_status = NULL )
 					->lists('parking_name', 'PARKING.parking_id');
 
     return $parkings;
+}
+
+function get_global_config( $in_config_name )
+{
+	$config = ConfigurationGlobal::where('name', $in_config_name);
+	return $config;
 }
 
 ?>

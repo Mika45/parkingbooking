@@ -15,7 +15,7 @@ class VerifyCsrfToken implements Middleware {
 	 * @var \Illuminate\Contracts\Encryption\Encrypter
 	 */
 	protected $encrypter;
-	protected $excludedRouteGroups = ['results'];
+	protected $excludedRouteGroups = ['results', 'payment', 'checkout'];
 
 	/**
 	 * Create a new middleware instance.

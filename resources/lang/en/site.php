@@ -82,7 +82,7 @@ return [
 	'book_form_heading'	=> 'Your Details',
 	/*'book_form_btn'		=> 'Proceed to Payment',*/
 	'book_form_country_list' => 'Please select',
-	'book_form_btn'		=> 'Complete Booking',
+	'book_form_btn'		=> 'Proceed',
 	'book_sum_heading'	=> 'BOOKING DETAILS',
 	'book_products_heading' => 'ADDITIONAL SERVICES',
 	'book_sum_carpark'	=> 'Parking',
