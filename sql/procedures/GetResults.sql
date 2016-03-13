@@ -26,7 +26,8 @@ BEGIN
 		    u.early_booking, 
 		    u.status AS active_status, 
 		    CASE WHEN ( u.slots <= IFNULL(u.checked_in, 0) OR u.slots <= IFNULL(u.checked_out, 0) ) THEN 'N'
-            WHEN ( IFNULL(u.24hour,'N') = 'N' ) AND ( in_available = 0 OR out_available = 0 ) THEN 'N'
+             WHEN ( IFNULL(u.24hour,'N') = 'N' ) AND ( in_available = 0 OR out_available = 0 ) THEN 'N'
+             WHEN ( gt_min_dur = 0 ) THEN 'N'
 				ELSE 'Y' 
 		    END AS available,
 		    u.in_available,
