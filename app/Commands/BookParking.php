@@ -197,19 +197,24 @@ class BookParking extends Command implements SelfHandling {
 			   $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
 				$message->attach('tmp/'.$temp_pdf_name);
 			});*/
-			
+
 			// Delete the generated pdf after the send
 			File::delete('tmp/'.$temp_pdf_name);
 		} else {
 
 			Bus::dispatch(
-	      	new IssueBankTicket($booking->booking_ref, $booking->price)
+	      		new IssueBankTicket($booking->booking_ref, $booking->price)
 	    	);
-
+			$ticket = Session::get('TranTicket');
 		}
 
-		// remove all sessions
+		// remove all sessions and keep Online ticket if it exists
 		Session::flush();
+
+		if (isset($ticket)) {
+			Session::put('TranTicket', $ticket);
+			Session::put('MerchantReference', $booking->booking_ref);
+		}
 	}
 
 }

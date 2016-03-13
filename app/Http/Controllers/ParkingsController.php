@@ -219,8 +219,13 @@ class ParkingsController extends Controller {
 		if ($request->payment == 'online') {
 			$page = 'payments.bank';
 			$ticket = Session::get('TranTicket');
-			dd($ticket);
-			return response()->view($page)->withCookie(Cookie::forget('noaf'));
+
+			$configuration = ConfigurationGlobal::where('name', 'like', 'ONLINE%')->get();
+			foreach ($configuration as $key => $conf) {
+				$config[$conf->name] = $conf->value;
+			}
+
+			return response()->view($page, compact($config))->withCookie(Cookie::forget('noaf'));
 		} else {
 			$page = 'static.payment';
 			return response()->view($page)->withCookie(Cookie::forget('noaf'));
