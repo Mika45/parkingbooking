@@ -202,10 +202,10 @@ class BookParking extends Command implements SelfHandling {
 			File::delete('tmp/'.$temp_pdf_name);
 		} else {
 
-			Bus::dispatch(
+			$ticket = Bus::dispatch(
 	      		new IssueBankTicket($booking->booking_ref, $booking->price)
 	    	);
-			$ticket = Session::get('TranTicket');
+			//$ticket = Session::get('TranTicket');
 		}
 
 		// remove all sessions and keep Online ticket if it exists
@@ -213,8 +213,10 @@ class BookParking extends Command implements SelfHandling {
 
 		if (isset($ticket)) {
 			Session::put('TranTicket', $ticket);
-			Session::put('MerchantReference', $booking->booking_ref);
+			//Session::put('MerchantReference', $booking->booking_ref);
 		}
+
+		return $booking->booking_ref;
 	}
 
 }
