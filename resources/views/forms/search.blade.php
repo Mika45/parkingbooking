@@ -118,50 +118,49 @@
 
 <script>
 	$(function () {
-		
+
 		var dateLimit = new Date();
  		dateLimit.setMonth(dateLimit .getMonth() + 6);
- 		
+
 		var appLocale = "<?php echo App::getLocale(); ?>";
 
 		$('#datetimepicker1').datetimepicker({
-			//format: 'YYYY-MM-DD H:mm',
-	      locale: moment.locale(appLocale),
-	      useCurrent: false,
-	      format: 'DD/MM/YYYY',
+	      	locale: moment.locale(appLocale),
+	      	format: 'DD/MM/YYYY',
     		minDate: moment(),
-    		maxDate: dateLimit
-	   });
-
-      $('#datetimepicker2').datetimepicker({
-	      //format: 'YYYY-MM-DD H:mm',
-	      useCurrent: false,
-	      format: 'H:mm',
-    		stepping: 10
-	   });
-	   
-	   $('#datetimepicker3').datetimepicker({
-	      //format: 'YYYY-MM-DD H:mm',
-	      locale: moment.locale(appLocale),
-	      useCurrent: false,
-	      format: 'DD/MM/YYYY',
-    		minDate: moment(),
-    		maxDate: dateLimit
-	   });
-      
-      $('#datetimepicker4').datetimepicker({
-	      //format: 'YYYY-MM-DD H:mm',
-	      useCurrent: false,
-	      format: 'H:mm',
-    		stepping: 10
-	   });
-	    /*$("#datetimepicker1").on("dp.change", function (e) {
-			$('#datetimepicker3').data("DateTimePicker").minDate(e.date);
+    		maxDate: dateLimit,
+    		useCurrent: false
+	   	});
+		$("#datetimepicker1").on("dp.show", function(e) {
+            $('#datetimepicker1').data("DateTimePicker").defaultDate(moment().add(1, 'days'));
+            $('#datetimepicker2').data("DateTimePicker").defaultDate(moment().hours(12).minutes(0));
         });
-        $("#datetimepicker3").on("dp.change", function (e) {
-            $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
-        });*/
-		
-		
+        $("#datetimepicker1").on("dp.change", function(e) {
+        	$('#datetimepicker3').data("DateTimePicker").minDate( $('#datetimepicker1').data("DateTimePicker").date() );
+        	if ( $('#datetimepicker1').data("DateTimePicker").date() > $('#datetimepicker3').data("DateTimePicker").date() ) {
+        		$('#datetimepicker3').data("DateTimePicker").clear();
+        		$('#datetimepicker4').data("DateTimePicker").clear();
+        	}
+        });
+
+      	$('#datetimepicker2').datetimepicker({
+	      	useCurrent: false,
+	      	format: 'H:mm',
+    		stepping: 10
+	   	});
+
+	   	$('#datetimepicker3').datetimepicker({
+	      	locale: moment.locale(appLocale),
+	      	useCurrent: false,
+	      	format: 'DD/MM/YYYY',
+    		minDate: moment(),
+    		maxDate: dateLimit
+	   	});
+
+      	$('#datetimepicker4').datetimepicker({
+	      	useCurrent: false,
+	      	format: 'H:mm',
+    		stepping: 10
+	   	});
     });
 </script>
