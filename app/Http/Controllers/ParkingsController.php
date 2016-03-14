@@ -8,6 +8,7 @@ use App\Booking;
 use App\Location;
 use App\User;
 use App\Configuration;
+use App\ConfigurationGlobal;
 use App\Field;
 use App\Tag;
 use App\Http\Requests;
@@ -212,7 +213,7 @@ class ParkingsController extends Controller {
 
 	public function payment(BookRequest $request)
 	{
-		$this->dispatch(
+		$booking_ref = $this->dispatch(
 			new BookParking($request)
 		);
 
@@ -225,7 +226,7 @@ class ParkingsController extends Controller {
 				$config[$conf->name] = $conf->value;
 			}
 
-			return response()->view($page, compact($config))->withCookie(Cookie::forget('noaf'));
+			return response()->view($page, compact('booking_ref', 'config'))->withCookie(Cookie::forget('noaf'));
 		} else {
 			$page = 'static.payment';
 			return response()->view($page)->withCookie(Cookie::forget('noaf'));

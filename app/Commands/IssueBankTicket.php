@@ -58,7 +58,8 @@ class IssueBankTicket extends Command implements SelfHandling {
 
 		$response = $client->IssueNewTicket(array('Request' => $params));
 
-		Session::put('TranTicket', $response);
+		//Session::put('TranTicket', $response);
+		return $response;
 	}
 
 }
