@@ -168,15 +168,33 @@
 	    <h3 class="panel-title">{{ Lang::get('site.pay_sum_heading') }}</h3>
 	  </div>
 	  <div class="panel-body">
-	  	{!! Form::radio('payment', 'online', true) !!}
-	  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
-	  	<br/>
-	  	{{-- <input type="radio" name="foo" value="N" disabled> --}}
-	  	{!! Form::radio('payment', 'atcarpark', false) !!}
-	  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
-	  	{{-- <p><small>{{Lang::get('site.pay_sum_opt_note')}}</small></p> --}}
+	  	@if (!Auth::guest())
+	  		@if (Auth::user()->email == 't.mihalis@gmail.com')
+		  		{!! Form::radio('payment', 'atcarpark', true) !!}
+		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
+		  		<br/>
+		  		{!! Form::radio('payment', 'online', true) !!}
+		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
+		  		<br/>
+		  	@else
+		  		{{-- This is VERY stupid but simple way / remove after testing --}}
+		  		{!! Form::radio('payment', 'atcarpark', true) !!}
+		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
+		  		<br/>
+			  	<input type="radio" name="foo" value="N" disabled>
+			  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
+			  	<p><small>{{Lang::get('site.pay_sum_opt_note')}}</small></p>
+		  	@endif
+	  	@else
+	  		{!! Form::radio('payment', 'atcarpark', true) !!}
+	  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
+	  		<br/>
+		  	<input type="radio" name="foo" value="N" disabled>
+		  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
+		  	<p><small>{{Lang::get('site.pay_sum_opt_note')}}</small></p>
+	  	@endif
 
-	  	<br/><br/>
+	  	<br/>
 	  	{!! Form::submit(Lang::get('site.book_form_btn'), ['class' => 'btn btn-primary form-control']) !!}
 	  	{!! Form::close() !!}
 	  </div>

@@ -9,6 +9,7 @@ use Auth;
 use Request;
 use Mail;
 use Storage;
+use Lang;
 use File;
 use App;
 use Carbon;
@@ -192,20 +193,23 @@ class BookParking extends Command implements SelfHandling {
 				$message->attach('tmp/'.$temp_pdf_name);
 			});
 
-			/*Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
+			Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
 			{
 			   $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
 				$message->attach('tmp/'.$temp_pdf_name);
-			});*/
+			});
 
 			// Delete the generated pdf after the send
 			File::delete('tmp/'.$temp_pdf_name);
+
+			$response = $booking[0]->booking_ref;
 		} else {
 
 			$ticket = Bus::dispatch(
 	      		new IssueBankTicket($booking->booking_ref, $booking->price)
 	    	);
-			//$ticket = Session::get('TranTicket');
+
+			$response = $booking->booking_ref;
 		}
 
 		// remove all sessions and keep Online ticket if it exists
@@ -216,7 +220,7 @@ class BookParking extends Command implements SelfHandling {
 			//Session::put('MerchantReference', $booking->booking_ref);
 		}
 
-		return $booking->booking_ref;
+		return $response;
 	}
 
 }
