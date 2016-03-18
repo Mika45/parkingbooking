@@ -179,7 +179,7 @@ class BookParking extends Command implements SelfHandling {
 			// Get the parking model to grab the email address of the parking
 			$parking = Parking::where('parking_id', '=', $booking[0]->parking_id)->first();
 
-			if(!empty($parking->email)) {
+			/*if(!empty($parking->email)) {
 				Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking, $parking)
 				{
 				   $message->to($parking->email)->subject(Lang::get('emails.voucher_subject'));
@@ -197,7 +197,7 @@ class BookParking extends Command implements SelfHandling {
 			{
 			   $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
 				$message->attach('tmp/'.$temp_pdf_name);
-			});
+			});*/
 
 			// Delete the generated pdf after the send
 			File::delete('tmp/'.$temp_pdf_name);
