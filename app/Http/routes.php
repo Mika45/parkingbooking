@@ -93,10 +93,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 // FORCE HTTPS
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect', 'localizationRedirect']], function()
 {
-	Route::post('payment', 'ParkingsController@payment');
+	//Route::post('payment', 'ParkingsController@payment');
 	Route::get('checkout', 'ParkingsController@checkout');
 	Route::post('checkout', 'ParkingsController@checkout');
-	Route::get('payment/online', 'PaymentsController@bank');
+	//Route::get('payment/online', 'PaymentsController@bank');
 	Route::get('payment/result/{name?}', 'PaymentsController@result');
 	
 	Route::get('settings', ['middleware' => 'auth', 'uses' => 'UsersController@index']);
@@ -130,6 +130,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::get('/{parent}/{slug}', 'LocationPagesController@showChild');
 
 });
+
+//Route::get('payment/online', 'PaymentsController@bank');
+Route::post('payment/online', 'ParkingsController@payment');
 
 //Route::get('xml', 'PagesController@getxml');
 Route::get('map', 'PagesController@showmap');

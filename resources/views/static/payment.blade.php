@@ -6,4 +6,6 @@
 	<p>
 		{!! Lang::get('site.pay_success_body') !!}
 	</p>
+
+	<?php header( "refresh:3;url=".URL::to('/') ); ?>
 @stop
