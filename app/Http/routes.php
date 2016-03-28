@@ -98,7 +98,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 	Route::post('checkout', 'ParkingsController@checkout');
 	//Route::get('payment/online', 'PaymentsController@bank');
 	Route::get('payment/result/{name?}', 'PaymentsController@result');
-	//Route::post('payment/result/{name?}', 'PaymentsController@result');
+	Route::post('payment/result/{name?}', 'PaymentsController@result');
 	
 	Route::get('settings', ['middleware' => 'auth', 'uses' => 'UsersController@index']);
 	Route::post('settings', 'UsersController@update');
