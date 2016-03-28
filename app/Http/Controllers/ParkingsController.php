@@ -18,7 +18,6 @@ use App;
 use Auth;
 use Request;
 use Storage;
-use Lang;
 use App\Http\Requests\BookRequest;
 use App\Http\Requests\AddParkingRequest;
 use Input;

@@ -30,6 +30,7 @@ use App\Location;
 use App\User;
 
 use App\Commands\IssueBankTicket;
+use App\Commands\SendVouchers;
 use Bus;
 
 
@@ -158,51 +159,15 @@ class BookParking extends Command implements SelfHandling {
 
 		// Booking Voucher section - Only proceed with the Voucher if the payment will be received at the car park
 		if( $this->input->payment == 'atcarpark' ) {
-			$bid = $booking->booking_id;
-			$temp_pdf_name = 'Booking Voucher '.$bid.'.pdf';
 
-			$booking = DB::select('CALL GetBooking('.$booking->booking_id.')');
+			//$bid = $booking->booking_id;
 
-			$cur_lang = App::getLocale();
-			$products = DB::select('CALL GetVoucherProducts('.$bid.',"'.$cur_lang.'")');
-			
-			// get the traslations of the current locale
-			$translations = get_parking_translation( $booking[0]->parking_id );
+			// Send the voucher
+			Bus::dispatch(
+				new SendVouchers($booking->booking_id)
+			);
 
-			$pdf = App::make('dompdf');
-			$pdf->loadView('emails.voucher', compact('booking', 'products', 'translations'));
-			$pdf->save('tmp/'.$temp_pdf_name);
-
-			// send the email to the booking user, to the admin and to the Park's e-mail if it exists
-			// Need to save the generated PDF to a temp directory and then include its path as the attachment
-			
-			// Get the parking model to grab the email address of the parking
-			$parking = Parking::where('parking_id', '=', $booking[0]->parking_id)->first();
-
-			/*if(!empty($parking->email)) {
-				Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking, $parking)
-				{
-				   $message->to($parking->email)->subject(Lang::get('emails.voucher_subject'));
-					$message->attach('tmp/'.$temp_pdf_name);
-				});
-			}
-
-			Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
-			{
-				$message->to($booking[0]->email)->subject(Lang::get('emails.voucher_subject'));
-				$message->attach('tmp/'.$temp_pdf_name);
-			});
-
-			Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
-			{
-			   $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
-				$message->attach('tmp/'.$temp_pdf_name);
-			});*/
-
-			// Delete the generated pdf after the send
-			File::delete('tmp/'.$temp_pdf_name);
-
-			$response = $booking[0]->booking_ref;
+			$response = $booking->booking_ref;
 		} else {
 
 			$ticket = Bus::dispatch(
