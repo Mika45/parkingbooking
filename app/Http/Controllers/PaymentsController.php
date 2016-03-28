@@ -47,8 +47,11 @@ class PaymentsController extends Controller {
 		return view('payments.bank');
 	}
 
-	public function result($name = null)
+	public function result($name = null, BankRequest $request)
 	{
+		$input = $request->all();
+		dd($input);
+
 		switch ($name) {
 			case 'success':
 				// To-Do
