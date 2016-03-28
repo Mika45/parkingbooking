@@ -51,6 +51,9 @@ class PaymentsController extends Controller {
 	{
 		switch ($name) {
 			case 'success':
+				// To-Do
+				// Send vouchers
+
 				$view = 'payments.result';
 				break;
 			case 'failure':
