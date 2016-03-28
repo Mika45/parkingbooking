@@ -95,9 +95,10 @@ class VerifyCsrfToken implements Middleware {
 
 	protected function excludedRoutes($request)
 	{
+		$segment = trim($request->segment(2), " ");
 		Log::info('$request->segment(2) = '.$request->segment(2));
 		foreach($this->excludedRouteGroups as $route) {
-	   	if ($request->segment(2) === $route) {
+	   	if ($segment === $route) {
 	         return true;
 	      }
 		}
