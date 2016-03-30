@@ -68,8 +68,13 @@ class BookParking extends Command implements SelfHandling {
 		$data = Session::all();
 
 		// Final check of Availability
+		$mode = 'L'; // set the mode for GetResults to (L)ive
+		if (Auth::check()){
+			if (Auth::user()->debug == 'Y')
+				$mode = 'T'; // only set to (T)est if the debug setting is turned on for the particular logged in User
+		}
 		$lang = Session::get('applocale');
-		$avail_parks = DB::select('CALL GetResults('.$data['location'].', "'.$data['checkindate'].'", "'.$data['checkintime'].'", "'.$data['checkoutdate'].'", "'.$data['checkouttime'].'", NULL, "'.$lang.'")');
+		$avail_parks = DB::select('CALL GetResults('.$data['location'].', "'.$data['checkindate'].'", "'.$data['checkintime'].'", "'.$data['checkoutdate'].'", "'.$data['checkouttime'].'", NULL, "'.$lang.'", "'.$mode.'")');
 
 		foreach ($avail_parks as $pid){
 			$pids[] = $pid->parking_id;

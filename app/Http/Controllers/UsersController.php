@@ -159,9 +159,14 @@ class UsersController extends Controller {
 
 			//check if we can cancel the booking or not
 
+			$mode = 'L'; // set the mode for GetResults to (L)ive
+			if (Auth::check()){
+				if (Auth::user()->debug == 'Y')
+					$mode = 'T'; // only set to (T)est if the debug setting is turned on for the particular logged in User
+			}
 			$lang = App::getLocale();
 			//$query = 'CALL GetNewAvailability('.$booking->booking_id.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'")';
-			$query = 'CALL GetResults(NULL, "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", '.$booking->booking_id.', "'.$lang.'")';
+			$query = 'CALL GetResults(NULL, "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", '.$booking->booking_id.', "'.$lang.'", "'.$mode.'")';
 			//a logging proc can go here or wrap the call to a separate API which will include the logging.
 			Log::debug('Query = '.$query);
 			$data = DB::select($query);
