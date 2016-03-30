@@ -96,8 +96,13 @@ class PagesController extends Controller {
 		$checkin = Session::get('checkin');
 		$checkout = Session::get('checkout');
 
+		$mode = 'L'; // set the mode for GetResults to (L)ive
+		if (Auth::check()){
+			if (Auth::user()->debug == 'Y')
+				$mode = 'T'; // only set to (T)est if the debug setting is turned on for the particular logged in User
+		}
 		$lang = Session::get('applocale');
-		$data = DB::select('CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", NULL, "'.$lang.'")');
+		$data = DB::select('CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", NULL, "'.$lang.'", "'.$mode.'")');
 		$locationsList = DB::table('LOCATION')->orderBy('name', 'asc')->lists('name','location_id');
 
 		$parkings_array = array();
@@ -145,8 +150,13 @@ class PagesController extends Controller {
 		$checkin = date('d/m/Y', strtotime($in_from_date)).' '.date('H:i', strtotime($in_from_time));
 		$checkout = date('d/m/Y', strtotime($in_to_date)).' '.date('H:i', strtotime($in_to_time));
 
+		$mode = 'L'; // set the mode for GetResults to (L)ive
+		if (Auth::check()){
+			if (Auth::user()->debug == 'Y')
+				$mode = 'T'; // only set to (T)est if the debug setting is turned on for the particular logged in User
+		}
 		$lang = Session::get('applocale');
-		$query = 'CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", NULL, "'.$lang.'")';
+		$query = 'CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", NULL, "'.$lang.'", "'.$mode.'")';
 		Log::info('Query = '.$query);
 
 		$data = DB::select($query);
