@@ -25,6 +25,7 @@ use URL;
 use LaravelLocalization;
 use Cookie;
 use App\Affiliate;
+use Auth;
 
 class PagesController extends Controller {
 
