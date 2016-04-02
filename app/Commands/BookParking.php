@@ -203,6 +203,9 @@ class BookParking extends Command implements SelfHandling {
 		);
 		Session::put('summary', $sum);
 
+		// temporarily store this to be used in the unlocalized payment page
+		Session::put('locale_tmp', Session::get('locale'));
+
 		return $response;
 	}
 
