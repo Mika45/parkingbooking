@@ -57,7 +57,12 @@ class BookParking extends Command implements SelfHandling {
 		Session::forget('selectedParking');
 
 		$selectedId = $selectedArray['parking_id'];
-		$selectedPrice = $selectedArray['price'];
+
+		if( $this->input->payment == 'online' ) {
+			$selectedPrice = $selectedArray['price_card'];
+		} else {
+			$selectedPrice = $selectedArray['price'];
+		}
 
 		if (array_key_exists('productsPrice', $selectedArray))
 			$selectedProductsPrice = $selectedArray['productsPrice'];

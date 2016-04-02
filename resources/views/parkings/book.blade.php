@@ -170,15 +170,15 @@
 	  <div class="panel-body">
 	  	@if (!Auth::guest())
 	  		@if (Auth::user()->email == 't.mihalis@gmail.com')
-		  		{!! Form::radio('payment', 'atcarpark', true) !!}
+		  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}
 		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
 		  		<br/>
-		  		{!! Form::radio('payment', 'online', true) !!}
+		  		{!! Form::radio('payment', 'online', true, array('id' => 'pay_online')) !!}
 		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
 		  		<br/>
 		  	@else
 		  		{{-- This is VERY stupid but simple way / remove after testing --}}
-		  		{!! Form::radio('payment', 'atcarpark', true) !!}
+		  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}
 		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
 		  		<br/>
 			  	<input type="radio" name="foo" value="N" disabled>
@@ -206,7 +206,7 @@
 	  			<table id="priceBreakdown" width="100%">
 	  				<tr>
 	  					<td>{{ Lang::get('site.book_sum_carpark') }}:</td> 
-	  					<td align="right"><span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span> <span id="parkingPrice">{{Session::get('selectedParking')['price']}}</span></td>
+	  					<td align="right"><span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span> <span id="parkingPrice">{{Session::get('selectedParking')['price_card']}}</span></td>
 	  				</tr>
 	  			</table>
 	  		</strong>
@@ -219,7 +219,7 @@
 	  			<table id="priceBreakdown" width="100%">
 	  				<tr>
 	  					<td>{{ Lang::get('site.book_sum_carpark') }}:</td> 
-	  					<td align="right"><span id="parkingPrice">{{Session::get('selectedParking')['price']}}</span> <span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span></td>
+	  					<td align="right"><span id="parkingPrice">{{Session::get('selectedParking')['price_card']}}</span> <span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span></td>
 	  				</tr>
 	  			</table>
 	  		</strong>
@@ -232,10 +232,7 @@
 
 		$(document).ready(function(){
 
-			$('[data-toggle="tooltip"]').tooltip();
-
-			$('#prod_checks input:checkbox').change(function() {
-				
+			function updatePriceBreakdown(){
 				var productsPrice = 0;
 				var totalPrice = 0;
 				var productIds = [];
@@ -256,7 +253,7 @@
 					totalPrice = productsPrice + parseFloat($("#parkingPrice").text());
 					$('#breakdown1').remove();
 					$('#breakdown2').remove();
-					
+
 					var cur = $("#currency").text();
 					if($("#currencyOrder").text() == 'Right'){
 						$('#priceBreakdown tr:last').after("<tr id='breakdown1'><td>{{ Lang::get('site.book_sum_products') }}:</td><td align='right'>" + productsPrice + ' ' + cur
@@ -270,16 +267,43 @@
 				$.get('getRequest', { totalPrice:totalPrice, productsPrice:productsPrice, productIDs:productIds }, function(data){
 					console.log(data);
 				});
+
+				return true;
+			}
+
+			if($('#pay_online').is(':checked')) {
+				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
+			} else {
+				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
+			}
+
+			$('[data-toggle="tooltip"]').tooltip();
+
+			$('#prod_checks input:checkbox').change(function() {
+
+				var priceBreakdown = updatePriceBreakdown();
 			});
 
 			/*$('#getRequest').click(function(){
 
 				var total = $('#total').val();
-				
+
 				$.get('getRequest', { totalPrice:total }, function(data){
 					console.log(data);
 				});
 			});*/
+
+			$('#pay_online, #pay_atcarpark').change(function() {
+
+				if($('#pay_online').is(':checked')) {
+					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
+				} else {
+					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
+				}
+
+				priceBreakdown = updatePriceBreakdown();
+
+			});
 
 		});
 

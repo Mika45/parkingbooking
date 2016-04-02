@@ -116,7 +116,9 @@ class ParkingsController extends Controller {
 			$selectedParking['price'] = $allowed_pids[$id];
 		}
 
-		Session::put('selectedParking', $selectedParking);
+		//parking details like name etc.
+		$parking = Parking::find($id);
+		Session::set('parkingName', $parking->parking_name);
 
 		// Delete allowed parkings session array as we have already selected an $id
 		// and set it again with the only allowed parking which was selected
@@ -124,17 +126,23 @@ class ParkingsController extends Controller {
 		$singleAllowedParking[$selectedParking['parking_id']] = $selectedParking['price'];
 		Session::set('allowedParkings', $singleAllowedParking);
 
-		//parking details like name etc.
-		$parking = Parking::find($id);
-		Session::set('parkingName', $parking->parking_name);
+		//Mike
+		if (is_numeric($parking->online_discount)) {
+			$discount = $parking->online_discount;
+		}
+		else {
+			$discount = 0;
+		}
+		$selectedParking['price_card'] = $selectedParking['price'] * (100 - $discount)/100;
+		Session::put('selectedParking', $selectedParking);
 
 		$fields = DB::select('CALL GetParkingFields( '.$id.' )');
-		
+
 		$user = Auth::user();
 
 		// get the traslations of the current locale
 		$translations = get_parking_translation( $id );
-		
+
 		$title_attributes = NULL;
 		foreach ($translations as $key2 => $value2) {
 			if ($key2 == 'title'){
