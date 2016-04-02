@@ -228,6 +228,9 @@ class ParkingsController extends Controller {
 
 			$summary = Session::get('summary');
 
+			// explicitly set the locale as we are about to enter an unlocalized route
+			app()->setLocale(Session::get('locale'));
+
 			return response()->view($page, compact('booking_ref', 'config', 'summary'))->withCookie(Cookie::forget('noaf'));
 		} else {
 			$page = 'static.payment';
