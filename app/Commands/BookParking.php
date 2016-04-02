@@ -185,7 +185,7 @@ class BookParking extends Command implements SelfHandling {
 		$checkin = Session::get('checkin');
 		$checkout = Session::get('checkout');
 
-		//dd('pname='.$pname.'/'.'checkin='.$checkin.'/'.'checkout='.$checkout);
+		$locale_tmp = Session::get('locale_tmp');
 
 		// remove all sessions and keep Online ticket if it exists
 		Session::flush();
@@ -203,8 +203,8 @@ class BookParking extends Command implements SelfHandling {
 		);
 		Session::put('summary', $sum);
 
-		// temporarily store this to be used in the unlocalized payment page
-		Session::put('locale_tmp', Session::get('locale'));
+		// recreate this session as previously flushed
+		Session::put('locale_tmp', $locale_tmp);
 
 		return $response;
 	}

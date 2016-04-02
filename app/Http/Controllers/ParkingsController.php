@@ -169,6 +169,9 @@ class ParkingsController extends Controller {
 		// reset the session in case of any selected products that have left in the session
 		Session::forget('selectedProducts');
 
+		// temporarily store this to be used in the unlocalized payment page
+		Session::put('locale_tmp', App::getLocale());
+
 		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products'));
 	}
 
