@@ -51,7 +51,7 @@
 
 @section('content')
 
-	<h1>{{ Lang::get('site.checkout_heading') }} ({{ App::getLocale() }})</h1>
+	<h1>{{ Lang::get('site.checkout_heading') }}</h1>
 
 	<form action='https://paycenter.piraeusbank.gr/redirection/pay.aspx' method='post' name='frm' target="pay">
 		<input name="AcquirerId" type="hidden" value="{{$config['ONLINE_ACQUIRER_ID']}}" /> 
@@ -65,7 +65,7 @@
 
 	<iframe name="pay" src="" width="800" height="455" frameBorder="0"></iframe>
 
-	{{--<script language="JavaScript">
+	<script language="JavaScript">
 		document.frm.submit();
-	</script>--}}
+	</script>
 @stop
