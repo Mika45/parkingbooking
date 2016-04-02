@@ -126,6 +126,7 @@ class ParkingsController extends Controller {
 
 		//parking details like name etc.
 		$parking = Parking::find($id);
+		Session::set('parkingName', $parking->parking_name);
 
 		$fields = DB::select('CALL GetParkingFields( '.$id.' )');
 		
@@ -225,7 +226,9 @@ class ParkingsController extends Controller {
 				$config[$conf->name] = $conf->value;
 			}
 
-			return response()->view($page, compact('booking_ref', 'config'))->withCookie(Cookie::forget('noaf'));
+			$summary = Session::get('summary');
+
+			return response()->view($page, compact('booking_ref', 'config', 'summary'))->withCookie(Cookie::forget('noaf'));
 		} else {
 			$page = 'static.payment';
 			return response()->view($page)->withCookie(Cookie::forget('noaf'));

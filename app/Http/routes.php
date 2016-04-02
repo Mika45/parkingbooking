@@ -69,7 +69,7 @@ Route::group(['middleware' => 'secure'], function()
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 //Route::get('sitemap', 'PagesController@sitemap');
 // FORCE HTTP - NOT SECURE - NON CRITICAL ROUTES ONLY
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect', 'localizationRedirect']], function() //can use unsecure also
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect'/*, 'localizationRedirect'*/]], function() //can use unsecure also
 {
 	Route::get('/', 'PagesController@index');
 	Route::get('results', 'PagesController@getsearch');
@@ -91,12 +91,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 });
 
 // FORCE HTTPS
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect', 'localizationRedirect']], function()
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['secure', 'localeSessionRedirect'/*, 'localizationRedirect'*/]], function()
 {
 	//Route::post('payment', 'ParkingsController@payment');
 	Route::get('checkout', 'ParkingsController@checkout');
 	Route::post('checkout', 'ParkingsController@checkout');
-	//Route::get('payment/online', 'PaymentsController@bank');
+	Route::post('payment/online', 'ParkingsController@payment');
 	Route::get('payment/result/{name?}', 'PaymentsController@result');
 	Route::post('payment/result/{name?}', 'PaymentsController@result');
 	
@@ -133,7 +133,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['se
 });
 
 //Route::get('payment/online', 'PaymentsController@bank');
-Route::post('payment/online', 'ParkingsController@payment');
+//Route::post('payment/online', 'ParkingsController@payment');
 
 //Route::get('xml', 'PagesController@getxml');
 Route::get('map', 'PagesController@showmap');
