@@ -58,7 +58,7 @@
 		<input name="MerchantId" type="hidden" value="{{$config['ONLINE_MERCHANT_ID']}}" /> 
 		<input name="PosId" type="hidden" value="{{$config['ONLINE_POS_ID']}}" /> 
 		<input name="User" type="hidden" value="{{$config['ONLINE_USERNAME']}}" /> 
-		<input name="LanguageCode" type="hidden" value="el-GR" /> 
+		<input name="LanguageCode" type="hidden" value="{{$iframe_lang}}" /> 
 		<input name="MerchantReference" type="hidden" value="{{$booking_ref}}" /> 
 		<input name="ParamBackLink" type="hidden" value="p1=v1&p2=v2" /> 
 	</form>

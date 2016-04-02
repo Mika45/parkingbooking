@@ -232,9 +232,14 @@ class ParkingsController extends Controller {
 			$summary = Session::get('summary');
 
 			// explicitly set the locale as we are about to enter an unlocalized route
-			app()->setLocale(Session::get('locale_tmp'));
+			$locale_tmp = Session::get('locale_tmp');
+			app()->setLocale($locale_tmp);
+			if ($locale_tmp == 'el')
+				$iframe_lang = 'el-GR';
+			else
+				$iframe_lang = 'en-US';
 
-			return response()->view($page, compact('booking_ref', 'config', 'summary'))->withCookie(Cookie::forget('noaf'));
+			return response()->view($page, compact('booking_ref', 'config', 'summary', 'iframe_lang'))->withCookie(Cookie::forget('noaf'));
 		} else {
 			$page = 'static.payment';
 			return response()->view($page)->withCookie(Cookie::forget('noaf'));
