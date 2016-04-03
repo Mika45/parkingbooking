@@ -44,7 +44,7 @@ class CompleteBooking extends Command implements SelfHandling {
 		$transaction->save();
 
 		// update booking
-		$booking = Booking::where('booking_ref', $this->input->SupportReferenceID)->firstOrFail();
+		$booking = Booking::where('booking_ref', $this->input->MerchantReference)->firstOrFail();
 
 		if (strtolower($this->input->StatusFlag) == 'success'){
 			$booking->status = null;
