@@ -26,7 +26,17 @@
 			              		</li>
 			            	</ul>
 
-			            	<p>ParkingLegend.com &copy; All rights reserved.
+			            	<p>ParkingLegend.com &copy; {{Lang::get('site.copyright')}}.</p>
+			            	@if(isset($card_icons))
+			            		@if($card_icons == 'Y')
+			            			<br/>
+			            			<img src="/img/bank/Visa.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/Mastercard.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/Maestro.jpg" />&nbsp;&nbsp;
+			            			<a href="{{Lang::get('site.secure_link')}}" target="_blank"><img src="/img/bank/vbv.jpg" /></a>&nbsp;&nbsp;
+			            			<a href="{{Lang::get('site.secure_link')}}" target="_blank"><img src="/img/bank/sc_62x34.gif" /></a>
+			            		@endif
+			            	@endif
 
 			          	</div>
 			        </div>

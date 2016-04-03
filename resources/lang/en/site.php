@@ -32,7 +32,9 @@ return [
 	'nav_settings'  => 'Account settings',
 	'nav_bookings'  => 'Manage my Bookings',
 	'nav_logout'  	=> 'Logout',
-	
+	'copyright'  	=> 'All rights reserved',
+	'secure_link'	=> 'https://paycenter.piraeusbank.gr/redirection/Content/HTML/3DSecure_en.html',
+
 	'form_save'  	=> 'Save',
 
 	'common_na'		=> 'Not available',

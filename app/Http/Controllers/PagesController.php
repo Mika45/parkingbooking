@@ -46,7 +46,9 @@ class PagesController extends Controller {
 
 		$locationsList = get_locations_for_search(); // in helpers.php
 
-		return view('home', compact('locationsList'));
+		$card_icons = 'Y'; // show cards in the footer
+
+		return view('home', compact('locationsList', 'card_icons'));
 	}
 
 	public function indextest()

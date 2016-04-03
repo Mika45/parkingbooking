@@ -29,7 +29,7 @@
 		    	<h3 class="panel-title">{{ Lang::get('site.book_products_heading') }}</h3>
 		  	</div>
 		  	<div class="panel-body">
-		  		
+
 		  		<div class="checkbox" id="prod_checks">
 		  		@foreach ($products as $product)
 		        	<label>
@@ -52,6 +52,14 @@
 @section('content')
 
 	<h1>{{ Lang::get('site.checkout_heading') }}</h1>
+
+	<div class="well">
+		<img src="/img/bank/Visa.jpg" />&nbsp;&nbsp;
+		<img src="/img/bank/Mastercard.jpg" />&nbsp;&nbsp;
+		<img src="/img/bank/Maestro.jpg" />&nbsp;&nbsp;
+		<img src="/img/bank/vbv.jpg" />&nbsp;&nbsp;
+		<img src="/img/bank/sc_62x34.gif" />&nbsp;&nbsp;
+	</div>
 
 	<form action='https://paycenter.piraeusbank.gr/redirection/pay.aspx' method='post' name='frm' target="pay">
 		<input name="AcquirerId" type="hidden" value="{{$config['ONLINE_ACQUIRER_ID']}}" /> 

@@ -32,7 +32,9 @@ return [
 	'nav_settings'  => 'Ρυθμίσεις Λογαριασμού',
 	'nav_bookings'  => 'Διαχείριση των Κρατήσεων μου',
 	'nav_logout'  	=> 'Αποσύνδεση',
-	
+	'copyright'  	=> 'Με την επιφύλαξη παντός δικαιώματος',
+	'secure_link'	=> 'https://paycenter.piraeusbank.gr/redirection/Content/HTML/3DSecure_el.html',
+
 	'form_save'  	=> 'Αποθήκευση',
 
 	'common_na'		=> 'Μη διαθέσιμο',
