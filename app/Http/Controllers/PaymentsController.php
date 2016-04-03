@@ -56,9 +56,11 @@ class PaymentsController extends Controller {
 	public function result($name = null, BankRequest $request)
 	{
 		// dispatch command to save the Transaction and update the Booking status
-		$this->dispatch(
+		$transaction = $this->dispatch(
 			new CompleteBooking($request)
 		);
+
+		$lang_msg = null;
 
 		switch ($name) {
 			case 'success':
@@ -69,6 +71,12 @@ class PaymentsController extends Controller {
 				);
 				break;
 			case 'failure':
+
+				if ($transaction->result_code == '981')
+					$lang_msg = 'site.pay_invalid_card';
+				else
+					$lang_msg = 'site.pay_failure_body';
+
 				break;
 			case 'cancel':
 				break;
@@ -77,7 +85,7 @@ class PaymentsController extends Controller {
 				break;
 		}
 
-		return view('payments.result', compact('name'));
+		return view('payments.result', compact('name', 'lang_msg'));
 	}
 
 	/**

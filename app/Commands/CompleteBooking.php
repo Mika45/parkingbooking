@@ -54,7 +54,7 @@ class CompleteBooking extends Command implements SelfHandling {
 
 		$booking->save();
 
-		return true;
+		return $transaction;
 	}
 
 }

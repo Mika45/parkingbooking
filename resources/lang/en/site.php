@@ -102,6 +102,13 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
+	| Online Payment Failure messages
+	|--------------------------------------------------------------------------
+	*/
+	'pay_invalid_card'	=> 'The transaction could not be completed. Please try again making sure the card details you have provided are correct or using another card.',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Checkout
 	|--------------------------------------------------------------------------
 	*/
