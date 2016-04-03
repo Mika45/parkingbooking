@@ -10,6 +10,9 @@ use Request;
 use SoapClient;
 use Session;
 use App\Commands\CompleteBooking;
+use App\Commands\SendVouchers;
+
+use App\Booking;
 
 class PaymentsController extends Controller {
 
@@ -22,7 +25,7 @@ class PaymentsController extends Controller {
     }
 
 	public function bank()
-	{	
+	{
 		$client = new SoapClient("https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx?WSDL");
 
 		$parameters = null;
@@ -59,8 +62,11 @@ class PaymentsController extends Controller {
 
 		switch ($name) {
 			case 'success':
-				// To-Do
+				$booking = Booking::where('booking_ref', $this->input->MerchantReference)->firstOrFail();
 				// Send vouchers
+				$this->dispatch(
+					new SendVouchers($booking->booking_id)
+				);
 
 				$view = 'payments.result';
 				break;

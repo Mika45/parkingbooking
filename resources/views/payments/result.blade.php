@@ -25,4 +25,6 @@
 
 	@endif
 
+	<?php header( "refresh:3;url=".URL::to('/') ); ?>
+
 @stop
