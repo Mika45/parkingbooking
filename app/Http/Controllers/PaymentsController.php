@@ -67,20 +67,16 @@ class PaymentsController extends Controller {
 				$this->dispatch(
 					new SendVouchers($booking->booking_id)
 				);
-
-				$view = 'payments.result';
 				break;
 			case 'failure':
-				$view = 'payments.failure';
 				break;
 			case 'cancel':
-				$view = 'payments.cancel';
 				break;
 			default:
 				abort(404);
 				break;
 		}
-		
+
 		return view('payments.result', compact('name'));
 	}
 

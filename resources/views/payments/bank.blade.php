@@ -60,7 +60,6 @@
 		<input name="User" type="hidden" value="{{$config['ONLINE_USERNAME']}}" /> 
 		<input name="LanguageCode" type="hidden" value="{{$iframe_lang}}" /> 
 		<input name="MerchantReference" type="hidden" value="{{$booking_ref}}" /> 
-		<input name="ParamBackLink" type="hidden" value="p1=v1&p2=v2" /> 
 	</form>
 
 	<iframe name="pay" src="" width="800" height="455" frameBorder="0"></iframe>
