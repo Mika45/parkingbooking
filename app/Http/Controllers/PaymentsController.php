@@ -9,6 +9,7 @@ use Request;
 
 use SoapClient;
 use Session;
+use App\Commands\CompleteBooking;
 
 class PaymentsController extends Controller {
 
@@ -51,8 +52,10 @@ class PaymentsController extends Controller {
 
 	public function result($name = null, BankRequest $request)
 	{
-		$input = $request->all();
-		dd($input);
+		// dispatch command to save the Transaction and update the Booking status
+		$this->dispatch(
+			new CompleteBooking($request)
+		);
 
 		switch ($name) {
 			case 'success':
