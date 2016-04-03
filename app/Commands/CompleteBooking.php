@@ -37,7 +37,7 @@ class CompleteBooking extends Command implements SelfHandling {
 		$transaction->result_description = $this->input->ResultDescription;
 		$transaction->status_flag = $this->input->StatusFlag;
 		$transaction->response_code = $this->input->ResponseCode;
-		$transaction->response_descr = $this->input->ResponseDescription;
+		$transaction->response_description = $this->input->ResponseDescription;
 		$transaction->bank_transact_id = $this->input->TransactionId;
 		$transaction->card_type = $this->input->CardType;
 
