@@ -169,7 +169,7 @@
 	  </div>
 	  <div class="panel-body">
 	  	@if (!Auth::guest())
-	  		@if (Auth::user()->email == 't.mihalis@gmail.com' or Auth::user()->email == 'jimkavouris4@gmail.com ')
+	  		@if (Auth::user()->email == 't.mihalis@gmail.com' or Auth::user()->email == 'jimkavouris4@gmail.com')
 		  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}
 		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
 		  		<br/>
