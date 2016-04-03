@@ -76,11 +76,13 @@ class SendVouchers extends Command implements SelfHandling {
 				$recipients[] = $usr->email;
 			}
 
-			Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking, $recipients)
-			{
-			   	$message->to($recipients)->subject(Lang::get('emails.voucher_subject'));
-				$message->attach('tmp/'.$temp_pdf_name);
-			});
+			if (isset($recipients)){
+				Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking, $recipients)
+				{
+				   	$message->to($recipients)->subject(Lang::get('emails.voucher_subject'));
+					$message->attach('tmp/'.$temp_pdf_name);
+				});
+			}
 		}
 
 		// Delete the generated pdf after the send

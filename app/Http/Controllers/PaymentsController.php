@@ -62,7 +62,7 @@ class PaymentsController extends Controller {
 
 		switch ($name) {
 			case 'success':
-				$booking = Booking::where('booking_ref', $this->input->MerchantReference)->firstOrFail();
+				$booking = Booking::where('booking_ref', $request->input('MerchantReference'))->firstOrFail();
 				// Send vouchers
 				$this->dispatch(
 					new SendVouchers($booking->booking_id)
