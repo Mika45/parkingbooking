@@ -15,7 +15,7 @@
 
 		<h1>{{Lang::get('site.pay_failure_head')}}</h1>
 		<p>
-			{!! Lang::get('site.pay_failure_body') !!}
+			{!! Lang::get($lang_msg) !!}
 		</p>
 
 	@elseif ($name == 'cancel')

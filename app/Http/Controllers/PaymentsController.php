@@ -72,7 +72,6 @@ class PaymentsController extends Controller {
 				);
 				break;
 			case 'failure':
-				Log::info('Transactio result_code = '.$transaction->result_code);
 				if ($transaction->result_code == '981')
 					$lang_msg = 'site.pay_invalid_card';
 				else
