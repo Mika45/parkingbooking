@@ -63,26 +63,30 @@ class PaymentsController extends Controller {
 
 		$lang_msg = null;
 
-		switch ($name) {
-			case 'success':
+		if ($name == 'success'){
+
+			if (($transaction->result_code == '0' and $transaction->response_code == '00') 
+				or ($transaction->result_code == '0' and $transaction->response_code == '11')) 
+			{
 				$booking = Booking::where('booking_ref', $request->input('MerchantReference'))->firstOrFail();
 				// Send vouchers
 				$this->dispatch(
 					new SendVouchers($booking->booking_id)
 				);
-				break;
-			case 'failure':
-				if ($transaction->result_code == '981')
-					$lang_msg = 'site.pay_invalid_card';
-				else
-					$lang_msg = 'site.pay_failure_body';
+			}
 
-				break;
-			case 'cancel':
-				break;
-			default:
-				abort(404);
-				break;
+		} elseif ($name == 'failure') {
+
+			if ($transaction->result_code == '981') {
+				$lang_msg = 'site.pay_invalid_card';
+			} elseif ($transaction->result_code == '0' and $transaction->response_code == '12') {
+				$lang_msg = 'site.pay_invalid_declined';
+			} else {
+				$lang_msg = 'site.pay_failure_body';
+			}
+
+		} elseif ($name == 'cancel') {
+			# code...
 		}
 
 		return view('payments.result', compact('name', 'lang_msg'));
