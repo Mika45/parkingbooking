@@ -68,6 +68,7 @@ class PaymentsController extends Controller {
 			if (($transaction->result_code == '0' and $transaction->response_code == '00') 
 				or ($transaction->result_code == '0' and $transaction->response_code == '11')) 
 			{
+				// TRANSACTION SUCCESFUL or RECHARGE ATTEMPT
 				$booking = Booking::where('booking_ref', $request->input('MerchantReference'))->firstOrFail();
 				// Send vouchers
 				$this->dispatch(
@@ -78,10 +79,16 @@ class PaymentsController extends Controller {
 		} elseif ($name == 'failure') {
 
 			if ($transaction->result_code == '981') {
+				// INVALID CARD NUMBER
 				$lang_msg = 'site.pay_invalid_card';
 			} elseif ($transaction->result_code == '0' and $transaction->response_code == '12') {
-				$lang_msg = 'site.pay_invalid_declined';
+				// DECLINED TRANSACTION
+				$lang_msg = 'site.pay_declined';
+			} elseif ($transaction->result_code == '500' or $transaction->result_code == '1045' or $transaction->result_code == '1072') {
+				// COMMUNICATION ERROR or UNDER-PROCESS TRANSACTION WAS RE-SENT or BATCH IS CLOSING
+				$lang_msg = 'site.pay_com_error';
 			} else {
+				// GENERAL ERROR
 				$lang_msg = 'site.pay_failure_body';
 			}
 

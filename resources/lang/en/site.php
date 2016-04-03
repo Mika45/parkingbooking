@@ -96,7 +96,7 @@ return [
 	'pay_success_head'	=> 'Thank you!',
 	'pay_success_body'	=> 'Your booking has been completed!<br/>An E-mail with your booking details and your voucher has been sent to you. Please check your inbox.',
 	'pay_failure_head'	=> 'We are sorry!',
-	'pay_failure_body'	=> 'Your booking could not be completed!<br/>The card details you provided could not be processed.',
+	'pay_failure_body'	=> 'Your booking could not be completed!<br/>Please try again later.',
 	'pay_cancel_head'	=> 'We are sorry for that!',
 	'pay_cancel_body'	=> 'You have chosen to cancel the completion of your booking. Why not try different dates?',
 
@@ -107,6 +107,7 @@ return [
 	*/
 	'pay_invalid_card'	=> 'The transaction could not be completed. Please try again making sure the card details you have provided are correct or using a different card.',
 	'pay_declined'		=> 'The transaction was declined by the Issuer.',
+	'pay_com_error'		=> 'The transaction could not be completed. Please try again later.',
 
 	/*
 	|--------------------------------------------------------------------------
