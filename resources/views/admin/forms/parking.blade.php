@@ -94,9 +94,13 @@
 			{!! Form::select('currency_order', ['L' => 'Left',
 			   									'R' => 'Right'], $configArray['CURRENCY_ORDER'], ['class' => 'form-control']) !!}
  		</div>
- 		<div class="col-lg-4">
+ 		<div class="col-lg-2">
  			{!! Form::label('images', 'Images:') !!}
 			{!! Form::file('images[]', array('multiple'=>true)) !!}
+ 		</div>
+ 		<div class="col-lg-2">
+			{!! Form::label('online_discount', 'Card payment discount (%):') !!}
+			{!! Form::text('online_discount', null, ['class' => 'form-control']) !!}
  		</div>
  	</div>
  	&nbsp;
