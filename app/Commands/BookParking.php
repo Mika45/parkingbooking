@@ -193,7 +193,7 @@ class BookParking extends Command implements SelfHandling {
 		$locale_tmp = Session::get('locale_tmp');
 
 		// remove all sessions and keep Online ticket if it exists
-		Session::flush();
+		//Session::flush();
 
 		if (isset($ticket)) {
 			Session::put('TranTicket', $ticket);
