@@ -28,7 +28,8 @@ class Parking extends Model {
 						   'phone2',
 						   'mobile',
 						   '24hour',
-						   'online_discount'];
+						   'online_discount',
+						   'payment_methods'];
 
 
     public function tags()

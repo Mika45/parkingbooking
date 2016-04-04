@@ -170,12 +170,16 @@
 	  <div class="panel-body">
 	  	@if (!Auth::guest())
 	  		@if (Auth::user()->email == 't.mihalis@gmail.com' or Auth::user()->email == 'jimkavouris4@gmail.com')
-		  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}
-		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
-		  		<br/>
-		  		{!! Form::radio('payment', 'online', true, array('id' => 'pay_online')) !!}
-		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
-		  		<br/>
+		  		@if (in_array('P',$payment_methods))
+			  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}
+			  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
+		  			<br/>
+		  		@endif
+		  		@if (in_array('O',$payment_methods))
+			  		{!! Form::radio('payment', 'online', true, array('id' => 'pay_online')) !!}
+			  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
+			  		<br/>
+			  	@endif
 		  	@else
 		  		{{-- This is VERY stupid but simple way / remove after testing --}}
 		  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}

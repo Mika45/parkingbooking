@@ -174,13 +174,15 @@ class ParkingsController extends Controller {
 			}
 		}
 
+		$payment_methods = explode(',', $parking->payment_methods);
+
 		// reset the session in case of any selected products that have left in the session
 		Session::forget('selectedProducts');
 
 		// temporarily store this to be used in the unlocalized payment page
 		Session::put('locale_tmp', App::getLocale());
 
-		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products'));
+		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products', 'payment_methods'));
 	}
 
 	// using Ajax
@@ -292,6 +294,8 @@ class ParkingsController extends Controller {
 
 		$p_fields_selected[] = null;
 
+		$p_options_selected[] = null;
+
 		$tags = Tag::lists('name', 'tag_id');
 		//dd($tags);
 
@@ -312,7 +316,7 @@ class ParkingsController extends Controller {
 			$configArray['FREE_MINUTES'] = null;
 
 		$page_title = 'Add a new Parking';
-		return view('admin.parkings.create', compact('page_title', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
+		return view('admin.parkings.create', compact('page_title', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'p_options_selected', 'tags', 'tags_selected',
 												'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
 
@@ -324,6 +328,8 @@ class ParkingsController extends Controller {
 	public function store(AddParkingRequest $request)
 	{
 		$input = $request->all();
+
+		$input['payment_methods'] = implode(',', $request->input('payment_options'));
 
 		$parking = Parking::create($input);
 
@@ -396,6 +402,7 @@ class ParkingsController extends Controller {
 
 		$p_locations_selected[] = NULL;
 		$p_locations = NULL;
+		$p_options_selected = NULL;
 
 		foreach ($parking_locations as $p_loc)
 			$p_locations_selected[] = $p_loc->location_id;
@@ -403,6 +410,7 @@ class ParkingsController extends Controller {
 		foreach ($locations as $loc)
 			$p_locations[$loc->location_id] = $loc->name;
 
+		$p_options_selected = explode(',', $parking->payment_methods);
 
 		$fields = Field::orderBy('field_id')->get();
 		$parking_fields = ParkingField::where('parking_id', '=', $parking->parking_id)->get();
@@ -431,7 +439,7 @@ class ParkingsController extends Controller {
 			$configArray['FREE_MINUTES'] = null;
 
 		$page_title = 'Edit Parking';
-		return view('admin.parkings.edit', compact('page_title', 'parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
+		return view('admin.parkings.edit', compact('page_title', 'parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'p_options_selected', 'tags', 'tags_selected',
 											'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
 	
@@ -504,6 +512,11 @@ class ParkingsController extends Controller {
 		}
 
 		$parking = Parking::findOrFail($id);
+
+		if (!empty($request->input('payment_options')))
+			$input['payment_methods'] = implode(',', $request->input('payment_options'));
+		else
+			$input['payment_methods'] = null;
 
 		$parking->update($input);
 

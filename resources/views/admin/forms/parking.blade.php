@@ -157,6 +157,22 @@
 	</div>
 	&nbsp;
  	<div class="form-group">
+		<div class="col-lg-4">
+			<br/>
+			{!! Form::label('payment_options', 'Payment options:') !!}
+			{!! Form::select('payment_options[]', ['O' => 'Online', 'P' => 'At car park'], $p_options_selected, ['multiple', 'class' => 'form-control']) !!}
+		</div>
+		<div class="col-lg-4">
+			<br/>
+			
+		</div>
+		<div class="col-lg-4">
+			<br/>
+			
+		</div>
+	</div>
+	&nbsp;
+ 	<div class="form-group">
  		<div class="col-lg-12">
  			<br/>
  			{!! Form::label('pricelist', 'Pricelist:') !!}
