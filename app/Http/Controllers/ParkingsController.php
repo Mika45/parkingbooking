@@ -27,6 +27,7 @@ use Image;
 use Imagine;
 use App\Product;
 use Cookie;
+use File;
 
 use Ivory\GoogleMap\Helper\MapHelper;
 use Illuminate\Support\Facades\Redirect;
