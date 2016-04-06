@@ -199,7 +199,7 @@
 	  	@endif
 
 	  	<br/>
-	  	{!! Form::submit(Lang::get('site.book_form_btn'), ['class' => 'btn btn-primary form-control']) !!}
+	  	{!! Form::submit(Lang::get('site.book_form_btn'), ['class' => 'btn btn-primary form-control', 'id' => 'submitButton']) !!}
 	  	{!! Form::close() !!}
 	  </div>
 	  {{-- <div class="panel-footer"><strong>{{ Lang::get('site.book_sum_total') }} {{Session::get('selectedParking')['price']}}</strong></div> --}}
@@ -277,6 +277,7 @@
 
 			if($('#pay_online').is(':checked')) {
 				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
+				document.getElementById("submitButton").value = "{{Lang::get('site.book_continue_btn')}}";
 			} else {
 				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
 			}
@@ -301,8 +302,10 @@
 
 				if($('#pay_online').is(':checked')) {
 					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
+					document.getElementById("submitButton").value = "{{Lang::get('site.book_continue_btn')}}";
 				} else {
 					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
+					document.getElementById("submitButton").value = "{{Lang::get('site.book_form_btn')}}";
 				}
 
 				priceBreakdown = updatePriceBreakdown();

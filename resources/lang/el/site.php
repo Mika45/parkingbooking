@@ -85,6 +85,7 @@ return [
 	/*'book_form_btn'		=> 'Συνέχεια στην Πληρωμή',*/
 	'book_form_country_list' => 'Παρακαλώ επιλέξτε',
 	'book_form_btn'		=> 'Ολοκλήρωση Κράτησης',
+	'book_continue_btn'		=> 'Συνέχεια',
 	'book_sum_heading'	=> 'ΣΤΟΙΧΕΙΑ ΚΡΑΤΗΣΗΣ',
 	'book_products_heading' => 'ΠΡΟΣΘΕΤΕΣ ΥΠΗΡΕΣΙΕΣ',
 	'book_sum_carpark'	=> 'Πάρκινγκ',
