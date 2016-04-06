@@ -168,34 +168,15 @@
 	    <h3 class="panel-title">{{ Lang::get('site.pay_sum_heading') }}</h3>
 	  </div>
 	  <div class="panel-body">
-	  	@if (!Auth::guest())
-	  		@if (Auth::user()->email == 't.mihalis@gmail.com' or Auth::user()->email == 'jimkavouris4@gmail.com' or Auth::user()->email == 'test@account.com')
-		  		@if (in_array('P',$payment_methods))
-			  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}
-			  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
-		  			<br/>
-		  		@endif
-		  		@if (in_array('O',$payment_methods))
-			  		{!! Form::radio('payment', 'online', true, array('id' => 'pay_online')) !!}
-			  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
-			  		<br/>
-			  	@endif
-		  	@else
-		  		{{-- This is VERY stupid but simple way / remove after testing --}}
-		  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}
-		  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
-		  		<br/>
-			  	<input type="radio" name="foo" value="N" disabled>
-			  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
-			  	<p><small>{{Lang::get('site.pay_sum_opt_note')}}</small></p>
-		  	@endif
-	  	@else
-	  		{!! Form::radio('payment', 'atcarpark', true) !!}
+	  	@if (in_array('P',$payment_methods))
+	  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}
 	  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
+  			<br/>
+  		@endif
+  		@if (in_array('O',$payment_methods))
+	  		{!! Form::radio('payment', 'online', true, array('id' => 'pay_online')) !!}
+	  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
 	  		<br/>
-		  	<input type="radio" name="foo" value="N" disabled>
-		  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
-		  	<p><small>{{Lang::get('site.pay_sum_opt_note')}}</small></p>
 	  	@endif
 
 	  	<br/>
@@ -277,7 +258,7 @@
 
 			if($('#pay_online').is(':checked')) {
 				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
-				document.getElementById("submitButton").value = "{{Lang::get('site.book_continue_btn')}}";
+				//document.getElementById("submitButton").value = "{{Lang::get('site.book_continue_btn')}}";
 			} else {
 				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
 			}
@@ -302,10 +283,10 @@
 
 				if($('#pay_online').is(':checked')) {
 					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
-					document.getElementById("submitButton").value = "{{Lang::get('site.book_continue_btn')}}";
+					//document.getElementById("submitButton").value = "{{Lang::get('site.book_continue_btn')}}";
 				} else {
 					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
-					document.getElementById("submitButton").value = "{{Lang::get('site.book_form_btn')}}";
+					//document.getElementById("submitButton").value = "{{Lang::get('site.book_form_btn')}}";
 				}
 
 				priceBreakdown = updatePriceBreakdown();

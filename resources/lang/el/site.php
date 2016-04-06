@@ -84,7 +84,7 @@ return [
 	'book_form_heading'	=> 'Τα Στοιχεία σας',
 	/*'book_form_btn'		=> 'Συνέχεια στην Πληρωμή',*/
 	'book_form_country_list' => 'Παρακαλώ επιλέξτε',
-	'book_form_btn'		=> 'Ολοκλήρωση Κράτησης',
+	'book_form_btn'		=> 'Συνέχεια',
 	'book_continue_btn'		=> 'Συνέχεια',
 	'book_sum_heading'	=> 'ΣΤΟΙΧΕΙΑ ΚΡΑΤΗΣΗΣ',
 	'book_products_heading' => 'ΠΡΟΣΘΕΤΕΣ ΥΠΗΡΕΣΙΕΣ',
