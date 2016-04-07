@@ -96,6 +96,9 @@ class PaymentsController extends Controller {
 			# code...
 		}
 
+		$locale_tmp = Session::get('locale_tmp');
+		app()->setLocale($locale_tmp);
+
 		return view('payments.result', compact('name', 'lang_msg'));
 	}
 
