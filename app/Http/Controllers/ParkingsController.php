@@ -137,6 +137,8 @@ class ParkingsController extends Controller {
 		$selectedParking['price_card'] = $selectedParking['price'] * (100 - $discount)/100;
 		Session::put('selectedParking', $selectedParking);
 
+		$discount_text = -1 * $discount;
+
 		$fields = DB::select('CALL GetParkingFields( '.$id.' )');
 
 		$user = Auth::user();
@@ -183,7 +185,7 @@ class ParkingsController extends Controller {
 		// temporarily store this to be used in the unlocalized payment page
 		Session::put('locale_tmp', App::getLocale());
 
-		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products', 'payment_methods'));
+		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products', 'payment_methods', 'discount_text'));
 	}
 
 	// using Ajax

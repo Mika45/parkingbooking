@@ -51,7 +51,6 @@
 
 	<h1>{{ Lang::get('site.book_form_heading') }}</h1>
 	<p>
-
 		<div class="well bs-component">
 			<br/>
 			
@@ -175,7 +174,7 @@
   		@endif
   		@if (in_array('O',$payment_methods))
 	  		{!! Form::radio('payment', 'online', true, array('id' => 'pay_online')) !!}
-	  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
+	  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!} @if ($discount_text < 0) ({{ $discount_text }}%) @endif
 	  		<br/>
 	  	@endif
 
@@ -250,7 +249,7 @@
 				}
 
 				$.get('getRequest', { totalPrice:totalPrice, productsPrice:productsPrice, productIDs:productIds }, function(data){
-					console.log(data);
+					//console.log(data);
 				});
 
 				return true;
@@ -258,7 +257,7 @@
 
 			if($('#pay_online').is(':checked')) {
 				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
-				//document.getElementById("submitButton").value = "{{Lang::get('site.book_continue_btn')}}";
+				document.getElementById("submitButton").value = Lang.get('site.book_continue_btn');
 			} else {
 				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
 			}
@@ -270,23 +269,14 @@
 				var priceBreakdown = updatePriceBreakdown();
 			});
 
-			/*$('#getRequest').click(function(){
-
-				var total = $('#total').val();
-
-				$.get('getRequest', { totalPrice:total }, function(data){
-					console.log(data);
-				});
-			});*/
-
 			$('#pay_online, #pay_atcarpark').change(function() {
 
 				if($('#pay_online').is(':checked')) {
 					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
-					//document.getElementById("submitButton").value = "{{Lang::get('site.book_continue_btn')}}";
+					document.getElementById("submitButton").value = Lang.get('site.book_continue_btn');
 				} else {
 					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
-					//document.getElementById("submitButton").value = "{{Lang::get('site.book_form_btn')}}";
+					document.getElementById("submitButton").value = Lang.get('site.book_form_btn');
 				}
 
 				priceBreakdown = updatePriceBreakdown();

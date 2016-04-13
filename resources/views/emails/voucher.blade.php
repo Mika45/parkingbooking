@@ -22,6 +22,7 @@
 			<p>{{Lang::get('emails.common_ref')}}: <strong>{{$bk->booking_ref}}</strong></p>
 			<p>{{Lang::get('emails.voucher_price')}}: 
 				@if ($bk->currency_order == 'L') {{$bk->currency}} @endif {{$bk->price}} @if($bk->currency_order == 'R') {{$bk->currency}} @endif
+				@if ($bk->payment_type == 'O') &nbsp;({{Lang::get('emails.voucher_payment')}}) @endif
 
 				@if ($bk->status == 'A') 
 					@if ($bk->price_diff < 0)

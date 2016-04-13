@@ -60,6 +60,7 @@ return [
 	'voucher_desc'    => 'Description',
 	'voucher_find'    => 'How to find it',
 	'voucher_price'   => 'Total Price',
+	'voucher_payment' => 'The amount has been paid online',
 	'voucher_services' => 'Additional Services',
 	'voucher_subject_amend' => 'Your Amended Booking Voucher',
 	

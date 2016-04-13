@@ -229,8 +229,9 @@ class LaravelLocalization {
             {
                 return $this->getURLFromRouteNameTranslated($locale, $this->routeName, $attributes);
             }
-            //$url = $this->request->fullUrl();
-            $url = $this->request->url();
+
+            $url = $this->request->fullUrl();
+
         }
         
         if ( $locale && $translatedRoute = $this->findTranslatedRouteByUrl($url, $attributes, $this->currentLocale) )
@@ -404,6 +405,16 @@ class LaravelLocalization {
     public function getCurrentLocaleName()
     {
         return $this->supportedLocales[ $this->getCurrentLocale() ][ 'name' ];
+    }
+
+    /**
+     * Returns current locale native name
+     *
+     * @return string current locale native name
+     */
+    public function getCurrentLocaleNative()
+    {
+        return $this->supportedLocales[ $this->getCurrentLocale() ][ 'native' ];
     }
 
     /**

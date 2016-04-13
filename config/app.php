@@ -156,7 +156,8 @@ return [
 		'Folklore\Image\ImageServiceProvider',
 		'Roumen\Sitemap\SitemapServiceProvider',
 		'Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider',
-		'Maatwebsite\Excel\ExcelServiceProvider'
+		'Maatwebsite\Excel\ExcelServiceProvider',
+		JsLocalization\JsLocalizationServiceProvider::class
 
 	],
 
