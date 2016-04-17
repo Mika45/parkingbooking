@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta charset="utf-8" />
-		
+
 		<meta name="keywords" content="@yield('meta_keywords')" />
 		<meta name="description" content="@yield('meta_description')" />
 
@@ -27,7 +27,7 @@
 		{!! HTML::script('js/bootstrap.js') !!}
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-		
+
 		<!-- Optional theme -->
 		{!! HTML::style('css/bootstrap-theme2.css') !!}
 		{!! HTML::script('js/bootstrap-datetimepicker.js') !!}
@@ -41,7 +41,7 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 		{!! HTML::style('css/bootstrap-social.css') !!}
-		
+
 		{!! HTML::style('css/magnific-popup.css') !!}
 		{!! HTML::script('js/jquery.magnific-popup.js') !!}
 
@@ -95,16 +95,18 @@
 		              	<li class="{{ set_active(App::getLocale().'/contact') }}"><a href="/{{App::getLocale()}}/contact">{{Lang::get('site.nav_contact')}}</a></li>
 		            </ul>
 		            <ul class="nav navbar-nav navbar-right">
-		            	<li class="dropdown">
-						    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! get_current_lang_icon() !!} <b class="caret"></b></a>
-						    <ul class="dropdown-menu">
-						        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-							        <li>
-							            {!! link_to_route_icon($properties, $localeCode) !!}
-							        </li>
-							    @endforeach
-						    </ul>
-						</li>
+						@if (Request::segment(1) != 'payment')
+							<li class="dropdown">
+							    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! get_current_lang_icon() !!} <b class="caret"></b></a>
+							    <ul class="dropdown-menu">
+							        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+								        <li>
+								            {!! link_to_route_icon($properties, $localeCode) !!}
+								        </li>
+								    @endforeach
+							    </ul>
+							</li>
+						@endif
 		            	@if(Auth::check())
 		            		<li class="dropdown">
 					          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong>{{Lang::get('site.nav_account')}}</strong><span class="caret"></span></a>

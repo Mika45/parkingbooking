@@ -41,14 +41,14 @@ class ParkingsController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth.admin', ['except' => ['show', 'book', 'payment', 'setBookingPrice', 'checkout']]); 
+        $this->middleware('auth.admin', ['except' => ['show', 'book', 'payment', 'setBookingPrice', 'checkout']]);
     }
 
 	//public function index()
 	public function all()
 	{
 		$parkings = Parking::all();
-		
+
 		return view('parkings.index', compact('parkings'));
 	}
 
@@ -72,7 +72,7 @@ class ParkingsController extends Controller {
 		$translations = get_parking_translation( $id );
 
 		Session::put('selectedParking', $id);
-		
+
 		$pcur = get_parking_currency($id);
 
 		// create the google map
@@ -161,7 +161,7 @@ class ParkingsController extends Controller {
 
 		$countries = NULL;
 		foreach ($allPhoneCodes as $country) {
-			$countries[] = ['country_id' => $country->country_id, 
+			$countries[] = ['country_id' => $country->country_id,
 							'locale' => $country->iso2,
 							'flag' => strtolower($country->iso2),
 							'code' => '(00'.$country->code.')'];
@@ -169,7 +169,7 @@ class ParkingsController extends Controller {
 
 		$products = Product::where('parking_id', $parking->parking_id)->get();
 		$prod_trans = get_product_translations( $parking->parking_id );
-		
+
 		$p_trans = null;
 		if(!empty($prod_trans)){
 			foreach ($prod_trans as $value) {
@@ -200,7 +200,7 @@ class ParkingsController extends Controller {
 
 			// set a session with the selected Products
 			Session::forget('selectedProducts');
-			
+
 			if (array_key_exists('productIDs', $data))
 				Session::set('selectedProducts', $data['productIDs']);
 
@@ -252,7 +252,9 @@ class ParkingsController extends Controller {
 			else
 				$iframe_lang = 'en-US';
 
-			return response()->view($page, compact('booking_ref', 'config', 'summary', 'iframe_lang'))->withCookie(Cookie::forget('noaf'));
+			$booking = Booking::where('booking_ref', $booking_ref)->firstOrFail();
+
+			return response()->view($page, compact('booking', 'booking_ref', 'config', 'summary', 'iframe_lang'))->withCookie(Cookie::forget('noaf'));
 		} else {
 			$page = 'static.payment';
 			return response()->view($page)->withCookie(Cookie::forget('noaf'));
@@ -376,7 +378,7 @@ class ParkingsController extends Controller {
 					$destinationPath = 'prices/';
 					//$filename = $file->getClientOriginalName();
 					$filename = $parking->parking_id.'.xlsx';
-					
+
 					$upload_success = $file->move($destinationPath, $filename);
 
 					$uploadcount ++;
@@ -445,7 +447,7 @@ class ParkingsController extends Controller {
 		return view('admin.parkings.edit', compact('page_title', 'parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'p_options_selected', 'tags', 'tags_selected',
 											'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
-	
+
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -471,7 +473,7 @@ class ParkingsController extends Controller {
 
 				$destinationPath = 'img/parkings/'.$id.'/';
 				$filename = $file->getClientOriginalName();
-				
+
 				$upload_success = $file->move($destinationPath, $filename);
 
 				//$thumbnail = Image::open($destinationPath.$filename)->thumbnail(new Imagine\Image\Box(300,300));
@@ -506,7 +508,7 @@ class ParkingsController extends Controller {
 
 					$destinationPath = 'prices/';
 					$filename = $id.'.xlsx';
-					
+
 					$upload_success = $xfile->move($destinationPath, $filename);
 
 					$xls_uploadcount ++;
@@ -524,15 +526,15 @@ class ParkingsController extends Controller {
 		$parking->update($input);
 
 		if ( $request->input('cancel_threshold') > 0 or empty($request->input('cancel_threshold'))  ){
-			
+
 			$config = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CANCELLATIONS')->first();
-			
+
 			if ($config){
 
 				if ($config->value == 'Y'){
-					
+
 					$cancel_threshold = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CANCEL_THRESHOLD')->first();
-					
+
 					upd_parking_config( $parking->parking_id, 'CANCEL_THRESHOLD', $request->input('cancel_threshold') );
 				}
 
