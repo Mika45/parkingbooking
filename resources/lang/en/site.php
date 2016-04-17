@@ -97,7 +97,7 @@ return [
 	'pay_sum_opt_2'		=> 'Pay with Credit/Debit card',
 	'pay_sum_opt_note'	=> 'Payment with Credit/Debit card coming soon',
 	'pay_success_head'	=> 'Thank you!',
-	'pay_success_body'	=> 'Your booking has been completed!<br/>An E-mail with your booking details and your voucher has been sent to you. Please check your inbox.',
+	'pay_success_body'	=> 'Your booking has been completed!<br/>An E-mail with your booking details and your voucher has been sent to you. Please check your inbox. Also please ensure you have checked your Spam folder in case you have not received it in your inbox.',
 	'pay_failure_head'	=> 'We are sorry!',
 	'pay_failure_body'	=> 'Your booking could not be completed. Please try again later.',
 	'pay_cancel_head'	=> 'We are sorry for that!',
@@ -156,7 +156,7 @@ return [
 	'back_book_conf_btn' 	=> 'View Booking Confirmation',
 	'back_book_amend_btn' 	=> 'Amend Booking',
 	'back_book_cancel_btn' 	=> 'Cancel Booking',
-	
+
 	/* Info messages */
 	'info_too_late' 	=> '<strong>We are sorry</strong> but it is too late to cancel your booking.',
 	'info_no_changes' 	=> '<strong>Please</strong> search using different input from the original.',
