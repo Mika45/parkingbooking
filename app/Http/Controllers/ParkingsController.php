@@ -229,92 +229,9 @@ class ParkingsController extends Controller {
 
 	public function payment(BookRequest $request)
 	{
-<<<<<<< HEAD
-		//Session::forget('bookingInProcess');
-
-		$input = $request->all();
-
-		$selectedArray = Session::get('selectedParking');
-		Session::forget('selectedParking');
-
-		$selectedId = $selectedArray['parking_id'];
-		$selectedPrice = $selectedArray['price'];
-
-		if (array_key_exists('productsPrice', $selectedArray))
-			$selectedProductsPrice = $selectedArray['productsPrice'];
-		else
-			$selectedProductsPrice = 0;
-
-		$data = Session::all();
-
-		$mode = 'L'; // set the mode for GetResults to (L)ive
-		if (Auth::check()){
-			if (Auth::user()->debug == 'Y')
-				$mode = 'T'; // only set to (T)est if the debug setting is turned on for the particular logged in User
-		}
-		// Final check of Availability
-		$lang = Session::get('applocale');
-		$avail_parks = DB::select('CALL GetResults('.$data['location'].', "'.$data['checkindate'].'", "'.$data['checkintime'].'", "'.$data['checkoutdate'].'", "'.$data['checkouttime'].'", NULL, "'.$lang.'", "'.$mode.'")');
-
-		foreach ($avail_parks as $pid){
-			$pids[] = $pid->parking_id;
-		}
-
-		if (!in_array($selectedId, $pids)) {
-			// Sorry, this parking is not available anymore for the given dates and times
-		    App::abort(403, 'Unauthorized');
-		}
-
-		// Save a Booking
-		$booking = new Booking;
-
-		$booking->parking_id = $selectedId;
-
-		$user = Auth::user();
-		if($user)
-			$booking->user_id = $user->user_id;
-
-		$booking->checkin = $data['checkindate'].' '.$data['checkintime'];
-		$booking->checkout = $data['checkoutdate'].' '.$data['checkouttime'];
-		$booking->price = $selectedPrice + $selectedProductsPrice;
-		$booking->title = $input['title'];
-		$booking->firstname = $input['items']['firstname'];
-		$booking->lastname = $input['items']['lastname'];
-		$booking->mobile = $input['items']['mobile'];
-		if( array_key_exists('landline', $input['items']) )
-			$booking->landline = $input['items']['landline'];
-		$booking->email = $input['items']['email'];
-		$booking->car_make = $input['items']['carmake'];
-		$booking->car_model = $input['items']['carmodel'];
-		$booking->car_reg = $input['items']['carreg'];
-		if( array_key_exists('carcolour', $input['items']) )
-			$booking->car_colour = $input['items']['carcolour'];
-		if( array_key_exists('passengers', $input) )
-			$booking->passengers = $input['passengers'];
-		if( array_key_exists('newsletter', $input) )
-			$booking->newsletter = 'Y';
-		if( array_key_exists('country', $input['items']) )
-			$booking->country_id = $input['items']['country'];
-
-		$booking->save();
-		
-		$year = substr(date("Y"), -2);
-		if ($user and $user->is_affiliate == 'Y')
-			$code = 'AF'.$year;
-		else
-			$code = 'PL'.$year;
-
-		$booking->booking_ref = $code.$booking->booking_id;
-
-		$affiliate_id = Request::cookie('noaf');
-		if((!empty($affiliate_id)) and $affiliate_id != 0) {
-			$booking->affiliate_id = $affiliate_id;
-		}
-=======
 		$booking_ref = $this->dispatch(
 			new BookParking($request)
 		);
->>>>>>> feature_online_payments
 
 		if ($request->payment == 'online') {
 			$page = 'payments.bank';

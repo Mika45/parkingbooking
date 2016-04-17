@@ -138,7 +138,7 @@ class PagesController extends Controller {
 		$mapHelper = new MapHelper();
 
 		return view('results', compact('data', 'locationsList', 'location', 'count', 'map', 'mapHelper', 'checkin', 'checkout'));
-		
+
 	}
 
 	public function geturlsearch($in_location_id, $in_from_date, $in_from_time, $in_to_date, $in_to_time, $in_id = null, $in_ref = null)
@@ -153,20 +153,12 @@ class PagesController extends Controller {
 		$checkin = date('d/m/Y', strtotime($in_from_date)).' '.date('H:i', strtotime($in_from_time));
 		$checkout = date('d/m/Y', strtotime($in_to_date)).' '.date('H:i', strtotime($in_to_time));
 
-		$mode = 'L'; // set the mode for GetResults to (L)ive
-		if (Auth::check()){
-			if (Auth::user()->debug == 'Y')
-				$mode = 'T'; // only set to (T)est if the debug setting is turned on for the particular logged in User
-		}
 		$lang = Session::get('applocale');
-<<<<<<< HEAD
-=======
 		$mode = 'L'; // set the mode for GetResults to (L)ive
 		if (Auth::check()){
 			if (Auth::user()->debug == 'Y')
 				$mode = 'T'; // only set to (T)est if the debug setting is turned on for the particular logged in User
 		}
->>>>>>> feature_online_payments
 		$query = 'CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", NULL, "'.$lang.'", "'.$mode.'")';
 		Log::info('Query = '.$query);
 
@@ -179,7 +171,7 @@ class PagesController extends Controller {
 		foreach ($data as $key => $pid){
 			$trans_merge = array();
 			$keys[] = $pid->parking_id;
-			
+
 			$curs_array[$pid->parking_id] = ['currency' => $pid->currency, 'currency_order' => $pid->currency_order];
 
 			$sysdate = Carbon\Carbon::now($pid->timezone); // current date and time of the Parking
@@ -206,7 +198,7 @@ class PagesController extends Controller {
 				$data[$key]->available = 'N';
 
 			// to make the sorting algorithm work and put the available='N' to the bottom
-			if ($data[$key]->available == 'N') 
+			if ($data[$key]->available == 'N')
 				$data[$key]->price = 0;
 
 			$parking = Parking::Find($pid->parking_id);
@@ -214,14 +206,14 @@ class PagesController extends Controller {
 			$data[$key]->tags = $parking->tags()->lists('name', 'icon_filename');
 
 			$tag_trans = get_tag_translations( $pid->parking_id );
-			
+
 			foreach ($tag_trans as $value2) {
 				$trans_merge[$value2->icon_filename] = $value2->name;
 			}
 
 			$data[$key]->tags = $trans_merge + $data[$key]->tags;
 		}
-		
+
 		$count = count($parkings_array);
 		if (is_null($count))
 			$count = 0;
@@ -246,7 +238,7 @@ class PagesController extends Controller {
 
 		if(!empty($keys)){
 			$pids = implode(",", $keys);
-			$translations = get_results_translation( $pids, $lang );	
+			$translations = get_results_translation( $pids, $lang );
 		} else {
 			$translations = array();
 		}
@@ -294,7 +286,7 @@ class PagesController extends Controller {
 	{
 		return view('static.payment-methods');
 	}
-	
+
 	public function affiliates()
 	{
 		return view('static.affiliates');
@@ -309,7 +301,7 @@ class PagesController extends Controller {
 		//$pdf->loadHTML($html);
 
 		$pdf->loadView('emails.booking');
-		
+
 		return $pdf->stream();
 
 		//return view('static.affiliates');
@@ -392,7 +384,7 @@ class PagesController extends Controller {
 
 	public function domap()
 	{
-		
+
 		$map = new Map();
 
 		$map->setHtmlContainerId('map_canvas');
@@ -417,7 +409,7 @@ class PagesController extends Controller {
 
 		//return view('test', compact('map', 'mapHelper'));
 		return true;
-		
+
 	}
 
 	public function sitemap()
@@ -434,9 +426,9 @@ class PagesController extends Controller {
       	foreach ($locales as $lng => $locale) {
 				$translations = [ ['language' => $lng, 'url' => url($lng.'/'.$page)] ];
 			}
-			$sitemap->add(url($currentLocale.'/'.$page), '2015-08-13T20:10:00+02:00', '1.0', 'daily', [], null, $translations);	
+			$sitemap->add(url($currentLocale.'/'.$page), '2015-08-13T20:10:00+02:00', '1.0', 'daily', [], null, $translations);
       }
-      
+
       $query = 'CALL GetLocationPages("'.$currentLocale.'")';
       $locationPages = DB::select($query);
 
