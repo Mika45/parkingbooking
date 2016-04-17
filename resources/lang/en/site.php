@@ -32,7 +32,9 @@ return [
 	'nav_settings'  => 'Account settings',
 	'nav_bookings'  => 'Manage my Bookings',
 	'nav_logout'  	=> 'Logout',
-	
+	'copyright'  	=> 'All rights reserved',
+	'secure_link'	=> 'https://paycenter.piraeusbank.gr/redirection/Content/HTML/3DSecure_en.html',
+
 	'form_save'  	=> 'Save',
 
 	'common_na'		=> 'Not available',
@@ -83,6 +85,7 @@ return [
 	/*'book_form_btn'		=> 'Proceed to Payment',*/
 	'book_form_country_list' => 'Please select',
 	'book_form_btn'		=> 'Complete Booking',
+	'book_continue_btn'		=> 'Proceed',
 	'book_sum_heading'	=> 'BOOKING DETAILS',
 	'book_products_heading' => 'ADDITIONAL SERVICES',
 	'book_sum_carpark'	=> 'Parking',
@@ -94,11 +97,27 @@ return [
 	'pay_sum_opt_2'		=> 'Pay with Credit/Debit card',
 	'pay_sum_opt_note'	=> 'Payment with Credit/Debit card coming soon',
 	'pay_success_head'	=> 'Thank you!',
-	'pay_success_body'	=> 'Your booking has been completed!<br/>An E-mail with your booking details and your voucher has been sent to you. Please check your inbox.',
+	'pay_success_body'	=> 'Your booking has been completed!<br/>An E-mail with your booking details and your voucher has been sent to you. Please check your inbox. Also please ensure you have checked your Spam folder in case you have not received it in your inbox.',
 	'pay_failure_head'	=> 'We are sorry!',
-	'pay_failure_body'	=> 'Your booking could not be completed!<br/>The card details you provided could not be processed.',
+	'pay_failure_body'	=> 'Your booking could not be completed. Please try again later.',
 	'pay_cancel_head'	=> 'We are sorry for that!',
 	'pay_cancel_body'	=> 'You have chosen to cancel the completion of your booking. Why not try different dates?',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Online Payment Response messages
+	|--------------------------------------------------------------------------
+	*/
+	'pay_invalid_card'	=> 'The transaction could not be completed. Please try again making sure the card details you have provided are correct or using a different card.',
+	'pay_declined'		=> 'The transaction was declined by the Issuer.',
+	'pay_com_error'		=> 'The transaction could not be completed. Please try again later.',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Checkout
+	|--------------------------------------------------------------------------
+	*/
+	'checkout_heading' => 'Checkout',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -137,7 +156,7 @@ return [
 	'back_book_conf_btn' 	=> 'View Booking Confirmation',
 	'back_book_amend_btn' 	=> 'Amend Booking',
 	'back_book_cancel_btn' 	=> 'Cancel Booking',
-	
+
 	/* Info messages */
 	'info_too_late' 	=> '<strong>We are sorry</strong> but it is too late to cancel your booking.',
 	'info_no_changes' 	=> '<strong>Please</strong> search using different input from the original.',

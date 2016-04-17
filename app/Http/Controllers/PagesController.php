@@ -46,7 +46,9 @@ class PagesController extends Controller {
 
 		$locationsList = get_locations_for_search(); // in helpers.php
 
-		return view('home', compact('locationsList'));
+		$card_icons = 'Y'; // show cards in the footer
+
+		return view('home', compact('locationsList', 'card_icons'));
 	}
 
 	public function indextest()
@@ -157,6 +159,14 @@ class PagesController extends Controller {
 				$mode = 'T'; // only set to (T)est if the debug setting is turned on for the particular logged in User
 		}
 		$lang = Session::get('applocale');
+<<<<<<< HEAD
+=======
+		$mode = 'L'; // set the mode for GetResults to (L)ive
+		if (Auth::check()){
+			if (Auth::user()->debug == 'Y')
+				$mode = 'T'; // only set to (T)est if the debug setting is turned on for the particular logged in User
+		}
+>>>>>>> feature_online_payments
 		$query = 'CALL GetResults('.$location.', "'.$checkindate.'", "'.$checkintime.'", "'.$checkoutdate.'", "'.$checkouttime.'", NULL, "'.$lang.'", "'.$mode.'")';
 		Log::info('Query = '.$query);
 

@@ -212,6 +212,12 @@ After this bad experience, it was understood that the parking space should have 
 							</li>
 						</ul>',
 	'payment_methods_heading'	=> 'Methods of Payment',
-	'payment_methods_content'	=> 'At the moment payments are exclusively completed at the car park. <br/><br/>Additional payment methods such as using Credit Cards are coming soon.'
+	'payment_methods_content'	=> 'On ParkingLegend.com, there are 2 available options for you so that you can make your parking reservation. You can either pay the full amount online or pay the full amount upon arrival.<br/>
+									<br/>
+									<img src="/img/bank/Visa.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/Mastercard.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/Maestro.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/vbv.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/sc_62x34.gif" />'
 
 ];

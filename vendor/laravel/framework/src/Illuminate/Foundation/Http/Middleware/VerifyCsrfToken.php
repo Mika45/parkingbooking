@@ -15,7 +15,7 @@ class VerifyCsrfToken implements Middleware {
 	 * @var \Illuminate\Contracts\Encryption\Encrypter
 	 */
 	protected $encrypter;
-	protected $excludedRouteGroups = ['results'];
+	protected $excludedRouteGroups = ['results', 'payment', 'checkout', 'result'];
 
 	/**
 	 * Create a new middleware instance.
@@ -82,7 +82,7 @@ class VerifyCsrfToken implements Middleware {
 	}
 
 	/**
-	 * Determine if the HTTP request uses a ‘read’ verb.
+	 * Determine if the HTTP request uses a 'read' verb.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return bool
@@ -94,8 +94,10 @@ class VerifyCsrfToken implements Middleware {
 
 	protected function excludedRoutes($request)
 	{
+		$segment = trim($request->segment(2), " ");
+
 		foreach($this->excludedRouteGroups as $route) {
-	   	if ($request->segment(2) === $route) {
+	   	if ($segment === $route) {
 	         return true;
 	      }
 		}

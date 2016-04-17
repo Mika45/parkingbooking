@@ -60,6 +60,7 @@ return [
 	'voucher_desc'    => 'Περιγραφή',
 	'voucher_find'    => 'Πως να το βρείτε',
 	'voucher_price'   => 'Συνολική Τιμή',
+	'voucher_payment' => 'Το ποσό έχει καταβληθεί κατά την κράτηση',
 	'voucher_services' => 'Πρόσθετες Υπηρεσίες',
 	'voucher_subject_amend' => 'Κουπόνι Τροποποιημένης Κράτησης',
 

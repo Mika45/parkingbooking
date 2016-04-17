@@ -7,8 +7,8 @@ use App\ParkingLocation;
 use App\Booking;
 use App\Location;
 use App\User;
-use App\RateDaily;
 use App\Configuration;
+use App\ConfigurationGlobal;
 use App\Field;
 use App\Tag;
 use App\Http\Requests;
@@ -17,10 +17,7 @@ use DB;
 use App;
 use Auth;
 use Request;
-use Mail;
 use Storage;
-use File;
-use Lang;
 use App\Http\Requests\BookRequest;
 use App\Http\Requests\AddParkingRequest;
 use Input;
@@ -28,12 +25,14 @@ use Carbon;
 use Validator;
 use Image;
 use Imagine;
-use App\PhoneCode;
 use App\Product;
-use App\BookingProduct;
 use Cookie;
+use File;
 
 use Ivory\GoogleMap\Helper\MapHelper;
+use Illuminate\Support\Facades\Redirect;
+
+use App\Commands\BookParking;
 
 class ParkingsController extends Controller {
 
@@ -42,14 +41,14 @@ class ParkingsController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth.admin', ['except' => ['show', 'book', 'payment', 'setBookingPrice']]); 
+        $this->middleware('auth.admin', ['except' => ['show', 'book', 'payment', 'setBookingPrice', 'checkout']]);
     }
 
 	//public function index()
 	public function all()
 	{
 		$parkings = Parking::all();
-		
+
 		return view('parkings.index', compact('parkings'));
 	}
 
@@ -73,7 +72,7 @@ class ParkingsController extends Controller {
 		$translations = get_parking_translation( $id );
 
 		Session::put('selectedParking', $id);
-		
+
 		$pcur = get_parking_currency($id);
 
 		// create the google map
@@ -118,7 +117,9 @@ class ParkingsController extends Controller {
 			$selectedParking['price'] = $allowed_pids[$id];
 		}
 
-		Session::put('selectedParking', $selectedParking);
+		//parking details like name etc.
+		$parking = Parking::find($id);
+		Session::set('parkingName', $parking->parking_name);
 
 		// Delete allowed parkings session array as we have already selected an $id
 		// and set it again with the only allowed parking which was selected
@@ -126,16 +127,25 @@ class ParkingsController extends Controller {
 		$singleAllowedParking[$selectedParking['parking_id']] = $selectedParking['price'];
 		Session::set('allowedParkings', $singleAllowedParking);
 
-		//parking details like name etc.
-		$parking = Parking::find($id);
+		//Mike
+		if (is_numeric($parking->online_discount)) {
+			$discount = $parking->online_discount;
+		}
+		else {
+			$discount = 0;
+		}
+		$selectedParking['price_card'] = $selectedParking['price'] * (100 - $discount)/100;
+		Session::put('selectedParking', $selectedParking);
+
+		$discount_text = -1 * $discount;
 
 		$fields = DB::select('CALL GetParkingFields( '.$id.' )');
-		
+
 		$user = Auth::user();
 
 		// get the traslations of the current locale
 		$translations = get_parking_translation( $id );
-		
+
 		$title_attributes = NULL;
 		foreach ($translations as $key2 => $value2) {
 			if ($key2 == 'title'){
@@ -151,7 +161,7 @@ class ParkingsController extends Controller {
 
 		$countries = NULL;
 		foreach ($allPhoneCodes as $country) {
-			$countries[] = ['country_id' => $country->country_id, 
+			$countries[] = ['country_id' => $country->country_id,
 							'locale' => $country->iso2,
 							'flag' => strtolower($country->iso2),
 							'code' => '(00'.$country->code.')'];
@@ -159,7 +169,7 @@ class ParkingsController extends Controller {
 
 		$products = Product::where('parking_id', $parking->parking_id)->get();
 		$prod_trans = get_product_translations( $parking->parking_id );
-		
+
 		$p_trans = null;
 		if(!empty($prod_trans)){
 			foreach ($prod_trans as $value) {
@@ -167,10 +177,15 @@ class ParkingsController extends Controller {
 			}
 		}
 
+		$payment_methods = explode(',', $parking->payment_methods);
+
 		// reset the session in case of any selected products that have left in the session
 		Session::forget('selectedProducts');
 
-		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products'));
+		// temporarily store this to be used in the unlocalized payment page
+		Session::put('locale_tmp', App::getLocale());
+
+		return view('parkings.book', compact('fields', 'countries', 'id', 'user', 'translations', 'p_trans', 'parking', 'title_attributes', 'passengers_attributes', 'products', 'payment_methods', 'discount_text'));
 	}
 
 	// using Ajax
@@ -185,7 +200,7 @@ class ParkingsController extends Controller {
 
 			// set a session with the selected Products
 			Session::forget('selectedProducts');
-			
+
 			if (array_key_exists('productIDs', $data))
 				Session::set('selectedProducts', $data['productIDs']);
 
@@ -214,6 +229,7 @@ class ParkingsController extends Controller {
 
 	public function payment(BookRequest $request)
 	{
+<<<<<<< HEAD
 		//Session::forget('bookingInProcess');
 
 		$input = $request->all();
@@ -294,85 +310,45 @@ class ParkingsController extends Controller {
 		if((!empty($affiliate_id)) and $affiliate_id != 0) {
 			$booking->affiliate_id = $affiliate_id;
 		}
+=======
+		$booking_ref = $this->dispatch(
+			new BookParking($request)
+		);
+>>>>>>> feature_online_payments
 
-		$booking->save();
+		if ($request->payment == 'online') {
+			$page = 'payments.bank';
+			$ticket = Session::get('TranTicket');
 
-		// Update the availability - Decrease
-		// Disabled at the moment - querying the booking table for availability
-		//DB::statement('CALL UpdateAvailability('.$selectedId.', "'.$data['checkindate'].'", "'.$data['checkoutdate'].'", "D")');
-
-		$checkProdPrice = 0;
-
-		// Booking Products section
-		if (Session::has('selectedProducts')){
-
-			$products = Session::get('selectedProducts');
-
-			foreach ($products as $prod) {
-				$product = Product::find($prod);
-				$checkProdPrice = $checkProdPrice + $product->price;
+			$configuration = ConfigurationGlobal::where('name', 'like', 'ONLINE%')->get();
+			foreach ($configuration as $key => $conf) {
+				$config[$conf->name] = $conf->value;
 			}
 
-			if ($checkProdPrice != $selectedArray['productsPrice'])
-				App::abort(403, 'Unauthorized');
+			$summary = Session::get('summary');
 
-			foreach ($products as $prod) {
-				$bookingProduct = new BookingProduct;
-				$bookingProduct->booking_id = $booking->booking_id;
-				$bookingProduct->product_id = $prod;
-				$bookingProduct->save();
-			}
+			// explicitly set the locale as we are about to enter an unlocalized route
+			$locale_tmp = Session::get('locale_tmp');
+			app()->setLocale($locale_tmp);
+			if ($locale_tmp == 'el')
+				$iframe_lang = 'el-GR';
+			else
+				$iframe_lang = 'en-US';
+
+			$booking = Booking::where('booking_ref', $booking_ref)->firstOrFail();
+
+			return response()->view($page, compact('booking', 'booking_ref', 'config', 'summary', 'iframe_lang'))->withCookie(Cookie::forget('noaf'));
+		} else {
+			$page = 'static.payment';
+			return response()->view($page)->withCookie(Cookie::forget('noaf'));
 		}
 
-		// Booking Voucher section
-		$bid = $booking->booking_id;
-		$temp_pdf_name = 'Booking Voucher '.$bid.'.pdf';
+		return response()->view($page)->withCookie(Cookie::forget('noaf'));
+	}
 
-		$booking = DB::select('CALL GetBooking('.$booking->booking_id.')');
-
-		$cur_lang = App::getLocale();
-		$products = DB::select('CALL GetVoucherProducts('.$bid.',"'.$cur_lang.'")');
-		
-		// get the traslations of the current locale
-		$translations = get_parking_translation( $booking[0]->parking_id );
-
-		$pdf = App::make('dompdf');
-		$pdf->loadView('emails.voucher', compact('booking', 'products', 'translations'));
-		$pdf->save('tmp/'.$temp_pdf_name);
-
-		// send the email to the booking user, to the admin and to the Park's e-mail if it exists
-		// Need to save the generated PDF to a temp directory and then include its path as the attachment
-		
-		// Get the parking model to grab the email address of the parking
-		$parking = Parking::where('parking_id', '=', $booking[0]->parking_id)->first();
-
-		if(!empty($parking->email)) {
-			Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking, $parking)
-			{
-			    $message->to($parking->email)->subject(Lang::get('emails.voucher_subject'));
-				$message->attach('tmp/'.$temp_pdf_name);
-			});
-		}
-
-		Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
-		{
-		    $message->to($booking[0]->email)->subject(Lang::get('emails.voucher_subject'));
-			$message->attach('tmp/'.$temp_pdf_name);
-		});
-
-		Mail::send('emails.booking', compact('booking', 'products'), function($message) use($temp_pdf_name, $booking)
-		{
-		    $message->to('jimkavouris4@gmail.com')->subject(Lang::get('emails.voucher_subject'));
-			$message->attach('tmp/'.$temp_pdf_name);
-		});
-		
-		// Delete the generated pdf after the send
-		File::delete('tmp/'.$temp_pdf_name);
-
-		// remove all sessions
-		Session::flush();
-
-		return response()->view('static.payment')->withCookie(Cookie::forget('noaf'));
+	public function checkout()
+	{
+		return view('static.checkout');
 	}
 
 	/*****************************************/
@@ -406,6 +382,8 @@ class ParkingsController extends Controller {
 
 		$p_fields_selected[] = null;
 
+		$p_options_selected[] = null;
+
 		$tags = Tag::lists('name', 'tag_id');
 		//dd($tags);
 
@@ -426,7 +404,7 @@ class ParkingsController extends Controller {
 			$configArray['FREE_MINUTES'] = null;
 
 		$page_title = 'Add a new Parking';
-		return view('admin.parkings.create', compact('page_title', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
+		return view('admin.parkings.create', compact('page_title', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'p_options_selected', 'tags', 'tags_selected',
 												'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
 
@@ -438,6 +416,8 @@ class ParkingsController extends Controller {
 	public function store(AddParkingRequest $request)
 	{
 		$input = $request->all();
+
+		$input['payment_methods'] = implode(',', $request->input('payment_options'));
 
 		$parking = Parking::create($input);
 
@@ -481,7 +461,7 @@ class ParkingsController extends Controller {
 					$destinationPath = 'prices/';
 					//$filename = $file->getClientOriginalName();
 					$filename = $parking->parking_id.'.xlsx';
-					
+
 					$upload_success = $file->move($destinationPath, $filename);
 
 					$uploadcount ++;
@@ -510,6 +490,7 @@ class ParkingsController extends Controller {
 
 		$p_locations_selected[] = NULL;
 		$p_locations = NULL;
+		$p_options_selected = NULL;
 
 		foreach ($parking_locations as $p_loc)
 			$p_locations_selected[] = $p_loc->location_id;
@@ -517,6 +498,7 @@ class ParkingsController extends Controller {
 		foreach ($locations as $loc)
 			$p_locations[$loc->location_id] = $loc->name;
 
+		$p_options_selected = explode(',', $parking->payment_methods);
 
 		$fields = Field::orderBy('field_id')->get();
 		$parking_fields = ParkingField::where('parking_id', '=', $parking->parking_id)->get();
@@ -545,10 +527,10 @@ class ParkingsController extends Controller {
 			$configArray['FREE_MINUTES'] = null;
 
 		$page_title = 'Edit Parking';
-		return view('admin.parkings.edit', compact('page_title', 'parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'tags', 'tags_selected',
+		return view('admin.parkings.edit', compact('page_title', 'parking', 'p_locations', 'p_locations_selected', 'p_fields', 'p_fields_selected', 'p_options_selected', 'tags', 'tags_selected',
 											'hours', 'from_time_bd', 'to_time_bd', 'from_time_sat', 'to_time_sat', 'from_time_sun', 'to_time_sun', 'configArray'));
 	}
-	
+
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -574,7 +556,7 @@ class ParkingsController extends Controller {
 
 				$destinationPath = 'img/parkings/'.$id.'/';
 				$filename = $file->getClientOriginalName();
-				
+
 				$upload_success = $file->move($destinationPath, $filename);
 
 				//$thumbnail = Image::open($destinationPath.$filename)->thumbnail(new Imagine\Image\Box(300,300));
@@ -609,7 +591,7 @@ class ParkingsController extends Controller {
 
 					$destinationPath = 'prices/';
 					$filename = $id.'.xlsx';
-					
+
 					$upload_success = $xfile->move($destinationPath, $filename);
 
 					$xls_uploadcount ++;
@@ -619,18 +601,23 @@ class ParkingsController extends Controller {
 
 		$parking = Parking::findOrFail($id);
 
+		if (!empty($request->input('payment_options')))
+			$input['payment_methods'] = implode(',', $request->input('payment_options'));
+		else
+			$input['payment_methods'] = null;
+
 		$parking->update($input);
 
 		if ( $request->input('cancel_threshold') > 0 or empty($request->input('cancel_threshold'))  ){
-			
+
 			$config = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CANCELLATIONS')->first();
-			
+
 			if ($config){
 
 				if ($config->value == 'Y'){
-					
+
 					$cancel_threshold = Configuration::where('parking_id', '=', $parking->parking_id)->where('conf_name', '=', 'CANCEL_THRESHOLD')->first();
-					
+
 					upd_parking_config( $parking->parking_id, 'CANCEL_THRESHOLD', $request->input('cancel_threshold') );
 				}
 

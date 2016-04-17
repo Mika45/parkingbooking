@@ -51,11 +51,11 @@
 
 	<h1>{{ Lang::get('site.book_form_heading') }}</h1>
 	<p>
-
 		<div class="well bs-component">
 			<br/>
 			
 			{!! Form::open(['action' => 'ParkingsController@payment', 'class' => 'form-horizontal', 'id' => 'payment']) !!}
+			{{-- {!! Form::open(['url' => 'https://paycenter.piraeusbank.gr/redirection/pay.aspx', 'class' => 'form-horizontal', 'id' => 'payment']) !!} --}}
 			<fieldset>
 
 			@if (count($errors) > 0)
@@ -167,14 +167,19 @@
 	    <h3 class="panel-title">{{ Lang::get('site.pay_sum_heading') }}</h3>
 	  </div>
 	  <div class="panel-body">
-	  	{!! Form::radio('sex', 'male', true) !!}
-	  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
+	  	@if (in_array('P',$payment_methods))
+	  		{!! Form::radio('payment', 'atcarpark', true, array('id' => 'pay_atcarpark')) !!}
+	  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_1')) !!}
+  			<br/>
+  		@endif
+  		@if (in_array('O',$payment_methods))
+	  		{!! Form::radio('payment', 'online', true, array('id' => 'pay_online')) !!}
+	  		{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!} @if ($discount_text < 0) ({{ $discount_text }}%) @endif
+	  		<br/>
+	  	@endif
+
 	  	<br/>
-	  	<input type="radio" name="foo" value="N" disabled>
-	  	{!! Form::label('penyakit-0', Lang::get('site.pay_sum_opt_2')) !!}
-	  	<p><small>{{Lang::get('site.pay_sum_opt_note')}}</small></p>
-	  	<br/>
-	  	{!! Form::submit(Lang::get('site.book_form_btn'), ['class' => 'btn btn-primary form-control']) !!}
+	  	{!! Form::submit(Lang::get('site.book_form_btn'), ['class' => 'btn btn-primary form-control', 'id' => 'submitButton']) !!}
 	  	{!! Form::close() !!}
 	  </div>
 	  {{-- <div class="panel-footer"><strong>{{ Lang::get('site.book_sum_total') }} {{Session::get('selectedParking')['price']}}</strong></div> --}}
@@ -185,7 +190,7 @@
 	  			<table id="priceBreakdown" width="100%">
 	  				<tr>
 	  					<td>{{ Lang::get('site.book_sum_carpark') }}:</td> 
-	  					<td align="right"><span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span> <span id="parkingPrice">{{Session::get('selectedParking')['price']}}</span></td>
+	  					<td align="right"><span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span> <span id="parkingPrice">{{Session::get('selectedParking')['price_card']}}</span></td>
 	  				</tr>
 	  			</table>
 	  		</strong>
@@ -198,7 +203,7 @@
 	  			<table id="priceBreakdown" width="100%">
 	  				<tr>
 	  					<td>{{ Lang::get('site.book_sum_carpark') }}:</td> 
-	  					<td align="right"><span id="parkingPrice">{{Session::get('selectedParking')['price']}}</span> <span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span></td>
+	  					<td align="right"><span id="parkingPrice">{{Session::get('selectedParking')['price_card']}}</span> <span id="currency">{{Session::get('currency')[$parking->parking_id]['currency']}}</span></td>
 	  				</tr>
 	  			</table>
 	  		</strong>
@@ -211,10 +216,7 @@
 
 		$(document).ready(function(){
 
-			$('[data-toggle="tooltip"]').tooltip();
-
-			$('#prod_checks input:checkbox').change(function() {
-				
+			function updatePriceBreakdown(){
 				var productsPrice = 0;
 				var totalPrice = 0;
 				var productIds = [];
@@ -235,7 +237,7 @@
 					totalPrice = productsPrice + parseFloat($("#parkingPrice").text());
 					$('#breakdown1').remove();
 					$('#breakdown2').remove();
-					
+
 					var cur = $("#currency").text();
 					if($("#currencyOrder").text() == 'Right'){
 						$('#priceBreakdown tr:last').after("<tr id='breakdown1'><td>{{ Lang::get('site.book_sum_products') }}:</td><td align='right'>" + productsPrice + ' ' + cur
@@ -247,18 +249,39 @@
 				}
 
 				$.get('getRequest', { totalPrice:totalPrice, productsPrice:productsPrice, productIDs:productIds }, function(data){
-					console.log(data);
+					//console.log(data);
 				});
+
+				return true;
+			}
+
+			if($('#pay_online').is(':checked')) {
+				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
+				document.getElementById("submitButton").value = Lang.get('site.book_continue_btn');
+			} else {
+				document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
+			}
+
+			$('[data-toggle="tooltip"]').tooltip();
+
+			$('#prod_checks input:checkbox').change(function() {
+
+				var priceBreakdown = updatePriceBreakdown();
 			});
 
-			/*$('#getRequest').click(function(){
+			$('#pay_online, #pay_atcarpark').change(function() {
 
-				var total = $('#total').val();
-				
-				$.get('getRequest', { totalPrice:total }, function(data){
-					console.log(data);
-				});
-			});*/
+				if($('#pay_online').is(':checked')) {
+					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price_card']}}";
+					document.getElementById("submitButton").value = Lang.get('site.book_continue_btn');
+				} else {
+					document.getElementById("parkingPrice").innerHTML = "{{Session::get('selectedParking')['price']}}";
+					document.getElementById("submitButton").value = Lang.get('site.book_form_btn');
+				}
+
+				priceBreakdown = updatePriceBreakdown();
+
+			});
 
 		});
 

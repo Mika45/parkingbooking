@@ -208,6 +208,12 @@ return [
 							</li>
 						</ul>',
 	'payment_methods_heading'	=> 'Μέθοδοι Πληρωμής',
-	'payment_methods_content'	=> 'Προς το παρόν όλες οι πληρωμές πραγματοποιούνται στον χώρο του πάρκινγκ. <br/><br/>Πρόσθετοι τρόποι πληρωμής όπως οι Online πληρωμές με πιστωτική κάρτα θα είναι σύντομα διαθέσιμοι.'
-							
+	'payment_methods_content'	=> 'Στο ParkingLegend.com, μπορείτε να πραγματοποιήσετε την κράτησή σας επιλέγοντας είτε να καταβάλλετε το συνολικό ποσό online είτε να καταβάλλετε το συνολικό ποσό κατά την άφιξή σας.<br/>
+									<br/>
+									<img src="/img/bank/Visa.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/Mastercard.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/Maestro.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/vbv.jpg" />&nbsp;&nbsp;
+			            			<img src="/img/bank/sc_62x34.gif" />'
+
 ];

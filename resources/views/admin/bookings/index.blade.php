@@ -21,8 +21,9 @@
 						  	<th><small>Number plate</small></th>
 						  	<th><small>Price</small></th>
 						  	<th><small>Name</small></th>
-						  	<th><small>Mobile</small></th>
+                            <th><small>Mobile</small></th>
 						  	<th><small>E-mail</small></th>
+						  	<th><small>Status</small></th>
 						  	<th><small>Booked at</small></th>
 						  	<th><small>Referrer</small></th>
 						</tr>
@@ -37,8 +38,9 @@
 							<td><small>{{ $booking->car_reg }}</small></td>
 							<td><small>{{ $booking->price }}</small></td>
 							<td><small>{{ $booking->firstname }} {{ $booking->lastname }}</small></td>
-							<td><small>{{ $booking->mobile }}</small></td>
+							<td><small>(+{{ $booking->phone_code }}) {{ $booking->mobile }}</small></td>
 							<td><small>{{ $booking->email }}</small></td>
+							<td><small>{{ $booking->status_descr }}</small></td>
 							<td><small>{{ $booking->created_at }}</small></td>
 							<td><small>{{ $booking->referrer }}</small></td>
 						</tr>

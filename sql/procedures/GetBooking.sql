@@ -37,7 +37,8 @@ BEGIN
 		   p.mobile AS pmobile,
 		   pc.code AS phone_code,
 		   a.price_old,
-		   b.price - a.price_old AS price_diff
+		   b.price - a.price_old AS price_diff,
+           b.payment_type
 	FROM   BOOKING b
 		   LEFT JOIN PHONE_CODE pc ON (pc.country_id = b.country_id)
 		   LEFT JOIN (SELECT a.* 
