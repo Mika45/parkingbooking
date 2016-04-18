@@ -229,6 +229,10 @@ class ParkingsController extends Controller {
 
 	public function payment(BookRequest $request)
 	{
+		// explicitly set the locale as we are about to enter an unlocalized route
+		$locale_tmp = Session::get('locale_tmp');
+		app()->setLocale($locale_tmp);
+
 		$booking_ref = $this->dispatch(
 			new BookParking($request)
 		);
@@ -244,9 +248,6 @@ class ParkingsController extends Controller {
 
 			$summary = Session::get('summary');
 
-			// explicitly set the locale as we are about to enter an unlocalized route
-			$locale_tmp = Session::get('locale_tmp');
-			app()->setLocale($locale_tmp);
 			if ($locale_tmp == 'el')
 				$iframe_lang = 'el-GR';
 			else
